@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="w_1">1dp</dimen>
+    <dimen name="w_8">8dp</dimen>
+    <dimen name="w_10">10dp</dimen>
+    <dimen name="w_20">20dp</dimen>
+    <dimen name="w_56">56dp</dimen>
+    <dimen name="w_256">256dp</dimen>
+    <dimen name="margin_padding_tiny">2dp</dimen>
+    <dimen name="margin_padding_small">5dp</dimen>
+    <dimen name="margin_padding_medium">10dp</dimen>
+    <dimen name="margin_padding_large">20dp</dimen>
+    <dimen name="uiza_media_button_height">64dp</dimen>
+    <dimen name="uiza_media_button_width">64dp</dimen>
+    <dimen name="text_size_tiny">9sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+    <dimen name="round_medium">15dp</dimen>
+</resources>

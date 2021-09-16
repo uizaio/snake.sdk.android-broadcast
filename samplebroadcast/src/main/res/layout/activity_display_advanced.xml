@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.uiza.display.UZDisplayView
+        android:id="@+id/uzDisplayBroadCast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etRtpUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_rtmp"
+        android:padding="@dimen/margin_padding_medium"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/text_size_small" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvStatus"
+        android:padding="@dimen/margin_padding_medium"
+        android:textSize="@dimen/text_size_small" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/hsv"
+        android:padding="@dimen/margin_padding_medium"
+        android:textSize="@dimen/text_size_small" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/margin_padding_medium"
+            android:paddingEnd="@dimen/margin_padding_medium"
+            android:paddingBottom="@dimen/margin_padding_large">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bScreenRotation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/screen_rotation" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/setting" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bStartTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/start_button" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bDisableAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/disable_audio"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bEnableAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/enable_audio"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</RelativeLayout>

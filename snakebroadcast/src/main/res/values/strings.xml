@@ -1,0 +1,16 @@
+<resources>
+    <string name="stream_started">Stream started</string>
+    <string name="stream_connection_failed">Stream connection failed</string>
+    <string name="stream_stopped">Stream stopped</string>
+    <string name="stream_auth_error">Stream auth error</string>
+    <string name="stream_auth_success">Stream auth success</string>
+    <string name="rtp_display_stream">RTP Display Stream</string>
+    <string name="you_are_already_streaming">You are already streaming</string>
+    <string name="streaming">Streaming</string>
+    <string name="display_mode_stream">Display mode stream</string>
+    <string name="stream_in_progress">Stream in progress</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="stream_connection_started">Stream connection started</string>
+    <string name="rtp_stream">RTP Stream</string>
+</resources>

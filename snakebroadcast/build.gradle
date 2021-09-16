@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+//apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.uizaio'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0.1"
+    }
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "4g"
+    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'com.google.android.material:material:1.4.0'
+    api "androidx.core:core-ktx:1.6.0"
+    api 'org.jetbrains:annotations:16.0.1'
+    api 'org.greenrobot:eventbus:3.2.0'
+    //https://github.com/pedroSG94/rtmp-rtsp-stream-client-java
+    api 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:2.0.7'
+}
+repositories {
+    mavenCentral()
+}
+project.afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
+    }
+}

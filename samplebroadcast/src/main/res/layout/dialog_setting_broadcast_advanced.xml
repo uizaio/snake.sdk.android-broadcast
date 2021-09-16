@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_padding_medium">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting"
+            android:textColor="@color/appColor"
+            android:textSize="@dimen/text_size_large" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            android:background="@color/appColor"
+            android:padding="@dimen/margin_padding_medium"
+            android:text="@string/video"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            android:text="@string/resolution_camera" />
+
+        <Spinner
+            android:id="@+id/spinnerResolutionCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fps" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etVideoFps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fps"
+            android:inputType="number" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bitrate" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etVideoBitrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bitrate"
+            android:inputType="number" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_large"
+            android:background="@color/appColor"
+            android:padding="@dimen/margin_padding_medium"
+            android:text="@string/audio"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_bitrate" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAudioBitrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/audio_bitrate"
+            android:inputType="number" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_sample_rate" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAudioSampleRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/audio_sample_rate"
+            android:inputType="number" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_is_stereo" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchAudioIsStereo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_is_stereo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_echo_canceler" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchAudioEchoCanceler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_echo_canceler" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_noise_suppressor" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchAudioNoiseSuppressor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_noise_suppressor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btGetBestSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_large"
+            android:text="@string/get_best_setting" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btOK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_small"
+            android:text="@string/ok" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+

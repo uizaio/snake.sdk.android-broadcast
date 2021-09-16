@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.uiza.background.UZBackgroundView
+        android:id="@+id/uzBackgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etRtpUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_rtmp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/text_size_medium" />
+
+    <TextView
+        android:id="@+id/tvSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvStatus"
+        android:padding="@dimen/margin_padding_medium"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_tiny" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/hsv"
+        android:padding="@dimen/margin_padding_medium"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_small" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/margin_padding_medium"
+            android:paddingEnd="@dimen/margin_padding_medium"
+            android:paddingBottom="@dimen/margin_padding_large">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bStartTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/start_button" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bEnableFaceDetection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/enablefacedetection" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bDisableFaceDetection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/disablefacedetection" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bEnableVideoStabilization"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/enablevideostabilization" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bDisableVideoStabilization"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/disablevideostabilization" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bGetCameraFacing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/getcamerafacing" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bEnableLantern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/enablelantern" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bDisableLantern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/disablelantern" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bEnableAutoFocus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/enableautofocus" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bDisableAutoFocus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/disableautofocus" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bDisableAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/disable_audio"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bEnableAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/enable_audio"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bSwitchCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_medium"
+                android:text="@string/switch_camera_button" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</RelativeLayout>

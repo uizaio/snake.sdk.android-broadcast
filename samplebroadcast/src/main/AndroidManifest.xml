@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.uiza.rtpstreamer">
+
+    <application
+        android:name="com.uiza.UZApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".broadcastBasic.BroadCastBasicActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="BroadCastBasicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".backgroundBasic.BackgroundBasicActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="BackgroundBasicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".displayBasic.DisplayBasicActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="DisplayBasicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".broadcastAdvanced.BroadCastAdvancedActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="BroadCastAdvancedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".displayAdvanced.DisplayAdvancedActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="DisplayAdvancedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".backgroundAdvanced.BackgroundAdvancedActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="BackgroundAdvancedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".player.PlayerBasicActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="PlayerBasicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>
