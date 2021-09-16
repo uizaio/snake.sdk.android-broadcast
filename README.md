@@ -5,7 +5,7 @@ Simple Streaming at scale.
 
 Uiza is the complete toolkit for building a powerful video streaming application with unlimited scalability. We design Uiza so simple that you only need a few lines of codes to start streaming, but sophisticated enough for you to build complex products on top of it.
 
-Read [CHANGELOG here](https://github.com/uizaio/snake.sdk.android/blob/loitp/dev/CHANGELOG.md).
+Read [CHANGELOG here](https://github.com/uizaio/snake.sdk.android-broadcast/blob/master/CHANGELOG.md).
 
 <br />
 <br />
@@ -16,20 +16,20 @@ Read [CHANGELOG here](https://github.com/uizaio/snake.sdk.android/blob/loitp/dev
 ```xml
 allprojects {
     repositories {
-    maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io' }
     }
-    }
+}
 ```
 
 **Step 2. Add the dependency**
 
 ```xml
 dependencies {
-    implementation 'com.github.uizaio:snake.sdk.android:x.y.z'
-    }
+    implementation 'com.github.uizaio:snake.sdk.android-broadcast:x.y.z'
+}
 ```
 
-Get latest release number [HERE](https://github.com/uizaio/snake.sdk.android/releases).
+Get latest release number [HERE](httpshttps://github.com/uizaio/snake.sdk.android-broadcast/releases).
 
 <br />
 <br />
@@ -48,7 +48,7 @@ XML:
     android:layout_height="match_parent" />   
 ```
 
-Pls take a look at class [`BroadCastAdvancedActivity`](https://github.com/uizaio/snake.sdk.android/blob/loitp/dev/samplebroadcast/src/main/java/com/uiza/rtpstreamer/broadcastAdvanced/BroadCastAdvancedActivity.kt) for more information.
+Pls take a look at class [`BroadCastAdvancedActivity`](https://github.com/uizaio/snake.sdk.android-broadcast/blob/master/samplebroadcast/src/main/java/com/uiza/rtpstreamer/broadcastAdvanced/BroadCastAdvancedActivity.kt) for more information.
 
 Here are some points you need to remember:
 
@@ -249,7 +249,7 @@ _orientation – of the camera preview. Could be 90, 180, 270 or 0.
         android:layout_height="match_parent" />
 ```
 
-Pls take a look at class [`BackgroundAdvancedActivity`](https://github.com/uizaio/snake.sdk.android/blob/loitp/dev/samplebroadcast/src/main/java/com/uiza/rtpstreamer/backgroundAdvanced/BackgroundAdvancedActivity.kt) for more information.
+Pls take a look at class [`BackgroundAdvancedActivity`](https://github.com/uizaio/snake.sdk.android-broadcast/blob/master/samplebroadcast/src/main/java/com/uiza/rtpstreamer/backgroundAdvanced/BackgroundAdvancedActivity.kt) for more information.
 
 Here are some points you need to remember:
 
@@ -363,7 +363,7 @@ Reeturn true if streaming, false if not streaming.
         android:layout_height="match_parent" />
 ```
 
-See example in class [`DisplayAdvancedActivity`](https://github.com/uizaio/snake.sdk.android/blob/loitp/dev/samplebroadcast/src/main/java/com/uiza/rtpstreamer/displayAdvanced/DisplayAdvancedActivity.kt):
+See example in class [`DisplayAdvancedActivity`](https://github.com/uizaio/snake.sdk.android-broadcast/blob/master/samplebroadcast/src/main/java/com/uiza/rtpstreamer/displayAdvanced/DisplayAdvancedActivity.kt):
 
 Here are some points you need to remember:
 
@@ -501,7 +501,7 @@ For a given use case, we aim to support UizaSDK on all Android devices that sati
 
 ## Support
 
-If you've found an error in this sample, please file an [issue ](https://github.com/uizaio/snake.sdk.android/issues)
+If you've found an error in this sample, please file an [issue ](https://github.com/uizaio/snake.sdk.android-broadcast/issues)
 
 Patches are encouraged, and may be submitted by forking this project and submitting a pull request through GitHub. Please feel free to contact me anytime: loitp@uiza.io for more details.
 
@@ -514,6 +514,6 @@ Website: _[uiza.io](https://uiza.io/)_
 
 ## License
 
-UizaSDK is released under the BSD license. See  [LICENSE](https://github.com/uizaio/uiza-android-broadcast-sdk/blob/master/LICENSE)  for details.
+UizaSDK is released under the BSD license. See  [LICENSE](https://github.com/uizaio/snake.sdk.android-broadcast/blob/master/LICENSE)  for details.
 
 
