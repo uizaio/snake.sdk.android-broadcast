@@ -1,3 +1,6 @@
+### 1.1.1 (2021-09-29)
+- Improved performances
+
 ### 1.1.0 (2021-09-28)
 - Improved performances
 
