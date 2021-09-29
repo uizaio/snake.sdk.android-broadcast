@@ -7,7 +7,7 @@ class UZApplication : MultiDexApplication() {
 
     companion object {
         const val URL_STREAM =
-            "rtmp://rtmp.alyin.uiza.io/live/live_wbVJjJGD9u"
+            "rtmp://a.rtmp.youtube.com/live2/8bdq-a4kv-q0k5-p2xm-2hqx"
     }
 
     override fun onCreate() {
