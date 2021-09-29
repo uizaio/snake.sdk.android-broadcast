@@ -79,6 +79,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onConnectionFailedRtp reason $reason")
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
+
+            reason?.let {
+                uzDisplayBroadCast.retry(delay = 1000, reason = it)
+            }
         }
         uzDisplayBroadCast.onDisconnectRtp = {
             Log.d(logTag, "onDisconnectRtp")

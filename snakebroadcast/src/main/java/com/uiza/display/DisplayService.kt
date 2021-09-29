@@ -231,6 +231,15 @@ class DisplayService : Service() {
         fun getRecordStatus(): RecordController.Status? {
             return displayBase?.recordStatus
         }
+
+        /**
+         * Retries to connect with the given delay. You can pass an optional backupUrl
+         * if you'd like to connect to your backup server instead of the original one.
+         * Given backupUrl replaces the original one.
+         */
+        fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
+            return displayBase?.reTry(delay, reason, backupUrl)
+        }
     }
 
     private var endpoint: String? = null

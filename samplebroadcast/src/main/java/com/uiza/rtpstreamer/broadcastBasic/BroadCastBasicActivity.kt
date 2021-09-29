@@ -51,6 +51,8 @@ class BroadCastBasicActivity : AppCompatActivity() {
         uzBroadCastView.onConnectionFailedRtmp = { reason ->
             setTextStatus("onConnectionFailedRtmp reason $reason")
             handleUI()
+
+            uzBroadCastView.reTry(delay = 1000, reason = reason)
         }
         uzBroadCastView.onConnectionStartedRtmp = { rtmpUrl ->
             setTextStatus("onConnectionStartedRtmp rtmpUrl $rtmpUrl")

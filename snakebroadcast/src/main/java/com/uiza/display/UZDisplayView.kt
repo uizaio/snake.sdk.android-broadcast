@@ -72,14 +72,14 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         }
     }
 
-//    Get stream state.
+    //    Get stream state.
 //    Returns:
 //    true if streaming, false if not streaming.
     fun isStreaming(): Boolean? {
         return DisplayService.isStreaming()
     }
 
-//    Get record state.
+    //    Get record state.
 //    Returns:
 //    true if recording, false if not recoding.
     fun isRecording(): Boolean? {
@@ -259,6 +259,16 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
     fun getRecordStatus(): RecordController.Status? {
         return DisplayService.getRecordStatus()
     }
+
+    /**
+     * Retries to connect with the given delay. You can pass an optional backupUrl
+     * if you'd like to connect to your backup server instead of the original one.
+     * Given backupUrl replaces the original one.
+     */
+    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
+        return DisplayService.retry(delay, reason, backupUrl)
+    }
+
 
     fun toggleScreenOrientation() {
         if (context is Activity) {

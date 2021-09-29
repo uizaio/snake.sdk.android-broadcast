@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.FrameLayout
@@ -429,5 +428,9 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
         if (context is Activity) {
             UZUtil.toggleScreenOrientation(context as Activity)
         }
+    }
+
+    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
+        return RtpService.retry(delay, reason, backupUrl)
     }
 }

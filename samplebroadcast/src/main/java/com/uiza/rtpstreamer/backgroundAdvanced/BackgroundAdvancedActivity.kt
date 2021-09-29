@@ -71,6 +71,9 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
+
+            //reconnect if needed
+            uzBackgroundView.retry(delay = 1000, reason = reason)
         }
         uzBackgroundView.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"
