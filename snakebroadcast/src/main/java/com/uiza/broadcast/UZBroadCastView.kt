@@ -320,7 +320,7 @@ class UZBroadCastView : FrameLayout,
 
     //    Retries to connect with the given delay. You can pass an optional backupUrl if
 //    you'd like to connect to your backup server instead of the original one. Given backupUrl replaces the original one.
-    fun reTry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
+    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
         return rtmpCamera1?.reTry(delay, reason, backupUrl)
     }
 

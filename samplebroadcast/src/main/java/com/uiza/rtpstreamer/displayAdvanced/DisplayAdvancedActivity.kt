@@ -17,7 +17,16 @@ import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
+import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
 import kotlinx.android.synthetic.main.activity_display_advanced.*
+import kotlinx.android.synthetic.main.activity_display_advanced.bDisableAudio
+import kotlinx.android.synthetic.main.activity_display_advanced.bEnableAudio
+import kotlinx.android.synthetic.main.activity_display_advanced.bScreenRotation
+import kotlinx.android.synthetic.main.activity_display_advanced.bSetting
+import kotlinx.android.synthetic.main.activity_display_advanced.bStartTop
+import kotlinx.android.synthetic.main.activity_display_advanced.etRtpUrl
+import kotlinx.android.synthetic.main.activity_display_advanced.tvSetting
+import kotlinx.android.synthetic.main.activity_display_advanced.tvStatus
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class DisplayAdvancedActivity : AppCompatActivity() {
@@ -79,6 +88,15 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onConnectionFailedRtp reason $reason")
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
+
+            reason?.let {
+                val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
+                if (retrySuccess != true) {
+                    runOnUiThread{
+                        showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
+                    }
+                }
+            }
         }
         uzDisplayBroadCast.onDisconnectRtp = {
             Log.d(logTag, "onDisconnectRtp")

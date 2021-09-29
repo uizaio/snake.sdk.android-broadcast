@@ -26,7 +26,6 @@ import com.uiza.broadcast.CameraSize
 import com.uiza.display.*
 import com.uiza.util.UZConstant
 import org.greenrobot.eventbus.EventBus
-import java.lang.Exception
 
 /**
  * Basic RTMP/RTSP service streaming implementation with camera2
@@ -378,6 +377,12 @@ class RtpService : Service() {
          */
         fun isOnPreview(): Boolean? {
             return camera2Base?.isOnPreview
+        }
+
+        //        Retries to connect with the given delay.
+//        You can pass an optional backupUrl if you'd like to connect to your backup server instead of the original one. Given backupUrl replaces the original one.
+        fun retry(delay: Long, reason: String, backupUrl: String?): Boolean? {
+            return camera2Base?.reTry(delay, reason, backupUrl)
         }
     }
 

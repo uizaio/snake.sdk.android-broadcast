@@ -24,7 +24,13 @@ import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import com.uiza.util.UZPathUtils
+import kotlinx.android.synthetic.main.activity_background_basic.*
 import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
+import kotlinx.android.synthetic.main.activity_broadcast_advanced.bStartTop
+import kotlinx.android.synthetic.main.activity_broadcast_advanced.bSwitchCamera
+import kotlinx.android.synthetic.main.activity_broadcast_advanced.etRtpUrl
+import kotlinx.android.synthetic.main.activity_broadcast_advanced.tvSetting
+import kotlinx.android.synthetic.main.activity_broadcast_advanced.tvStatus
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -68,6 +74,13 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         uzBroadCastView.onConnectionFailedRtmp = { reason ->
             setTextStatus("onConnectionFailedRtmp reason $reason")
             handleUI()
+
+            val retrySuccess = uzBroadCastView.retry(delay = 1000, reason = reason)
+            if (retrySuccess != true) {
+                runOnUiThread {
+                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
+                }
+            }
         }
         uzBroadCastView.onConnectionStartedRtmp = { rtmpUrl ->
             setTextStatus("onConnectionStartedRtmp rtmpUrl $rtmpUrl")

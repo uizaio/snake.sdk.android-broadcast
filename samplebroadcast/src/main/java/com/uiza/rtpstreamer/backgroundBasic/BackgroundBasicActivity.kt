@@ -5,14 +5,25 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.SurfaceHolder
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
+import kotlinx.android.synthetic.main.activity_background_advanced.*
 import kotlinx.android.synthetic.main.activity_background_basic.*
+import kotlinx.android.synthetic.main.activity_background_basic.bStartTop
+import kotlinx.android.synthetic.main.activity_background_basic.bSwitchCamera
+import kotlinx.android.synthetic.main.activity_background_basic.etRtpUrl
+import kotlinx.android.synthetic.main.activity_background_basic.tvSetting
+import kotlinx.android.synthetic.main.activity_background_basic.tvStatus
+import kotlinx.android.synthetic.main.activity_background_basic.uzBackgroundView
 
 class BackgroundBasicActivity : AppCompatActivity() {
+    private fun showToast(msg: String?) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
 
     private val logTag = javaClass.simpleName
     private var videoWidth = UZConstant.VIDEO_WIDTH_DEFAULT
@@ -60,6 +71,14 @@ class BackgroundBasicActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
+
+            //reconnect if needed
+            val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
+            if (retrySuccess != true) {
+                runOnUiThread {
+                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
+                }
+            }
         }
         uzBackgroundView.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"

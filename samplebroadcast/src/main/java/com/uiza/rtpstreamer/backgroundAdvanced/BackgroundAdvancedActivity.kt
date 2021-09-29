@@ -16,6 +16,12 @@ import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import kotlinx.android.synthetic.main.activity_background_advanced.*
+import kotlinx.android.synthetic.main.activity_background_advanced.bStartTop
+import kotlinx.android.synthetic.main.activity_background_advanced.bSwitchCamera
+import kotlinx.android.synthetic.main.activity_background_advanced.etRtpUrl
+import kotlinx.android.synthetic.main.activity_background_advanced.tvSetting
+import kotlinx.android.synthetic.main.activity_background_advanced.tvStatus
+import kotlinx.android.synthetic.main.activity_broadcast_basic.*
 
 class BackgroundAdvancedActivity : AppCompatActivity() {
 
@@ -71,6 +77,14 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
+
+            //reconnect if needed
+            val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
+            if (retrySuccess != true) {
+                runOnUiThread {
+                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
+                }
+            }
         }
         uzBackgroundView.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"
