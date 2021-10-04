@@ -94,7 +94,7 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
      */
     private fun initNotification() {
         val notificationBuilder = Notification.Builder(context)
-            .setSmallIcon(R.drawable.notification_anim)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(context.getString(R.string.streaming))
             .setContentText(context.getString(R.string.display_mode_stream))
             .setTicker(context.getString(R.string.stream_in_progress))
