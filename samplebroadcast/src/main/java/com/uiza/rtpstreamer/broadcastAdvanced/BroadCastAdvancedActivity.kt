@@ -19,6 +19,7 @@ import com.pedro.encoder.input.gl.render.filters.`object`.TextObjectFilterRender
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.encoder.utils.gl.TranslateTo
+import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
@@ -36,6 +37,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BroadCastAdvancedActivity : AppCompatActivity() {
     private val logTag = javaClass.simpleName
@@ -51,6 +53,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
+
+    //Adaptative video bitrate
+    private var bitrateAdapter: BitrateAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,13 +93,23 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onConnectionSuccessRtmp = {
             setTextStatus("onConnectionSuccessRtmp")
+
+            bitrateAdapter = BitrateAdapter { bitrate ->
+                uzBroadCastView.setVideoBitrateOnFly(bitrate)
+            }
+            uzBroadCastView.getBitrate()?.let { br ->
+                bitrateAdapter?.setMaxBitrate(br)
+            }
         }
+
         uzBroadCastView.onDisconnectRtmp = {
             setTextStatus("onDisconnectRtmp")
             handleUI()
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
+
+            bitrateAdapter?.adaptBitrate(bitrate)
         }
         uzBroadCastView.onSurfaceChanged =
             { _: SurfaceHolder, _: Int, _: Int, _: Int ->
@@ -724,12 +739,12 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         runOnUiThread {
             if (uzBroadCastView.isStreaming()) {
                 bStartTop.setText(R.string.stop_button)
-                bDisableAudio.visibility=View.VISIBLE
-                bEnableAudio.visibility=View.VISIBLE
+                bDisableAudio.visibility = View.VISIBLE
+                bEnableAudio.visibility = View.VISIBLE
             } else {
                 bStartTop.setText(R.string.start_button)
-                bDisableAudio.visibility=View.GONE
-                bEnableAudio.visibility=View.GONE
+                bDisableAudio.visibility = View.GONE
+                bEnableAudio.visibility = View.GONE
             }
         }
     }
