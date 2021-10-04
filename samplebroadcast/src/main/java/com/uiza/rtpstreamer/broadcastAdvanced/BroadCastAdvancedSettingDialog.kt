@@ -95,9 +95,7 @@ class BroadCastAdvancedSettingDialog(
 
     private fun handleBtGetBestSetting() {
         val bestCameraSize = UZUtil.getBestCameraSize(resolutionCamera)
-        bestCameraSize?.let {
-            setSelectionSpinnerResolutionCamera(w = it.width, h = it.height)
-        }
+        setSelectionSpinnerResolutionCamera(w = bestCameraSize.width, h = bestCameraSize.height)
         etVideoFps.setText("60")
         etVideoBitrate.setText("5000")
         etAudioBitrate.setText("${UZConstant.AUDIO_BITRATE_256}")
