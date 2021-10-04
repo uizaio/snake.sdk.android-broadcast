@@ -144,7 +144,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             }
         })
         uzBroadCastView.setFpsListener { fps ->
-            runOnUiThread {
+            tvFps.post {
                 tvFps.text = "$fps FPS"
             }
         }
@@ -684,7 +684,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     }
 
     private fun setTextStatus(msg: String) {
-        runOnUiThread { tvStatus.text = msg }
+        tvStatus.post {
+            tvStatus.text = msg
+        }
     }
 
     @SuppressLint("SetTextI18n")
