@@ -43,7 +43,7 @@ class UZUtil {
             return Resources.getSystem().displayMetrics.heightPixels
         }
 
-        fun getBestCameraSize(resolutionCamera: List<CameraSize>): CameraSize? {
+        fun getBestCameraSize(resolutionCamera: List<CameraSize>): CameraSize {
             var cameraSize = CameraSize(
                 UZConstant.VIDEO_WIDTH_DEFAULT,
                 UZConstant.VIDEO_HEIGHT_DEFAULT
