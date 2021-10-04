@@ -10,18 +10,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
+import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import kotlinx.android.synthetic.main.activity_background_advanced.*
-import kotlinx.android.synthetic.main.activity_background_advanced.bStartTop
-import kotlinx.android.synthetic.main.activity_background_advanced.bSwitchCamera
-import kotlinx.android.synthetic.main.activity_background_advanced.etRtpUrl
-import kotlinx.android.synthetic.main.activity_background_advanced.tvSetting
-import kotlinx.android.synthetic.main.activity_background_advanced.tvStatus
-import kotlinx.android.synthetic.main.activity_broadcast_basic.*
 
 class BackgroundAdvancedActivity : AppCompatActivity() {
 
@@ -35,6 +30,9 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
+
+    //Adaptative video bitrate
+    private var bitrateAdapter: BitrateAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,9 +68,17 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionSuccessRtp = {
             tvStatus.text = "onConnectionSuccessRtp"
             handleUI()
+
+            bitrateAdapter = BitrateAdapter { bitrate ->
+                uzBackgroundView.setVideoBitrateOnFly(bitrate)
+            }
+            uzBackgroundView.getBitrate()?.let { br ->
+                bitrateAdapter?.setMaxBitrate(br)
+            }
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            bitrateAdapter?.adaptBitrate(bitrate)
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
