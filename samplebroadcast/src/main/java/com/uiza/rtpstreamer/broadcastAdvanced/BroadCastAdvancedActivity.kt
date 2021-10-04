@@ -56,6 +56,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
 
     //Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
+    private var resumeBroadcasting = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         folder = UZPathUtils.getRecordPath(this)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupViews()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        resumeBroadcasting = true
     }
 
     @SuppressLint("SetTextI18n")
@@ -108,12 +114,17 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
-
             bitrateAdapter?.adaptBitrate(bitrate)
         }
         uzBroadCastView.onSurfaceChanged =
             { _: SurfaceHolder, _: Int, _: Int, _: Int ->
                 startPreview(true)
+
+                //resume broadcasting after onPause
+                if (resumeBroadcasting) {
+                    resumeBroadcasting = false
+                    bStartTop.performClick()
+                }
             }
         uzBroadCastView.onSurfaceDestroyed = { _: SurfaceHolder ->
             if (uzBroadCastView.isRecording()) {
