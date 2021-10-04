@@ -37,6 +37,9 @@ dependencies {
     api 'org.greenrobot:eventbus:3.2.0'
     //https://github.com/pedroSG94/rtmp-rtsp-stream-client-java
     api 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:2.1.2'
+
+    //https://github.com/bertrandmartel/speed-test-lib
+//    implementation 'fr.bmartel:jspeedtest:1.32.1'
 }
 repositories {
     mavenCentral()

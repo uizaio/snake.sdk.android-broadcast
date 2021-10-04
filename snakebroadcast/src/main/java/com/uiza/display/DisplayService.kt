@@ -149,7 +149,11 @@ class DisplayService : Service() {
         private fun showNotification(text: String) {
             contextApp?.let {
                 val notification = NotificationCompat.Builder(it, channelId)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_noti_white)
+//                    .setLargeIcon(
+//                        BitmapFactory.decodeResource(
+//                            it.resources,
+//                        R.mipmap.ic_launcher_noti))
                     .setContentTitle(it.getString(R.string.rtp_display_stream))
                     .setContentText(text).build()
                 notificationManager?.notify(notifyId, notification)
