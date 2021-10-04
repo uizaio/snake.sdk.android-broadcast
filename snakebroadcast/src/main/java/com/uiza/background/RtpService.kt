@@ -173,7 +173,7 @@ class RtpService : Service() {
         private fun showNotification(text: String) {
             contextApp?.let {
                 val notification = NotificationCompat.Builder(it, channelId)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_noti_white)
                     .setContentTitle(it.getString(R.string.rtp_stream))
                     .setContentText(text).build()
                 notificationManager?.notify(notifyId, notification)
