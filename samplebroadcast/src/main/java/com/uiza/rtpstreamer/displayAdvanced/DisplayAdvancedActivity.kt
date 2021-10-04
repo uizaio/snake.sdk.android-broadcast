@@ -12,21 +12,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
 import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
-import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
 import kotlinx.android.synthetic.main.activity_display_advanced.*
-import kotlinx.android.synthetic.main.activity_display_advanced.bDisableAudio
-import kotlinx.android.synthetic.main.activity_display_advanced.bEnableAudio
-import kotlinx.android.synthetic.main.activity_display_advanced.bScreenRotation
-import kotlinx.android.synthetic.main.activity_display_advanced.bSetting
-import kotlinx.android.synthetic.main.activity_display_advanced.bStartTop
-import kotlinx.android.synthetic.main.activity_display_advanced.etRtpUrl
-import kotlinx.android.synthetic.main.activity_display_advanced.tvSetting
-import kotlinx.android.synthetic.main.activity_display_advanced.tvStatus
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class DisplayAdvancedActivity : AppCompatActivity() {
@@ -44,6 +36,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
+
+    //Adaptative video bitrate
+    private var bitrateAdapter: BitrateAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,10 +74,21 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onConnectionSuccessRtp")
             tvStatus.text = "onConnectionSuccessRtp"
             handleUI()
+
+            bitrateAdapter = BitrateAdapter { bitrate ->
+                uzDisplayBroadCast.setVideoBitrateOnFly(bitrate)
+            }
+            uzDisplayBroadCast.getBitrate()?.let { br ->
+                bitrateAdapter?.setMaxBitrate(br)
+            }
         }
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+
+            bitrate?.let{
+                bitrateAdapter?.adaptBitrate(bitrate)
+            }
         }
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
             Log.d(logTag, "onConnectionFailedRtp reason $reason")
@@ -92,7 +98,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             reason?.let {
                 val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
                 if (retrySuccess != true) {
-                    runOnUiThread{
+                    runOnUiThread {
                         showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
                     }
                 }

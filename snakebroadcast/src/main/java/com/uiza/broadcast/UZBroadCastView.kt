@@ -176,6 +176,15 @@ class UZBroadCastView : FrameLayout,
         spriteGestureController.stopListener()
     }
 
+    /**
+     * Set video bitrate of H264 in bits per second while stream.
+     *
+     * @param bitrate H264 in bits per second.
+     */
+    fun setVideoBitrateOnFly(bitrate: Int) {
+        rtmpCamera1?.setVideoBitrateOnFly(bitrate)
+    }
+
     fun isStreaming(): Boolean {
         return rtmpCamera1?.isStreaming ?: false
     }
