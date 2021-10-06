@@ -3,6 +3,7 @@ package com.uiza
 import androidx.multidex.MultiDexApplication
 import com.uiza.util.UZUtil
 
+//TODO adaptive resolution camera
 class UZApplication : MultiDexApplication() {
 
     companion object {

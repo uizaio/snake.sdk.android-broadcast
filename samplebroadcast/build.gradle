@@ -64,7 +64,7 @@ dependencies {
 //    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.1.1'
 
     //for player
-    implementation 'com.github.uizaio:snake.sdk.android-player:1.0.5'
+    implementation 'com.github.uizaio:snake.sdk.android-player:1.0.6'
 }
 repositories {
     mavenCentral()
