@@ -9,20 +9,14 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.uiza.UZApplication
 import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
-import kotlinx.android.synthetic.main.activity_display_advanced.*
 import kotlinx.android.synthetic.main.activity_display_basic.*
-import kotlinx.android.synthetic.main.activity_display_basic.bStartTop
-import kotlinx.android.synthetic.main.activity_display_basic.etRtpUrl
-import kotlinx.android.synthetic.main.activity_display_basic.iv
-import kotlinx.android.synthetic.main.activity_display_basic.tvSetting
-import kotlinx.android.synthetic.main.activity_display_basic.tvStatus
-import kotlinx.android.synthetic.main.activity_display_basic.uzDisplayBroadCast
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class DisplayBasicActivity : AppCompatActivity() {
@@ -81,7 +75,7 @@ class DisplayBasicActivity : AppCompatActivity() {
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
 
-            reason?.let{
+            reason?.let {
                 val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
                 if (retrySuccess != true) {
                     runOnUiThread {
@@ -145,10 +139,17 @@ class DisplayBasicActivity : AppCompatActivity() {
         if (uzDisplayBroadCast.isStreaming() == false) {
             uzDisplayBroadCast.start(this)
         } else {
-            uzDisplayBroadCast.stop()
-        }
-        if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
-            uzDisplayBroadCast.stopNotification()
+            uzDisplayBroadCast.stop(
+                onStopPreExecute = {
+                    bStartTop.isVisible = false
+                },
+                onStopSuccess = {
+                    bStartTop.isVisible = true
+                }
+            )
+            if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
+                uzDisplayBroadCast.stopNotification()
+            }
         }
     }
 
