@@ -2,6 +2,8 @@ package com.uiza.broadcast
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -323,8 +325,20 @@ class UZBroadCastView : FrameLayout,
     }
 
     //Stop stream started with @startStream.
-    fun stopStream() {
-        rtmpCamera1?.stopStream()
+    fun stopStream(
+        delayStopStreamInMls: Long = UZConstant.DELAY_STOP_STREAM_IN_MLS,
+        onStopPreExecute: ((Unit) -> Unit),
+        onStopSuccess: ((Boolean) -> Unit)
+    ) {
+        onStopPreExecute.invoke(Unit)
+        Handler(Looper.getMainLooper()).postDelayed({
+            try {
+                rtmpCamera1?.stopStream()
+                onStopSuccess.invoke(true)
+            } catch (e: Exception) {
+                onStopSuccess.invoke(false)
+            }
+        }, delayStopStreamInMls)
     }
 
     //    Retries to connect with the given delay. You can pass an optional backupUrl if

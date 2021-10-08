@@ -6,11 +6,11 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
@@ -86,7 +86,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
 
-            bitrate?.let{
+            bitrate?.let {
                 bitrateAdapter?.adaptBitrate(bitrate)
             }
         }
@@ -244,12 +244,12 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
-            bDisableAudio.visibility = View.VISIBLE
-            bEnableAudio.visibility = View.VISIBLE
+            bDisableAudio.isVisible = true
+            bEnableAudio.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
-            bDisableAudio.visibility = View.GONE
-            bEnableAudio.visibility = View.GONE
+            bDisableAudio.isVisible = false
+            bEnableAudio.isVisible = false
         }
     }
 }

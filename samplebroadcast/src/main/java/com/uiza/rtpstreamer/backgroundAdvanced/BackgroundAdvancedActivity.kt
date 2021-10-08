@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.SurfaceHolder
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.rtplibrary.util.BitrateAdapter
@@ -162,7 +162,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
 
     private fun handleBSetting() {
 
-        fun openSheet(){
+        fun openSheet() {
             val openGlSettingDialog = BroadCastAdvancedSettingDialog(
                 resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
                     uzBackgroundView.getResolutionsFront()
@@ -203,10 +203,10 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                 uzBackgroundView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-                        bStartTop.visibility = View.GONE
+                        bStartTop.isVisible = false
                     },
                     onStopSuccess = {
-                        bStartTop.visibility = View.VISIBLE
+                        bStartTop.isVisible = true
                         uzBackgroundView.stopPreview()
                         startPreview()
                         setTextSetting()
@@ -220,10 +220,10 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.stopStream(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStartTop.visibility = View.GONE
+                bStartTop.isVisible = false
             },
             onStopSuccess = {
-                bStartTop.visibility = View.VISIBLE
+                bStartTop.isVisible = true
                 openSheet()
             }
         )
@@ -233,10 +233,10 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         if (uzBackgroundView.isServiceRunning()) {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.visibility = View.GONE
+                    bStartTop.isVisible = false
                 },
                 onStopSuccess = {
-                    bStartTop.visibility = View.VISIBLE
+                    bStartTop.isVisible = true
                 }
             )
         } else {
@@ -360,13 +360,13 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
 
-            bDisableAudio.visibility = View.VISIBLE
-            bEnableAudio.visibility = View.VISIBLE
+            bDisableAudio.isVisible = true
+            bEnableAudio.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
 
-            bDisableAudio.visibility = View.GONE
-            bEnableAudio.visibility = View.GONE
+            bDisableAudio.isVisible = false
+            bEnableAudio.isVisible = false
         }
     }
 

@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.SurfaceHolder
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
@@ -100,10 +100,10 @@ class BackgroundBasicActivity : AppCompatActivity() {
         if (uzBackgroundView.isServiceRunning()) {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.visibility = View.GONE
+                    bStartTop.isVisible = false
                 },
                 onStopSuccess = {
-                    bStartTop.visibility = View.VISIBLE
+                    bStartTop.isVisible = true
                 },
             )
         } else {
@@ -141,10 +141,10 @@ class BackgroundBasicActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
-            bSwitchCamera.visibility = View.VISIBLE
+            bSwitchCamera.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
-            bSwitchCamera.visibility = View.GONE
+            bSwitchCamera.isVisible = false
         }
     }
 

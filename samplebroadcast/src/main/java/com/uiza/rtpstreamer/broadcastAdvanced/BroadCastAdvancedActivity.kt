@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.pedro.encoder.input.gl.render.filters.*
 import com.pedro.encoder.input.gl.render.filters.`object`.GifObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.ImageObjectFilterRender
@@ -25,13 +26,7 @@ import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import com.uiza.util.UZPathUtils
-import kotlinx.android.synthetic.main.activity_background_basic.*
 import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
-import kotlinx.android.synthetic.main.activity_broadcast_advanced.bStartTop
-import kotlinx.android.synthetic.main.activity_broadcast_advanced.bSwitchCamera
-import kotlinx.android.synthetic.main.activity_broadcast_advanced.etRtpUrl
-import kotlinx.android.synthetic.main.activity_broadcast_advanced.tvSetting
-import kotlinx.android.synthetic.main.activity_broadcast_advanced.tvStatus
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -494,64 +489,82 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             button1 = getString(R.string.confirm),
             button2 = getString(R.string.cancel),
             onClickButton1 = {
-                uzBroadCastView.stopStream()
-                stopPreview()
-                uzBroadCastView.toggleScreenOrientation()
-                reset()
+                uzBroadCastView.stopStream(
+                    delayStopStreamInMls = 100,
+                    onStopPreExecute = {
+                        bStartTop.isVisible = false
+                    },
+                    onStopSuccess = {
+                        bStartTop.isVisible = true
+                        stopPreview()
+                        uzBroadCastView.toggleScreenOrientation()
+                        reset()
+                    }
+                )
             },
             onClickButton2 = null,
         )
     }
 
     private fun handleBSetting() {
+        fun openSheet() {
+            val openGlSettingDialog = BroadCastAdvancedSettingDialog(
+                resolutionCamera = if (uzBroadCastView.isFrontCamera()) {
+                    uzBroadCastView.getResolutionsFront()
+                } else {
+                    uzBroadCastView.getResolutionsBack()
+                },
+                videoWidth = videoWidth,
+                videoHeight = videoHeight,
+                videoFps = videoFps,
+                videoBitrate = videoBitrate,
+                audioBitrate = audioBitrate,
+                audioSampleRate = audioSampleRate,
+                audioIsStereo = audioIsStereo,
+                audioEchoCanceler = audioEchoCanceler,
+                audioNoiseSuppressor = audioNoiseSuppressor,
+            )
+            openGlSettingDialog.onOk = {
+                    videoWidth: Int,
+                    videoHeight: Int,
+                    videoFps: Int,
+                    videoBitrate: Int,
+                    audioBitrate: Int,
+                    audioSampleRate: Int,
+                    audioIsStereo: Boolean,
+                    audioEchoCanceler: Boolean,
+                    audioNoiseSuppressor: Boolean,
+                ->
+                this.videoWidth = videoWidth
+                this.videoHeight = videoHeight
+                this.videoFps = videoFps
+                this.videoBitrate = videoBitrate
+                this.audioBitrate = audioBitrate
+                this.audioSampleRate = audioSampleRate
+                this.audioIsStereo = audioIsStereo
+                this.audioEchoCanceler = audioEchoCanceler
+                this.audioNoiseSuppressor = audioNoiseSuppressor
+
+                stopPreview()
+                startPreview(false)
+                setTextSetting()
+            }
+            openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
+        }
+
         //stop streaming if exist
         if (uzBroadCastView.isStreaming()) {
-            uzBroadCastView.stopStream()
+            uzBroadCastView.stopStream(
+                delayStopStreamInMls = 100,
+                onStopPreExecute = {
+                    bStartTop.isVisible = false
+                },
+                onStopSuccess = {
+                    bStartTop.isVisible = true
+                    openSheet()
+                }
+            )
         }
-
-        //setting screen
-        val openGlSettingDialog = BroadCastAdvancedSettingDialog(
-            resolutionCamera = if (uzBroadCastView.isFrontCamera()) {
-                uzBroadCastView.getResolutionsFront()
-            } else {
-                uzBroadCastView.getResolutionsBack()
-            },
-            videoWidth = videoWidth,
-            videoHeight = videoHeight,
-            videoFps = videoFps,
-            videoBitrate = videoBitrate,
-            audioBitrate = audioBitrate,
-            audioSampleRate = audioSampleRate,
-            audioIsStereo = audioIsStereo,
-            audioEchoCanceler = audioEchoCanceler,
-            audioNoiseSuppressor = audioNoiseSuppressor,
-        )
-        openGlSettingDialog.onOk = {
-                videoWidth: Int,
-                videoHeight: Int,
-                videoFps: Int,
-                videoBitrate: Int,
-                audioBitrate: Int,
-                audioSampleRate: Int,
-                audioIsStereo: Boolean,
-                audioEchoCanceler: Boolean,
-                audioNoiseSuppressor: Boolean,
-            ->
-            this.videoWidth = videoWidth
-            this.videoHeight = videoHeight
-            this.videoFps = videoFps
-            this.videoBitrate = videoBitrate
-            this.audioBitrate = audioBitrate
-            this.audioSampleRate = audioSampleRate
-            this.audioIsStereo = audioIsStereo
-            this.audioEchoCanceler = audioEchoCanceler
-            this.audioNoiseSuppressor = audioNoiseSuppressor
-
-            stopPreview()
-            startPreview(false)
-            setTextSetting()
-        }
-        openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
     }
 
     private fun handleBStartTop() {
@@ -562,7 +575,14 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 showToast("Error preparing stream, This device cant do it")
             }
         } else {
-            uzBroadCastView.stopStream()
+            uzBroadCastView.stopStream(
+                onStopPreExecute = {
+                    bStartTop.isVisible = false
+                },
+                onStopSuccess = {
+                    bStartTop.isVisible = true
+                }
+            )
         }
     }
 
@@ -752,12 +772,12 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         runOnUiThread {
             if (uzBroadCastView.isStreaming()) {
                 bStartTop.setText(R.string.stop_button)
-                bDisableAudio.visibility = View.VISIBLE
-                bEnableAudio.visibility = View.VISIBLE
+                bDisableAudio.isVisible = true
+                bEnableAudio.isVisible = true
             } else {
                 bStartTop.setText(R.string.start_button)
-                bDisableAudio.visibility = View.GONE
-                bEnableAudio.visibility = View.GONE
+                bDisableAudio.isVisible = false
+                bEnableAudio.isVisible = false
             }
         }
     }
