@@ -561,10 +561,10 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
-                    openSheet()
                 }
             )
         }
+        openSheet()
     }
 
     private fun handleBStartTop() {
