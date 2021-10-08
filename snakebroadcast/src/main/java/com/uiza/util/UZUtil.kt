@@ -95,6 +95,13 @@ class UZUtil {
             return cameraSize
         }
 
+        fun getBestDisplaySize(): CameraSize {
+            return CameraSize(
+                getScreenWidth(),
+                getScreenHeight()
+            )
+        }
+
         @JvmStatic
         fun toggleScreenOrientation(activity: Activity) {
             val s = getScreenOrientation(activity)

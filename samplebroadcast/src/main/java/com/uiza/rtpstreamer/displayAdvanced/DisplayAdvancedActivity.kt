@@ -215,10 +215,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                 bStartTop.isVisible = false
             },
             onStopSuccess = {
-                bStartTop.isVisible = false
-                openSheet()
+                bStartTop.isVisible = true
             }
         )
+        openSheet()
     }
 
     @SuppressLint("SetTextI18n")
