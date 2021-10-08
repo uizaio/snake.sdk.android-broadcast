@@ -74,6 +74,10 @@ class BroadCastAdvancedSettingDialog(
         switchAudioEchoCanceler.isChecked = audioEchoCanceler
         switchAudioNoiseSuppressor.isChecked = audioNoiseSuppressor
 
+        btGetStableResolutionCamera.setOnClickListener {
+            handleBtGetStableResolutionCamera()
+        }
+
         btGetBestSetting.setOnClickListener {
             handleBtGetBestSetting()
         }
@@ -91,6 +95,11 @@ class BroadCastAdvancedSettingDialog(
             }
         }
         spinnerResolutionCamera.setSelection(indexBack)
+    }
+
+    private fun handleBtGetStableResolutionCamera() {
+        val bestCameraSize = UZUtil.getStableCameraSize(resolutionCamera)
+        setSelectionSpinnerResolutionCamera(w = bestCameraSize.width, h = bestCameraSize.height)
     }
 
     private fun handleBtGetBestSetting() {

@@ -43,6 +43,45 @@ class UZUtil {
             return Resources.getSystem().displayMetrics.heightPixels
         }
 
+        fun getStableCameraSize(resolutionCamera: List<CameraSize>): CameraSize {
+
+            //1280x960
+            val list1280Width = resolutionCamera.filter {
+                it.width == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_1280
+            }.sortedBy { it.height }
+            if (list1280Width.isNotEmpty()) {
+                return list1280Width.last()
+            }
+
+            val list1280Height = resolutionCamera.filter {
+                it.height == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_1280
+            }.sortedBy { it.width }
+            if (list1280Height.isNotEmpty()) {
+                return list1280Height.last()
+            }
+
+            //720x480
+            val list720Width = resolutionCamera.filter {
+                it.width == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_720
+            }.sortedBy { it.height }
+            if (list720Width.isNotEmpty()) {
+                return list720Width.last()
+            }
+
+            //1640x720
+            val list720Height = resolutionCamera.filter {
+                it.height == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_720
+            }.sortedBy { it.width }
+            if (list720Height.isNotEmpty()) {
+                return list720Height.last()
+            }
+
+            return CameraSize(
+                UZConstant.VIDEO_WIDTH_DEFAULT,
+                UZConstant.VIDEO_HEIGHT_DEFAULT
+            )
+        }
+
         fun getBestCameraSize(resolutionCamera: List<CameraSize>): CameraSize {
             var cameraSize = CameraSize(
                 UZConstant.VIDEO_WIDTH_DEFAULT,

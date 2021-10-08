@@ -109,4 +109,5 @@
     <string name="warning">Warning</string>
     <string name="live_background_msg">When livestreaming in background mode, you only start by back camera by default</string>
     <string name="flash_light_background_msg">The flashlight will be disable automatically when the camera preview is lost focus</string>
+    <string name="get_stable_resolution_camera">Get stable resolution camera</string>
 </resources>
