@@ -37,4 +37,5 @@ object UZConstant {
     const val VIDEO_ROTATION_270 = 270
 
     const val RES_1920 = 1920
+    const val DELAY_STOP_STREAM_IN_MLS = 2000L
 }

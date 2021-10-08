@@ -11,14 +11,7 @@ import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
-import kotlinx.android.synthetic.main.activity_background_advanced.*
 import kotlinx.android.synthetic.main.activity_background_basic.*
-import kotlinx.android.synthetic.main.activity_background_basic.bStartTop
-import kotlinx.android.synthetic.main.activity_background_basic.bSwitchCamera
-import kotlinx.android.synthetic.main.activity_background_basic.etRtpUrl
-import kotlinx.android.synthetic.main.activity_background_basic.tvSetting
-import kotlinx.android.synthetic.main.activity_background_basic.tvStatus
-import kotlinx.android.synthetic.main.activity_background_basic.uzBackgroundView
 
 class BackgroundBasicActivity : AppCompatActivity() {
     private fun showToast(msg: String?) {
@@ -55,7 +48,7 @@ class BackgroundBasicActivity : AppCompatActivity() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
         setTextSetting()
 
-        uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, width: Int, height: Int ->
+        uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, _: Int, _: Int ->
             startPreview()
         }
         uzBackgroundView.onConnectionStartedRtp = { rtpUrl ->
@@ -105,7 +98,14 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     private fun handleBStartTop() {
         if (uzBackgroundView.isServiceRunning()) {
-            uzBackgroundView.stopStream()
+            uzBackgroundView.stopStream(
+                onStopPreExecute = {
+                    bStartTop.visibility = View.GONE
+                },
+                onStopSuccess = {
+                    bStartTop.visibility = View.VISIBLE
+                },
+            )
         } else {
             UZDialogUtil.showDialog1(
                 context = this,

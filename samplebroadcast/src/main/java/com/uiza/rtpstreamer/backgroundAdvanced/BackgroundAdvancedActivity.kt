@@ -161,58 +161,84 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     }
 
     private fun handleBSetting() {
-        //stop streaming if exist
-        uzBackgroundView.stopStream()
 
-        //setting screen
-        val openGlSettingDialog = BroadCastAdvancedSettingDialog(
-            resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
-                uzBackgroundView.getResolutionsFront()
-            } else {
-                uzBackgroundView.getResolutionsBack()
-            },
-            videoWidth = videoWidth,
-            videoHeight = videoHeight,
-            videoFps = videoFps,
-            videoBitrate = videoBitrate,
-            audioBitrate = audioBitrate,
-            audioSampleRate = audioSampleRate,
-            audioIsStereo = audioIsStereo,
-            audioEchoCanceler = audioEchoCanceler,
-            audioNoiseSuppressor = audioNoiseSuppressor,
-        )
-        openGlSettingDialog.onOk = {
-                videoWidth: Int,
-                videoHeight: Int,
-                videoFps: Int,
-                videoBitrate: Int,
-                audioBitrate: Int,
-                audioSampleRate: Int,
-                audioIsStereo: Boolean,
-                audioEchoCanceler: Boolean,
-                audioNoiseSuppressor: Boolean,
-            ->
-            this.videoWidth = videoWidth
-            this.videoHeight = videoHeight
-            this.videoFps = videoFps
-            this.videoBitrate = videoBitrate
-            this.audioBitrate = audioBitrate
-            this.audioSampleRate = audioSampleRate
-            this.audioIsStereo = audioIsStereo
-            this.audioEchoCanceler = audioEchoCanceler
-            this.audioNoiseSuppressor = audioNoiseSuppressor
+        fun openSheet(){
+            val openGlSettingDialog = BroadCastAdvancedSettingDialog(
+                resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
+                    uzBackgroundView.getResolutionsFront()
+                } else {
+                    uzBackgroundView.getResolutionsBack()
+                },
+                videoWidth = videoWidth,
+                videoHeight = videoHeight,
+                videoFps = videoFps,
+                videoBitrate = videoBitrate,
+                audioBitrate = audioBitrate,
+                audioSampleRate = audioSampleRate,
+                audioIsStereo = audioIsStereo,
+                audioEchoCanceler = audioEchoCanceler,
+                audioNoiseSuppressor = audioNoiseSuppressor,
+            )
+            openGlSettingDialog.onOk = {
+                    videoWidth: Int,
+                    videoHeight: Int,
+                    videoFps: Int,
+                    videoBitrate: Int,
+                    audioBitrate: Int,
+                    audioSampleRate: Int,
+                    audioIsStereo: Boolean,
+                    audioEchoCanceler: Boolean,
+                    audioNoiseSuppressor: Boolean,
+                ->
+                this.videoWidth = videoWidth
+                this.videoHeight = videoHeight
+                this.videoFps = videoFps
+                this.videoBitrate = videoBitrate
+                this.audioBitrate = audioBitrate
+                this.audioSampleRate = audioSampleRate
+                this.audioIsStereo = audioIsStereo
+                this.audioEchoCanceler = audioEchoCanceler
+                this.audioNoiseSuppressor = audioNoiseSuppressor
 
-            uzBackgroundView.stopStream()
-            uzBackgroundView.stopPreview()
-            startPreview()
-            setTextSetting()
+                uzBackgroundView.stopStream(
+                    delayStopStreamInMls = 100,
+                    onStopPreExecute = {
+                        bStartTop.visibility = View.GONE
+                    },
+                    onStopSuccess = {
+                        bStartTop.visibility = View.VISIBLE
+                        uzBackgroundView.stopPreview()
+                        startPreview()
+                        setTextSetting()
+                    }
+                )
+            }
+            openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
         }
-        openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
+
+        //stop streaming if exist
+        uzBackgroundView.stopStream(
+            delayStopStreamInMls = 100,
+            onStopPreExecute = {
+                bStartTop.visibility = View.GONE
+            },
+            onStopSuccess = {
+                bStartTop.visibility = View.VISIBLE
+                openSheet()
+            }
+        )
     }
 
     private fun handleBStartTop() {
         if (uzBackgroundView.isServiceRunning()) {
-            uzBackgroundView.stopStream()
+            uzBackgroundView.stopStream(
+                onStopPreExecute = {
+                    bStartTop.visibility = View.GONE
+                },
+                onStopSuccess = {
+                    bStartTop.visibility = View.VISIBLE
+                }
+            )
         } else {
             UZDialogUtil.showDialog1(
                 context = this,
