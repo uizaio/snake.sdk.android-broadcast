@@ -142,9 +142,11 @@ class DisplayBasicActivity : AppCompatActivity() {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
                     bStartTop.isVisible = false
+                    progressBar.isVisible = true
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
+                    progressBar.isVisible = false
                 }
             )
             if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
