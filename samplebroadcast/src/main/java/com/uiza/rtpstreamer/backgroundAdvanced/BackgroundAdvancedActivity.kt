@@ -51,7 +51,6 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
-        setTextSetting()
         uzBackgroundView.onSurfaceCreated = {
             Log.d(logTag, "surfaceCreated")
         }
@@ -163,7 +162,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun handleBSetting() {
 
         fun openSheet() {
-            val openGlSettingDialog = BroadCastAdvancedSettingDialog(
+            val dialog = BroadCastAdvancedSettingDialog(
                 resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
                     uzBackgroundView.getResolutionsFront()
                 } else {
@@ -179,7 +178,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                 audioEchoCanceler = audioEchoCanceler,
                 audioNoiseSuppressor = audioNoiseSuppressor,
             )
-            openGlSettingDialog.onOk = {
+            dialog.onOk = {
                     videoWidth: Int,
                     videoHeight: Int,
                     videoFps: Int,
@@ -213,7 +212,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                     }
                 )
             }
-            openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
+            dialog.show(supportFragmentManager, dialog.tag)
         }
 
         //stop streaming if exist
@@ -379,9 +378,18 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     }
 
     private fun startPreview() {
+        //Option 1: in case you want to customize width, height
         uzBackgroundView.startPreview(
             videoWidth = videoWidth,
             videoHeight = videoHeight,
         )
+
+        //Option 2: in case you want to SDK choose the width, height automatically
+//        val cameraSize = uzBackgroundView.getStableCameraSize()
+//        videoWidth = cameraSize.width
+//        videoHeight = cameraSize.height
+//        uzBackgroundView.startPreview()
+
+        setTextSetting()
     }
 }

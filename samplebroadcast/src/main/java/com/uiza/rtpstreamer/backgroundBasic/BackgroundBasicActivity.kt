@@ -46,7 +46,6 @@ class BackgroundBasicActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
-        setTextSetting()
 
         uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, _: Int, _: Int ->
             startPreview()
@@ -157,9 +156,18 @@ class BackgroundBasicActivity : AppCompatActivity() {
     }
 
     private fun startPreview() {
+        //Option 1: in case you want to customize width, height
         uzBackgroundView.startPreview(
             videoWidth = videoWidth,
             videoHeight = videoHeight,
         )
+
+        //Option 2: in case you want to SDK choose the width, height automatically
+//        val cameraSize = uzBackgroundView.getStableCameraSize()
+//        videoWidth = cameraSize.width
+//        videoHeight = cameraSize.height
+//        uzBackgroundView.startPreview()
+
+        setTextSetting()
     }
 }

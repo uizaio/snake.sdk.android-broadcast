@@ -1,5 +1,6 @@
 package com.uiza.rtpstreamer.broadcastAdvanced
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -98,13 +99,14 @@ class BroadCastAdvancedSettingDialog(
     }
 
     private fun handleBtGetStableResolutionCamera() {
-        val bestCameraSize = UZUtil.getStableCameraSize(resolutionCamera)
-        setSelectionSpinnerResolutionCamera(w = bestCameraSize.width, h = bestCameraSize.height)
+        val cameraSize = UZUtil.getStableCameraSize(resolutionCamera)
+        setSelectionSpinnerResolutionCamera(w = cameraSize.width, h = cameraSize.height)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun handleBtGetBestSetting() {
-        val bestCameraSize = UZUtil.getBestCameraSize(resolutionCamera)
-        setSelectionSpinnerResolutionCamera(w = bestCameraSize.width, h = bestCameraSize.height)
+        val cameraSize = UZUtil.getBestCameraSize(resolutionCamera)
+        setSelectionSpinnerResolutionCamera(w = cameraSize.width, h = cameraSize.height)
         etVideoFps.setText("60")
         etVideoBitrate.setText("5000")
         etAudioBitrate.setText("${UZConstant.AUDIO_BITRATE_256}")

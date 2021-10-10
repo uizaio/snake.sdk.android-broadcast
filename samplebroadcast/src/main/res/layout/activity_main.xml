@@ -30,21 +30,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="@string/broadcast_basic" />
+            android:text="BroadCastBasicActivity" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bBroadcastBackgroundBasic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="@string/broadcast_background_basic" />
+            android:text="BackgroundBasicActivity" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bDisplayBasic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="@string/display_basic" />
+            android:text="DisplayBasicActivity" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -59,21 +59,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="@string/broadcast_advanced" />
+            android:text="BroadCastAdvancedActivity" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bBroadcastBackgroundAdvanced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="@string/broadcast_background_advanced" />
+            android:text="BackgroundAdvancedActivity" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bDisplayAdvanced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="@string/display_advanced" />
+            android:text="DisplayAdvancedActivity" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -88,6 +88,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="Player" />
+            android:text="PlayerBasicActivity" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
