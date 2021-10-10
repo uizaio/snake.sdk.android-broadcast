@@ -492,9 +492,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
                         bStartTop.isVisible = false
+                        progressBar.isVisible = true
                     },
                     onStopSuccess = {
                         bStartTop.isVisible = true
+                        progressBar.isVisible = false
                         stopPreview()
                         uzBroadCastView.toggleScreenOrientation()
                         reset()
@@ -557,9 +559,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 delayStopStreamInMls = 100,
                 onStopPreExecute = {
                     bStartTop.isVisible = false
+                    progressBar.isVisible = true
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
+                    progressBar.isVisible = false
                 }
             )
         }
@@ -577,9 +581,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
                     bStartTop.isVisible = false
+                    progressBar.isVisible = true
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
+                    progressBar.isVisible = false
                 }
             )
         }
