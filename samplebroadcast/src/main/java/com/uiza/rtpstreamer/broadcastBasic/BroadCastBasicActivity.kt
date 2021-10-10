@@ -48,7 +48,6 @@ class BroadCastBasicActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
-        setTextSetting()
         uzBroadCastView.onConnectionFailedRtmp = { reason ->
             Log.e(logTag, "onConnectionFailedRtmp reason ${System.nanoTime()}")
             setTextStatus("onConnectionFailedRtmp reason $reason")
@@ -154,12 +153,25 @@ class BroadCastBasicActivity : AppCompatActivity() {
 
     private fun startPreview() {
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
+
+        //Option 1: in case you want to customize width, height
         uzBroadCastView.startPreview(
             cameraFacing = CameraHelper.Facing.FRONT,
             width = videoWidth,
             height = videoHeight,
             rotation = CameraHelper.getCameraOrientation(this)
         )
+
+        //Option 2: in case you want to SDK choose the width, height automatically
+//        val cameraSize = uzBroadCastView.getStableCameraSize()
+//        videoWidth = cameraSize.width
+//        videoHeight = cameraSize.height
+//        uzBroadCastView.startPreview(
+//            cameraFacing = CameraHelper.Facing.FRONT,
+//            rotation = CameraHelper.getCameraOrientation(this),
+//        )
+
+        setTextSetting()
     }
 
     private fun prepareAudio(): Boolean {

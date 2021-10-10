@@ -223,13 +223,35 @@ class UZBroadCastView : FrameLayout,
         height: Int,
         rotation: Int,
     ) {
-        Log.d(logTag, "startPreview width $width, height $height")
+//        Log.d(logTag, "startPreview width $width, height $height")
         rtmpCamera1?.startPreview(
             cameraFacing,
             width,
             height,
             rotation,
         )
+    }
+
+    fun startPreview(
+        cameraFacing: CameraHelper.Facing,
+        rotation: Int,
+    ) {
+        val cameraSize = getStableCameraSize()
+        startPreview(
+            cameraFacing,
+            cameraSize.width,
+            cameraSize.height,
+            rotation,
+        )
+    }
+
+    fun getStableCameraSize(): CameraSize {
+        val resolutionCamera = if (isFrontCamera()) {
+            getResolutionsFront()
+        } else {
+            getResolutionsBack()
+        }
+        return UZUtil.getStableCameraSize(resolutionCamera)
     }
 
     fun stopPreview() {

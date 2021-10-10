@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.FrameLayout
@@ -125,9 +124,7 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
         } else {
             getResolutionsBack()
         }
-        val cameraSize = UZUtil.getStableCameraSize(resolutionCamera)
-        Log.d("loitpp", "startPreview cameraSize $cameraSize")
-        return cameraSize
+        return UZUtil.getStableCameraSize(resolutionCamera)
     }
 
     //Stop camera preview. Ignored if streaming or already stopped. You need call it after
