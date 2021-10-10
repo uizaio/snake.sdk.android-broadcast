@@ -100,9 +100,11 @@ class BackgroundBasicActivity : AppCompatActivity() {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
                     bStartTop.isVisible = false
+                    progressBar.isVisible = true
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
+                    progressBar.isVisible = false
                 },
             )
         } else {
