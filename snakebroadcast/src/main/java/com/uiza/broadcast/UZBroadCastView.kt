@@ -330,6 +330,10 @@ class UZBroadCastView : FrameLayout,
         onStopPreExecute: ((Unit) -> Unit),
         onStopSuccess: ((Boolean) -> Unit)
     ) {
+        if (delayStopStreamInMls <= 0) {
+            throw IllegalArgumentException("Invalid value for parameter delayStopStreamInMls")
+        }
+
         onStopPreExecute.invoke(Unit)
         Handler(Looper.getMainLooper()).postDelayed({
             try {
