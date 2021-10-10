@@ -203,9 +203,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
                         bStartTop.isVisible = false
+                        progressBar.isVisible = true
                     },
                     onStopSuccess = {
                         bStartTop.isVisible = true
+                        progressBar.isVisible = false
                         uzBackgroundView.stopPreview()
                         startPreview()
                         setTextSetting()
@@ -220,9 +222,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             delayStopStreamInMls = 100,
             onStopPreExecute = {
                 bStartTop.isVisible = false
+                progressBar.isVisible = true
             },
             onStopSuccess = {
                 bStartTop.isVisible = true
+                progressBar.isVisible = false
                 openSheet()
             }
         )
@@ -233,9 +237,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
                     bStartTop.isVisible = false
+                    progressBar.isVisible = true
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
+                    progressBar.isVisible = false
                 }
             )
         } else {
