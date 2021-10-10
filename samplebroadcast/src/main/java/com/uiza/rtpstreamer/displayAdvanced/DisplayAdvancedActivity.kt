@@ -213,9 +213,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             delayStopStreamInMls = 100,
             onStopPreExecute = {
                 bStartTop.isVisible = false
+                progressBar.isVisible = true
             },
             onStopSuccess = {
                 bStartTop.isVisible = true
+                progressBar.isVisible = false
             }
         )
         openSheet()
@@ -235,9 +237,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
                     bStartTop.isVisible = false
+                    progressBar.isVisible = true
                 },
                 onStopSuccess = {
                     bStartTop.isVisible = true
+                    progressBar.isVisible = false
                     if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
                         uzDisplayBroadCast.stopNotification()
                     }
