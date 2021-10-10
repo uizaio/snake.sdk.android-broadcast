@@ -3,6 +3,8 @@ package com.uiza.background
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.View
@@ -18,6 +20,7 @@ import com.pedro.encoder.input.video.CameraOpenException
 import com.uiza.R
 import com.uiza.broadcast.CameraSize
 import com.uiza.display.*
+import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.layout_uz_background.view.*
 import org.greenrobot.eventbus.EventBus
@@ -110,15 +113,43 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
         )
     }
 
+    fun startPreview() {
+        val cameraSize = getStableCameraSize()
+        startPreview(videoWidth = cameraSize.width, videoHeight = cameraSize.height)
+    }
+
+    fun getStableCameraSize(): CameraSize {
+        val resolutionCamera = if (isFrontCamera()) {
+            getResolutionsFront()
+        } else {
+            getResolutionsBack()
+        }
+        return UZUtil.getStableCameraSize(resolutionCamera)
+    }
+
     //Stop camera preview. Ignored if streaming or already stopped. You need call it after
     fun stopPreview() {
         RtpService.stopPreview()
     }
 
-    fun stopStream() {
-        if (isServiceRunning()) {
-            context.stopService(Intent(context.applicationContext, RtpService::class.java))
+    fun stopStream(
+        delayStopStreamInMls: Long = UZConstant.DELAY_STOP_STREAM_IN_MLS,
+        onStopPreExecute: ((Unit) -> Unit),
+        onStopSuccess: ((Boolean) -> Unit)
+    ) {
+        if (delayStopStreamInMls <= 0) {
+            throw IllegalArgumentException("Invalid value for parameter delayStopStreamInMls")
         }
+
+        onStopPreExecute.invoke(Unit)
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (isServiceRunning()) {
+                context.stopService(Intent(context.applicationContext, RtpService::class.java))
+                onStopSuccess.invoke(true)
+            } else {
+                onStopSuccess.invoke(false)
+            }
+        }, delayStopStreamInMls)
     }
 
     fun startStream(

@@ -2,6 +2,8 @@ package com.uiza.broadcast
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -221,13 +223,35 @@ class UZBroadCastView : FrameLayout,
         height: Int,
         rotation: Int,
     ) {
-        Log.d(logTag, "startPreview width $width, height $height")
+//        Log.d(logTag, "startPreview width $width, height $height")
         rtmpCamera1?.startPreview(
             cameraFacing,
             width,
             height,
             rotation,
         )
+    }
+
+    fun startPreview(
+        cameraFacing: CameraHelper.Facing,
+        rotation: Int,
+    ) {
+        val cameraSize = getStableCameraSize()
+        startPreview(
+            cameraFacing,
+            cameraSize.width,
+            cameraSize.height,
+            rotation,
+        )
+    }
+
+    fun getStableCameraSize(): CameraSize {
+        val resolutionCamera = if (isFrontCamera()) {
+            getResolutionsFront()
+        } else {
+            getResolutionsBack()
+        }
+        return UZUtil.getStableCameraSize(resolutionCamera)
     }
 
     fun stopPreview() {
@@ -323,8 +347,24 @@ class UZBroadCastView : FrameLayout,
     }
 
     //Stop stream started with @startStream.
-    fun stopStream() {
-        rtmpCamera1?.stopStream()
+    fun stopStream(
+        delayStopStreamInMls: Long = UZConstant.DELAY_STOP_STREAM_IN_MLS,
+        onStopPreExecute: ((Unit) -> Unit),
+        onStopSuccess: ((Boolean) -> Unit)
+    ) {
+        if (delayStopStreamInMls <= 0) {
+            throw IllegalArgumentException("Invalid value for parameter delayStopStreamInMls")
+        }
+
+        onStopPreExecute.invoke(Unit)
+        Handler(Looper.getMainLooper()).postDelayed({
+            try {
+                rtmpCamera1?.stopStream()
+                onStopSuccess.invoke(true)
+            } catch (e: Exception) {
+                onStopSuccess.invoke(false)
+            }
+        }, delayStopStreamInMls)
     }
 
     //    Retries to connect with the given delay. You can pass an optional backupUrl if

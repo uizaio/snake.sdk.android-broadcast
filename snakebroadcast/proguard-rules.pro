@@ -1,24 +1,47 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-dontwarn javax.naming.**
+-dontwarn javax.servlet.**
+-dontwarn org.joda.**
+-dontwarn org.slf4j.**
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-dontwarn com.google.android.material.**
+-keep class com.google.android.material.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-ignorewarnings
+
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-dontwarn sun.misc.**
+#-keep class com.google.gson.stream.** { *; }
+
+# Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
+# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * implements com.google.gson.TypeAdapter
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+# Prevent R8 from leaving Data object members always null
+-keepclassmembers,allowobfuscation class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}
+
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+ }
+ -keep enum org.greenrobot.eventbus.ThreadMode { *; }
+ # And if you use AsyncExecutor:
+ -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+     <init>(java.lang.Throwable);
+ }
+#-dontwarn retrofit2.**
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep class * extends com.bumptech.glide.module.AppGlideModule {
@@ -32,5 +55,7 @@
   *** rewind();
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#exo
+-keep class com.google.android.exoplayer2.** { public *; }
+-keep class com.google.android.gms.cast.** { public *; }
+-keep public class com.google.android.gms.ads.** { public *;}

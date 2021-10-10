@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.pedro.encoder.input.video.CameraHelper
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
@@ -47,7 +48,6 @@ class BroadCastBasicActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
-        setTextSetting()
         uzBroadCastView.onConnectionFailedRtmp = { reason ->
             Log.e(logTag, "onConnectionFailedRtmp reason ${System.nanoTime()}")
             setTextStatus("onConnectionFailedRtmp reason $reason")
@@ -109,7 +109,16 @@ class BroadCastBasicActivity : AppCompatActivity() {
                 showToast("Error preparing stream, This device cant do it")
             }
         } else {
-            uzBroadCastView.stopStream()
+            uzBroadCastView.stopStream(
+                onStopPreExecute = {
+                    bStartTop.isVisible = false
+                    progressBar.isVisible = true
+                },
+                onStopSuccess = {
+                    bStartTop.isVisible = true
+                    progressBar.isVisible = false
+                }
+            )
         }
     }
 
@@ -146,12 +155,25 @@ class BroadCastBasicActivity : AppCompatActivity() {
 
     private fun startPreview() {
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
+
+        //Option 1: in case you want to customize width, height
         uzBroadCastView.startPreview(
             cameraFacing = CameraHelper.Facing.FRONT,
             width = videoWidth,
             height = videoHeight,
             rotation = CameraHelper.getCameraOrientation(this)
         )
+
+        //Option 2: in case you want to SDK choose the width, height automatically
+//        val cameraSize = uzBroadCastView.getStableCameraSize()
+//        videoWidth = cameraSize.width
+//        videoHeight = cameraSize.height
+//        uzBroadCastView.startPreview(
+//            cameraFacing = CameraHelper.Facing.FRONT,
+//            rotation = CameraHelper.getCameraOrientation(this),
+//        )
+
+        setTextSetting()
     }
 
     private fun prepareAudio(): Boolean {

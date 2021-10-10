@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.SurfaceHolder
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.rtplibrary.util.BitrateAdapter
@@ -51,7 +51,6 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
-        setTextSetting()
         uzBackgroundView.onSurfaceCreated = {
             Log.d(logTag, "surfaceCreated")
         }
@@ -161,58 +160,90 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     }
 
     private fun handleBSetting() {
-        //stop streaming if exist
-        uzBackgroundView.stopStream()
 
-        //setting screen
-        val openGlSettingDialog = BroadCastAdvancedSettingDialog(
-            resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
-                uzBackgroundView.getResolutionsFront()
-            } else {
-                uzBackgroundView.getResolutionsBack()
-            },
-            videoWidth = videoWidth,
-            videoHeight = videoHeight,
-            videoFps = videoFps,
-            videoBitrate = videoBitrate,
-            audioBitrate = audioBitrate,
-            audioSampleRate = audioSampleRate,
-            audioIsStereo = audioIsStereo,
-            audioEchoCanceler = audioEchoCanceler,
-            audioNoiseSuppressor = audioNoiseSuppressor,
-        )
-        openGlSettingDialog.onOk = {
-                videoWidth: Int,
-                videoHeight: Int,
-                videoFps: Int,
-                videoBitrate: Int,
-                audioBitrate: Int,
-                audioSampleRate: Int,
-                audioIsStereo: Boolean,
-                audioEchoCanceler: Boolean,
-                audioNoiseSuppressor: Boolean,
-            ->
-            this.videoWidth = videoWidth
-            this.videoHeight = videoHeight
-            this.videoFps = videoFps
-            this.videoBitrate = videoBitrate
-            this.audioBitrate = audioBitrate
-            this.audioSampleRate = audioSampleRate
-            this.audioIsStereo = audioIsStereo
-            this.audioEchoCanceler = audioEchoCanceler
-            this.audioNoiseSuppressor = audioNoiseSuppressor
+        fun openSheet() {
+            val dialog = BroadCastAdvancedSettingDialog(
+                resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
+                    uzBackgroundView.getResolutionsFront()
+                } else {
+                    uzBackgroundView.getResolutionsBack()
+                },
+                videoWidth = videoWidth,
+                videoHeight = videoHeight,
+                videoFps = videoFps,
+                videoBitrate = videoBitrate,
+                audioBitrate = audioBitrate,
+                audioSampleRate = audioSampleRate,
+                audioIsStereo = audioIsStereo,
+                audioEchoCanceler = audioEchoCanceler,
+                audioNoiseSuppressor = audioNoiseSuppressor,
+            )
+            dialog.onOk = {
+                    videoWidth: Int,
+                    videoHeight: Int,
+                    videoFps: Int,
+                    videoBitrate: Int,
+                    audioBitrate: Int,
+                    audioSampleRate: Int,
+                    audioIsStereo: Boolean,
+                    audioEchoCanceler: Boolean,
+                    audioNoiseSuppressor: Boolean,
+                ->
+                this.videoWidth = videoWidth
+                this.videoHeight = videoHeight
+                this.videoFps = videoFps
+                this.videoBitrate = videoBitrate
+                this.audioBitrate = audioBitrate
+                this.audioSampleRate = audioSampleRate
+                this.audioIsStereo = audioIsStereo
+                this.audioEchoCanceler = audioEchoCanceler
+                this.audioNoiseSuppressor = audioNoiseSuppressor
 
-            uzBackgroundView.stopStream()
-            uzBackgroundView.stopPreview()
-            startPreview()
-            setTextSetting()
+                uzBackgroundView.stopStream(
+                    delayStopStreamInMls = 100,
+                    onStopPreExecute = {
+                        bStartTop.isVisible = false
+                        progressBar.isVisible = true
+                    },
+                    onStopSuccess = {
+                        bStartTop.isVisible = true
+                        progressBar.isVisible = false
+                        uzBackgroundView.stopPreview()
+                        startPreview()
+                        setTextSetting()
+                    }
+                )
+            }
+            dialog.show(supportFragmentManager, dialog.tag)
         }
-        openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
+
+        //stop streaming if exist
+        uzBackgroundView.stopStream(
+            delayStopStreamInMls = 100,
+            onStopPreExecute = {
+                bStartTop.isVisible = false
+                progressBar.isVisible = true
+            },
+            onStopSuccess = {
+                bStartTop.isVisible = true
+                progressBar.isVisible = false
+                openSheet()
+            }
+        )
     }
 
     private fun handleBStartTop() {
         if (uzBackgroundView.isServiceRunning()) {
-            uzBackgroundView.stopStream()
+            uzBackgroundView.stopStream(
+                onStopPreExecute = {
+                    bStartTop.isVisible = false
+                    progressBar.isVisible = true
+                },
+                onStopSuccess = {
+                    bStartTop.isVisible = true
+                    progressBar.isVisible = false
+                }
+            )
         } else {
             UZDialogUtil.showDialog1(
                 context = this,
@@ -334,13 +365,13 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
 
-            bDisableAudio.visibility = View.VISIBLE
-            bEnableAudio.visibility = View.VISIBLE
+            bDisableAudio.isVisible = true
+            bEnableAudio.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
 
-            bDisableAudio.visibility = View.GONE
-            bEnableAudio.visibility = View.GONE
+            bDisableAudio.isVisible = false
+            bEnableAudio.isVisible = false
         }
     }
 
@@ -353,9 +384,18 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     }
 
     private fun startPreview() {
+        //Option 1: in case you want to customize width, height
         uzBackgroundView.startPreview(
             videoWidth = videoWidth,
             videoHeight = videoHeight,
         )
+
+        //Option 2: in case you want to SDK choose the width, height automatically
+//        val cameraSize = uzBackgroundView.getStableCameraSize()
+//        videoWidth = cameraSize.width
+//        videoHeight = cameraSize.height
+//        uzBackgroundView.startPreview()
+
+        setTextSetting()
     }
 }

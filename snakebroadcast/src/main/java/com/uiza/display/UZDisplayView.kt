@@ -5,6 +5,8 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -180,8 +182,24 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         }
     }
 
-    fun stop() {
-        context.stopService(Intent(context, DisplayService::class.java))
+    fun stop(
+        delayStopStreamInMls: Long = UZConstant.DELAY_STOP_STREAM_IN_MLS,
+        onStopPreExecute: ((Unit) -> Unit),
+        onStopSuccess: ((Boolean) -> Unit)
+    ) {
+        if (delayStopStreamInMls <= 0) {
+            throw IllegalArgumentException("Invalid value for parameter delayStopStreamInMls")
+        }
+
+        onStopPreExecute.invoke(Unit)
+        Handler(Looper.getMainLooper()).postDelayed({
+            try {
+                context.stopService(Intent(context, DisplayService::class.java))
+                onStopSuccess.invoke(true)
+            } catch (e: Exception) {
+                onStopSuccess.invoke(false)
+            }
+        }, delayStopStreamInMls)
     }
 
     //        Starts recording an MP4 video. Needs to be called while streaming.
@@ -302,11 +320,18 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: OnConnectionFailedRtp?) {
-        event?.let {
+        event?.let { e ->
 //            Log.d(logTag, "onMessageEvent OnConnectionFailedRtp ${it.reason}")
             stopNotification()
-            stop()
-            onConnectionFailedRtp?.invoke(it.reason)
+            stop(
+                delayStopStreamInMls = 100,
+                onStopPreExecute = {
+                    //do nothing
+                },
+                onStopSuccess = {
+                    onConnectionFailedRtp?.invoke(e.reason)
+                },
+            )
         }
     }
 

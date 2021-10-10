@@ -78,8 +78,9 @@ class DisplayAdvancedSettingDialog(
 
     @SuppressLint("SetTextI18n")
     private fun handleBtGetBestSetting() {
-        etVideoWidth.setText("${UZUtil.getScreenWidth()}")
-        etVideoHeight.setText("${UZUtil.getScreenHeight()}")
+        val bestDisplaySize = UZUtil.getBestDisplaySize()
+        etVideoWidth.setText("${bestDisplaySize.width}")
+        etVideoHeight.setText("${bestDisplaySize.height}")
         etVideoFps.setText("60")
         etVideoBitrate.setText("5000")
         etVideoRotation.setText("0")

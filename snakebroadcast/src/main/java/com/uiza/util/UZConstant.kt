@@ -6,6 +6,9 @@ object UZConstant {
     const val VIDEO_FPS_DEFAULT = 25
     const val VIDEO_BITRATE_DEFAULT = 1200
 
+    const val RESOLUTION_STABLE_FOR_SYSTEM_UIZA_1280 = 1280
+    const val RESOLUTION_STABLE_FOR_SYSTEM_UIZA_720 = 720
+
     const val AUDIO_BITRATE_32 = 32
     const val AUDIO_BITRATE_64 = 64
     const val AUDIO_BITRATE_128 = 128
@@ -37,4 +40,5 @@ object UZConstant {
     const val VIDEO_ROTATION_270 = 270
 
     const val RES_1920 = 1920
+    const val DELAY_STOP_STREAM_IN_MLS = 2000L
 }

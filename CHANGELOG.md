@@ -1,3 +1,9 @@
+### 1.1.2 (2021-10-10)
+- //        val cameraSize = uzBackgroundView.getStableCameraSize()
+  //        videoWidth = cameraSize.width
+  //        videoHeight = cameraSize.height
+  //        uzBackgroundView.startPreview()
+
 ### 1.1.1 (2021-09-29)
 - Improved performances
 

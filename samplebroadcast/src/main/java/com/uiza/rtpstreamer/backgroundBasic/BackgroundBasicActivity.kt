@@ -4,21 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.SurfaceHolder
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
-import kotlinx.android.synthetic.main.activity_background_advanced.*
 import kotlinx.android.synthetic.main.activity_background_basic.*
-import kotlinx.android.synthetic.main.activity_background_basic.bStartTop
-import kotlinx.android.synthetic.main.activity_background_basic.bSwitchCamera
-import kotlinx.android.synthetic.main.activity_background_basic.etRtpUrl
-import kotlinx.android.synthetic.main.activity_background_basic.tvSetting
-import kotlinx.android.synthetic.main.activity_background_basic.tvStatus
-import kotlinx.android.synthetic.main.activity_background_basic.uzBackgroundView
 
 class BackgroundBasicActivity : AppCompatActivity() {
     private fun showToast(msg: String?) {
@@ -53,9 +46,8 @@ class BackgroundBasicActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         etRtpUrl.setText(UZApplication.URL_STREAM)
-        setTextSetting()
 
-        uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, width: Int, height: Int ->
+        uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, _: Int, _: Int ->
             startPreview()
         }
         uzBackgroundView.onConnectionStartedRtp = { rtpUrl ->
@@ -105,7 +97,16 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     private fun handleBStartTop() {
         if (uzBackgroundView.isServiceRunning()) {
-            uzBackgroundView.stopStream()
+            uzBackgroundView.stopStream(
+                onStopPreExecute = {
+                    bStartTop.isVisible = false
+                    progressBar.isVisible = true
+                },
+                onStopSuccess = {
+                    bStartTop.isVisible = true
+                    progressBar.isVisible = false
+                },
+            )
         } else {
             UZDialogUtil.showDialog1(
                 context = this,
@@ -141,10 +142,10 @@ class BackgroundBasicActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
-            bSwitchCamera.visibility = View.VISIBLE
+            bSwitchCamera.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
-            bSwitchCamera.visibility = View.GONE
+            bSwitchCamera.isVisible = false
         }
     }
 
@@ -157,9 +158,18 @@ class BackgroundBasicActivity : AppCompatActivity() {
     }
 
     private fun startPreview() {
+        //Option 1: in case you want to customize width, height
         uzBackgroundView.startPreview(
             videoWidth = videoWidth,
             videoHeight = videoHeight,
         )
+
+        //Option 2: in case you want to SDK choose the width, height automatically
+//        val cameraSize = uzBackgroundView.getStableCameraSize()
+//        videoWidth = cameraSize.width
+//        videoHeight = cameraSize.height
+//        uzBackgroundView.startPreview()
+
+        setTextSetting()
     }
 }
