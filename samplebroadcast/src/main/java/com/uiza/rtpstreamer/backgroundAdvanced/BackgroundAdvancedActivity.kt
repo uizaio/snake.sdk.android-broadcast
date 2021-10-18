@@ -33,6 +33,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
 
     //Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
+    //TODO move to sdk
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
