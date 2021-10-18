@@ -18,6 +18,7 @@ import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.encoder.input.video.CameraOpenException
 import com.pedro.rtmp.utils.ConnectCheckerRtmp
 import com.pedro.rtplibrary.rtmp.RtmpCamera1
+import com.pedro.rtplibrary.util.BitrateAdapter
 import com.pedro.rtplibrary.util.FpsListener
 import com.pedro.rtplibrary.util.RecordController
 import com.pedro.rtplibrary.view.TakePhotoCallback
@@ -44,6 +45,9 @@ class UZBroadCastView : FrameLayout,
     var onSurfaceChanged: ((holder: SurfaceHolder, format: Int, width: Int, height: Int) -> Unit)? =
         null
     var onSurfaceDestroyed: ((holder: SurfaceHolder) -> Unit)? = null
+
+    //Adaptative video bitrate
+    private var bitrateAdapter: BitrateAdapter? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -88,6 +92,13 @@ class UZBroadCastView : FrameLayout,
     override fun onConnectionSuccessRtmp() {
 //        Log.d(logTag, "onConnectionSuccessRtmp")
         onConnectionSuccessRtmp?.invoke(Unit)
+
+        bitrateAdapter = BitrateAdapter { bitrate ->
+            setVideoBitrateOnFly(bitrate)
+        }
+        getBitrate()?.let { br ->
+            bitrateAdapter?.setMaxBitrate(br)
+        }
     }
 
     override fun onDisconnectRtmp() {
@@ -98,6 +109,8 @@ class UZBroadCastView : FrameLayout,
     override fun onNewBitrateRtmp(bitrate: Long) {
 //        Log.d(logTag, "onNewBitrateRtmp bitrate $bitrate")
         onNewBitrateRtmp?.invoke(bitrate)
+
+        bitrateAdapter?.adaptBitrate(bitrate)
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {

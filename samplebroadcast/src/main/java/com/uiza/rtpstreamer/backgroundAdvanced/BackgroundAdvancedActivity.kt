@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
-import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
@@ -30,10 +29,6 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
-
-    //Adaptative video bitrate
-    private var bitrateAdapter: BitrateAdapter? = null
-    //TODO move to sdk
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,17 +63,9 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionSuccessRtp = {
             tvStatus.text = "onConnectionSuccessRtp"
             handleUI()
-
-            bitrateAdapter = BitrateAdapter { bitrate ->
-                uzBackgroundView.setVideoBitrateOnFly(bitrate)
-            }
-            uzBackgroundView.getBitrate()?.let { br ->
-                bitrateAdapter?.setMaxBitrate(br)
-            }
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
-            bitrateAdapter?.adaptBitrate(bitrate)
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"

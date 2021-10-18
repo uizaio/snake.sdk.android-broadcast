@@ -17,6 +17,7 @@ import com.pedro.encoder.input.video.Camera2ApiManager
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.encoder.input.video.CameraOpenException
+import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.R
 import com.uiza.broadcast.CameraSize
 import com.uiza.display.*
@@ -40,6 +41,9 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
     var onDisconnectRtp: ((Unit) -> Unit)? = null
     var onAuthErrorRtp: ((Unit) -> Unit)? = null
     var onAuthSuccessRtp: ((Unit) -> Unit)? = null
+
+    //Adaptative video bitrate
+    private var bitrateAdapter: BitrateAdapter? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -189,6 +193,13 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
     fun onMessageEvent(event: OnConnectionSuccessRtp?) {
         event?.let {
             onConnectionSuccessRtp?.invoke(Unit)
+
+            bitrateAdapter = BitrateAdapter { bitrate ->
+                setVideoBitrateOnFly(bitrate)
+            }
+            getBitrate()?.let { br ->
+                bitrateAdapter?.setMaxBitrate(br)
+            }
         }
     }
 
@@ -196,6 +207,8 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
     fun onMessageEvent(event: OnNewBitrateRtp?) {
         event?.bitrate?.let {
             onNewBitrateRtp?.invoke(it)
+
+            bitrateAdapter?.adaptBitrate(it)
         }
     }
 

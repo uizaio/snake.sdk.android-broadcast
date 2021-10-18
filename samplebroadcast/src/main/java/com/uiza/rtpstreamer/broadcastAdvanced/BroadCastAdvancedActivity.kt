@@ -49,8 +49,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
 
-    //Adaptative video bitrate
-    private var bitrateAdapter: BitrateAdapter? = null
     private var resumeBroadcasting = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,13 +91,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onConnectionSuccessRtmp = {
             setTextStatus("onConnectionSuccessRtmp")
-
-            bitrateAdapter = BitrateAdapter { bitrate ->
-                uzBroadCastView.setVideoBitrateOnFly(bitrate)
-            }
-            uzBroadCastView.getBitrate()?.let { br ->
-                bitrateAdapter?.setMaxBitrate(br)
-            }
         }
 
         uzBroadCastView.onDisconnectRtmp = {
@@ -108,7 +99,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
-            bitrateAdapter?.adaptBitrate(bitrate)
         }
         uzBroadCastView.onSurfaceChanged =
             { _: SurfaceHolder, _: Int, _: Int, _: Int ->

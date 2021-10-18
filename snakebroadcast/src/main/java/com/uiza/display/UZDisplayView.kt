@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import com.pedro.rtplibrary.util.BitrateAdapter
 import com.pedro.rtplibrary.util.RecordController
 import com.uiza.R
 import com.uiza.util.UZConstant
@@ -38,6 +39,9 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
     var onDisconnectRtp: ((Unit) -> Unit)? = null
     var onAuthErrorRtp: ((Unit) -> Unit)? = null
     var onAuthSuccessRtp: ((Unit) -> Unit)? = null
+
+    //Adaptative video bitrate
+    private var bitrateAdapter: BitrateAdapter? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -307,6 +311,13 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         event?.let {
 //            Log.d(logTag, "onMessageEvent OnConnectionSuccessRtp")
             onConnectionSuccessRtp?.invoke(Unit)
+
+            bitrateAdapter = BitrateAdapter { bitrate ->
+                setVideoBitrateOnFly(bitrate)
+            }
+            getBitrate()?.let { br ->
+                bitrateAdapter?.setMaxBitrate(br)
+            }
         }
     }
 
@@ -314,7 +325,11 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
     fun onMessageEvent(event: OnNewBitrateRtp?) {
         event?.let {
 //            Log.d(logTag, "onMessageEvent OnNewBitrateRtp ${it.bitrate}")
-            onNewBitrateRtp?.invoke(it.bitrate)
+
+            it.bitrate?.let { bitrate ->
+                onNewBitrateRtp?.invoke(bitrate)
+                bitrateAdapter?.adaptBitrate(bitrate)
+            }
         }
     }
 
