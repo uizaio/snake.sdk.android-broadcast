@@ -44,6 +44,7 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
 
     //Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
+    var isAdaptativeVideoBitrate = true
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -194,11 +195,13 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
         event?.let {
             onConnectionSuccessRtp?.invoke(Unit)
 
-            bitrateAdapter = BitrateAdapter { bitrate ->
-                setVideoBitrateOnFly(bitrate)
-            }
-            getBitrate()?.let { br ->
-                bitrateAdapter?.setMaxBitrate(br)
+            if (isAdaptativeVideoBitrate) {
+                bitrateAdapter = BitrateAdapter { bitrate ->
+                    setVideoBitrateOnFly(bitrate)
+                }
+                getBitrate()?.let { br ->
+                    bitrateAdapter?.setMaxBitrate(br)
+                }
             }
         }
     }
@@ -208,7 +211,9 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
         event?.bitrate?.let {
             onNewBitrateRtp?.invoke(it)
 
-            bitrateAdapter?.adaptBitrate(it)
+            if (isAdaptativeVideoBitrate) {
+                bitrateAdapter?.adaptBitrate(it)
+            }
         }
     }
 

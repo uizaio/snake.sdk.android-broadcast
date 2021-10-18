@@ -42,6 +42,7 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
 
     //Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
+    var isAdaptativeVideoBitrate = true
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -312,11 +313,13 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
 //            Log.d(logTag, "onMessageEvent OnConnectionSuccessRtp")
             onConnectionSuccessRtp?.invoke(Unit)
 
-            bitrateAdapter = BitrateAdapter { bitrate ->
-                setVideoBitrateOnFly(bitrate)
-            }
-            getBitrate()?.let { br ->
-                bitrateAdapter?.setMaxBitrate(br)
+            if (isAdaptativeVideoBitrate) {
+                bitrateAdapter = BitrateAdapter { bitrate ->
+                    setVideoBitrateOnFly(bitrate)
+                }
+                getBitrate()?.let { br ->
+                    bitrateAdapter?.setMaxBitrate(br)
+                }
             }
         }
     }
@@ -328,7 +331,10 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
 
             it.bitrate?.let { bitrate ->
                 onNewBitrateRtp?.invoke(bitrate)
-                bitrateAdapter?.adaptBitrate(bitrate)
+
+                if (isAdaptativeVideoBitrate) {
+                    bitrateAdapter?.adaptBitrate(bitrate)
+                }
             }
         }
     }

@@ -48,6 +48,7 @@ class UZBroadCastView : FrameLayout,
 
     //Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
+    var isAdaptativeVideoBitrate = true
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -93,11 +94,13 @@ class UZBroadCastView : FrameLayout,
 //        Log.d(logTag, "onConnectionSuccessRtmp")
         onConnectionSuccessRtmp?.invoke(Unit)
 
-        bitrateAdapter = BitrateAdapter { bitrate ->
-            setVideoBitrateOnFly(bitrate)
-        }
-        getBitrate()?.let { br ->
-            bitrateAdapter?.setMaxBitrate(br)
+        if (isAdaptativeVideoBitrate) {
+            bitrateAdapter = BitrateAdapter { bitrate ->
+                setVideoBitrateOnFly(bitrate)
+            }
+            getBitrate()?.let { br ->
+                bitrateAdapter?.setMaxBitrate(br)
+            }
         }
     }
 
@@ -110,7 +113,9 @@ class UZBroadCastView : FrameLayout,
 //        Log.d(logTag, "onNewBitrateRtmp bitrate $bitrate")
         onNewBitrateRtmp?.invoke(bitrate)
 
-        bitrateAdapter?.adaptBitrate(bitrate)
+        if (isAdaptativeVideoBitrate) {
+            bitrateAdapter?.adaptBitrate(bitrate)
+        }
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
