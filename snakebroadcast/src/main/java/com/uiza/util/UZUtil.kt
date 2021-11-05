@@ -1,5 +1,6 @@
 package com.uiza.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
@@ -102,6 +103,7 @@ class UZUtil {
             )
         }
 
+        @SuppressLint("SourceLockedOrientationActivity")
         @JvmStatic
         fun toggleScreenOrientation(activity: Activity) {
             val s = getScreenOrientation(activity)
@@ -112,6 +114,7 @@ class UZUtil {
             }
         }
 
+        @SuppressLint("SourceLockedOrientationActivity")
         @JvmStatic
         fun changeScreenPortrait(activity: Activity) {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

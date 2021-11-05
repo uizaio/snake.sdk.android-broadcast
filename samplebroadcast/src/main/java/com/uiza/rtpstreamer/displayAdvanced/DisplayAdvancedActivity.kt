@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
-import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
 import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
@@ -36,9 +35,6 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
-
-    //Adaptative video bitrate
-    private var bitrateAdapter: BitrateAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,21 +70,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onConnectionSuccessRtp")
             tvStatus.text = "onConnectionSuccessRtp"
             handleUI()
-
-            bitrateAdapter = BitrateAdapter { bitrate ->
-                uzDisplayBroadCast.setVideoBitrateOnFly(bitrate)
-            }
-            uzDisplayBroadCast.getBitrate()?.let { br ->
-                bitrateAdapter?.setMaxBitrate(br)
-            }
         }
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
-
-            bitrate?.let {
-                bitrateAdapter?.adaptBitrate(bitrate)
-            }
         }
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
             Log.d(logTag, "onConnectionFailedRtp reason $reason")

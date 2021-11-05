@@ -7,12 +7,12 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.* // ktlint-disable no-wildcard-imports
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.pedro.encoder.input.gl.render.filters.*
+import com.pedro.encoder.input.gl.render.filters.* // ktlint-disable no-wildcard-imports
 import com.pedro.encoder.input.gl.render.filters.`object`.GifObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.ImageObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.SurfaceFilterRender
@@ -20,7 +20,6 @@ import com.pedro.encoder.input.gl.render.filters.`object`.TextObjectFilterRender
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.encoder.utils.gl.TranslateTo
-import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
@@ -30,8 +29,7 @@ import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.* // ktlint-disable no-wildcard-imports
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BroadCastAdvancedActivity : AppCompatActivity() {
@@ -49,8 +47,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
 
-    //Adaptative video bitrate
-    private var bitrateAdapter: BitrateAdapter? = null
     private var resumeBroadcasting = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,13 +89,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onConnectionSuccessRtmp = {
             setTextStatus("onConnectionSuccessRtmp")
-
-            bitrateAdapter = BitrateAdapter { bitrate ->
-                uzBroadCastView.setVideoBitrateOnFly(bitrate)
-            }
-            uzBroadCastView.getBitrate()?.let { br ->
-                bitrateAdapter?.setMaxBitrate(br)
-            }
         }
 
         uzBroadCastView.onDisconnectRtmp = {
@@ -108,13 +97,12 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
-            bitrateAdapter?.adaptBitrate(bitrate)
         }
         uzBroadCastView.onSurfaceChanged =
             { _: SurfaceHolder, _: Int, _: Int, _: Int ->
                 startPreview(true)
 
-                //resume broadcasting after onPause
+                // resume broadcasting after onPause
                 if (resumeBroadcasting) {
                     resumeBroadcasting = false
                     bStartTop.performClick()
@@ -207,7 +195,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         if (item.itemId == android.R.id.home) {
             onBackPressed()
         }
-        //Stop listener for image, text and gif stream objects.
+        // Stop listener for image, text and gif stream objects.
         uzBroadCastView.stopListenerSpriteGestureController()
         return when (item.itemId) {
             R.id.e_d_fxaa -> {
@@ -351,7 +339,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             R.id.rgb_saturate -> {
                 val rgbSaturationFilterRender = RGBSaturationFilterRender()
                 uzBroadCastView.setFilter(rgbSaturationFilterRender)
-                //Reduce green and blue colors 20%. Red will predominate.
+                // Reduce green and blue colors 20%. Red will predominate.
                 rgbSaturationFilterRender.setRGBSaturation(1f, 0.8f, 0.8f)
                 true
             }
@@ -387,18 +375,18 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             }
             R.id.surface_filter -> {
                 val surfaceFilterRender = SurfaceFilterRender { surfaceTexture ->
-                    //You can render this filter with other api that draw in a surface. for example you can use VLC
+                    // You can render this filter with other api that draw in a surface. for example you can use VLC
                     val mediaPlayer: MediaPlayer =
                         MediaPlayer.create(this@BroadCastAdvancedActivity, R.raw.big_bunny_240p)
                     mediaPlayer.setSurface(Surface(surfaceTexture))
                     mediaPlayer.start()
                 }
                 uzBroadCastView.setFilter(surfaceFilterRender)
-                //Video is 360x240 so select a percent to keep aspect ratio (50% x 33.3% screen)
+                // Video is 360x240 so select a percent to keep aspect ratio (50% x 33.3% screen)
                 surfaceFilterRender.setScale(50f, 33.3f)
                 uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(
                     surfaceFilterRender
-                ) //Optional
+                ) // Optional
                 true
             }
             R.id.temperature -> {
@@ -426,7 +414,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             uzBroadCastView.getStreamHeight()
         )
         textObjectFilterRender.setPosition(TranslateTo.CENTER)
-        uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(textObjectFilterRender) //Optional
+        uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(textObjectFilterRender) // Optional
     }
 
     private fun setImageToStream() {
@@ -443,8 +431,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             uzBroadCastView.getStreamHeight()
         )
         imageObjectFilterRender.setPosition(TranslateTo.RIGHT)
-        uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(imageObjectFilterRender) //Optional
-        uzBroadCastView.spriteGestureController.setPreventMoveOutside(false) //Optional
+        uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(imageObjectFilterRender) // Optional
+        uzBroadCastView.spriteGestureController.setPreventMoveOutside(false) // Optional
     }
 
     private fun setGifToStream() {
@@ -457,7 +445,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 uzBroadCastView.getStreamHeight()
             )
             gifObjectFilterRender.setPosition(TranslateTo.BOTTOM)
-            uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(gifObjectFilterRender) //Optional
+            uzBroadCastView.spriteGestureController.setBaseObjectFilterRender(gifObjectFilterRender) // Optional
         } catch (e: IOException) {
             showToast(e.message)
         }
@@ -526,15 +514,15 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 audioNoiseSuppressor = audioNoiseSuppressor,
             )
             openGlSettingDialog.onOk = {
-                    videoWidth: Int,
-                    videoHeight: Int,
-                    videoFps: Int,
-                    videoBitrate: Int,
-                    audioBitrate: Int,
-                    audioSampleRate: Int,
-                    audioIsStereo: Boolean,
-                    audioEchoCanceler: Boolean,
-                    audioNoiseSuppressor: Boolean,
+                videoWidth: Int,
+                videoHeight: Int,
+                videoFps: Int,
+                videoBitrate: Int,
+                audioBitrate: Int,
+                audioSampleRate: Int,
+                audioIsStereo: Boolean,
+                audioEchoCanceler: Boolean,
+                audioNoiseSuppressor: Boolean,
                 ->
                 this.videoWidth = videoWidth
                 this.videoHeight = videoHeight
@@ -553,7 +541,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             openGlSettingDialog.show(supportFragmentManager, openGlSettingDialog.tag)
         }
 
-        //stop streaming if exist
+        // stop streaming if exist
         if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 delayStopStreamInMls = 100,
@@ -718,14 +706,14 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private fun setTextSetting() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
-                    "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+            "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
+            ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
     }
 
     private fun startPreview(isInitFirst: Boolean) {
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
 
-        //Option 1: in case you want to customize width, height
+        // Option 1: in case you want to customize width, height
         if (isInitFirst) {
             uzBroadCastView.startPreview(
                 cameraFacing = if (isCameraFrontDefault) CameraHelper.Facing.FRONT else CameraHelper.Facing.BACK,
@@ -751,7 +739,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             }
         }
 
-        //Option 2: in case you want to SDK choose the width, height automatically
+        // Option 2: in case you want to SDK choose the width, height automatically
 //        val cameraSize = uzBroadCastView.getStableCameraSize()
 //        videoWidth = cameraSize.width
 //        videoHeight = cameraSize.height

@@ -1,3 +1,5 @@
+### 1.1.3 (2021-11-5)
+- We removed BitrateAdapter so you do not need class BitrateAdapter on your code. We have already handle this feature on SDK.
 
 ### 1.1.2 (2021-10-10)
 - Added more parameters for func stopStream(...), now you can make a delay before stopping stream.
