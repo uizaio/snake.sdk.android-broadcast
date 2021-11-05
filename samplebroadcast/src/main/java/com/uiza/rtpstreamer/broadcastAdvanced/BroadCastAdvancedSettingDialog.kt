@@ -145,9 +145,10 @@ class BroadCastAdvancedSettingDialog(
             audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000 &&
             audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500 &&
             audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000 &&
-            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_48000
         ) {
-            showToast("audioSampleRate could be 8000, 16000, 22500, 32000, 44100")
+            showToast("audioSampleRate could be 8000, 16000, 22500, 32000, 44100, 48000")
             return
         }
         onOk?.invoke(

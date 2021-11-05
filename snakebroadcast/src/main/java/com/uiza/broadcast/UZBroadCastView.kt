@@ -308,9 +308,10 @@ class UZBroadCastView :
             audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000 &&
             audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500 &&
             audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000 &&
-            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_48000
         ) {
-            throw IllegalArgumentException("audioSampleRate could be 8000, 16000, 22500, 32000, 44100")
+            throw IllegalArgumentException("audioSampleRate could be 8000, 16000, 22500, 32000, 44100, 48000")
         }
         return rtmpCamera1?.prepareAudio(
             audioBitrate * 1024,

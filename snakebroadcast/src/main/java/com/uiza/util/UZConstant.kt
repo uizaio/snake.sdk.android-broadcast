@@ -19,6 +19,7 @@ object UZConstant {
     const val AUDIO_SAMPLE_RATE_22500 = 22500
     const val AUDIO_SAMPLE_RATE_32000 = 32000
     const val AUDIO_SAMPLE_RATE_44100 = 44100
+    const val AUDIO_SAMPLE_RATE_48000 = 48000
 
     const val PREVIEW_ROTATION_90 = 90
     const val PREVIEW_ROTATION_180 = 180

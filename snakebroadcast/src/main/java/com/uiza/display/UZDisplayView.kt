@@ -40,7 +40,7 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
     var onAuthErrorRtp: ((Unit) -> Unit)? = null
     var onAuthSuccessRtp: ((Unit) -> Unit)? = null
 
-    //Adaptative video bitrate
+    // Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
     var isAdaptativeVideoBitrate = true
 
@@ -137,33 +137,36 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         audioEchoCanceler: Boolean,
         audioNoiseSuppressor: Boolean,
     ) {
-        if (videoRotation != UZConstant.VIDEO_ROTATION_0
-            && videoRotation != UZConstant.VIDEO_ROTATION_90
-            && videoRotation != UZConstant.VIDEO_ROTATION_180
-            && videoRotation != UZConstant.VIDEO_ROTATION_270
+        if (videoRotation != UZConstant.VIDEO_ROTATION_0 &&
+            videoRotation != UZConstant.VIDEO_ROTATION_90 &&
+            videoRotation != UZConstant.VIDEO_ROTATION_180 &&
+            videoRotation != UZConstant.VIDEO_ROTATION_270
         ) {
             throw IllegalArgumentException("Rotation could be 90, 180, 270 or 0")
         }
-        if (audioBitrate != UZConstant.AUDIO_BITRATE_32
-            && audioBitrate != UZConstant.AUDIO_BITRATE_64
-            && audioBitrate != UZConstant.AUDIO_BITRATE_128
-            && audioBitrate != UZConstant.AUDIO_BITRATE_256
+        if (audioBitrate != UZConstant.AUDIO_BITRATE_32 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_64 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_128 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_256
         ) {
             throw IllegalArgumentException("audioBitrate could be 32, 64, 128 or 256")
         }
-        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
+        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_48000
         ) {
-            throw IllegalArgumentException("audioSampleRate could be 8000, 16000, 22500, 32000, 44100")
+            throw IllegalArgumentException("audioSampleRate could be 8000, 16000, 22500, 32000, 44100, 48000")
         }
 
         if (data != null &&
-            (requestCode == REQUEST_CODE_STREAM
-                    || requestCode == REQUEST_CODE_RECORD
-                    && resultCode == AppCompatActivity.RESULT_OK)
+            (
+                requestCode == REQUEST_CODE_STREAM ||
+                    requestCode == REQUEST_CODE_RECORD &&
+                    resultCode == AppCompatActivity.RESULT_OK
+                )
         ) {
             initNotification()
             DisplayService.setData(resultCode = resultCode, data = data)
@@ -216,17 +219,17 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         DisplayService.startRecord(path = path, listener = listener)
     }
 
-    //Stop record MP4 video started with @startRecord. If you don't call it file will be unreadable.
+    // Stop record MP4 video started with @startRecord. If you don't call it file will be unreadable.
     fun stopRecord() {
         DisplayService.stopRecord()
     }
 
-    //Mute microphone, can be called before, while and after stream.
+    // Mute microphone, can be called before, while and after stream.
     fun disableAudio() {
         DisplayService.disableAudio()
     }
 
-    //Enable a muted microphone, can be called before, while and after stream.
+    // Enable a muted microphone, can be called before, while and after stream.
     fun enableAudio() {
         DisplayService.enableAudio()
     }
@@ -292,7 +295,6 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         return DisplayService.retry(delay, reason, backupUrl)
     }
 
-
     fun toggleScreenOrientation() {
         if (context is Activity) {
             UZUtil.toggleScreenOrientation(context as Activity)
@@ -347,7 +349,7 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
             stop(
                 delayStopStreamInMls = 100,
                 onStopPreExecute = {
-                    //do nothing
+                    // do nothing
                 },
                 onStopSuccess = {
                     onConnectionFailedRtp?.invoke(e.reason)
