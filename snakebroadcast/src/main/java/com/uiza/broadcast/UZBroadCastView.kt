@@ -27,7 +27,8 @@ import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.layout_uz_broadcast.view.*
 
-class UZBroadCastView : FrameLayout,
+class UZBroadCastView :
+    FrameLayout,
     ConnectCheckerRtmp,
     SurfaceHolder.Callback,
     View.OnTouchListener {
@@ -46,7 +47,7 @@ class UZBroadCastView : FrameLayout,
         null
     var onSurfaceDestroyed: ((holder: SurfaceHolder) -> Unit)? = null
 
-    //Adaptative video bitrate
+    // Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
     var isAdaptativeVideoBitrate = true
 
@@ -296,18 +297,18 @@ class UZBroadCastView : FrameLayout,
             logTag,
             "prepareAudio audioBitrate $audioBitrate, audioSampleRate $audioSampleRate, audioIsStereo $audioIsStereo, audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
         )
-        if (audioBitrate != UZConstant.AUDIO_BITRATE_32
-            && audioBitrate != UZConstant.AUDIO_BITRATE_64
-            && audioBitrate != UZConstant.AUDIO_BITRATE_128
-            && audioBitrate != UZConstant.AUDIO_BITRATE_256
+        if (audioBitrate != UZConstant.AUDIO_BITRATE_32 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_64 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_128 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_256
         ) {
             throw IllegalArgumentException("audioBitrate could be 32, 64, 128 or 256")
         }
-        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
+        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
         ) {
             throw IllegalArgumentException("audioSampleRate could be 8000, 16000, 22500, 32000, 44100")
         }
@@ -338,8 +339,9 @@ class UZBroadCastView : FrameLayout,
     ): Boolean {
         val mVideoRotation = videoRotation ?: CameraHelper.getCameraOrientation(context)
         Log.d(
-            logTag, "prepareVideo videoWidth $videoWidth, videoHeight $videoHeight," +
-                    " videoFps $videoFps, videoBitrate $videoBitrate, videoRotation $videoRotation"
+            logTag,
+            "prepareVideo videoWidth $videoWidth, videoHeight $videoHeight," +
+                " videoFps $videoFps, videoBitrate $videoBitrate, videoRotation $videoRotation"
         )
         return rtmpCamera1?.prepareVideo(
             videoWidth,
@@ -364,7 +366,7 @@ class UZBroadCastView : FrameLayout,
         rtmpCamera1?.startStream(url)
     }
 
-    //Stop stream started with @startStream.
+    // Stop stream started with @startStream.
     fun stopStream(
         delayStopStreamInMls: Long = UZConstant.DELAY_STOP_STREAM_IN_MLS,
         onStopPreExecute: ((Unit) -> Unit),
@@ -394,7 +396,7 @@ class UZBroadCastView : FrameLayout,
     fun getResolutionsBack(): List<CameraSize> {
         val listResolutionsBack = rtmpCamera1?.resolutionsBack ?: emptyList()
         val list = ArrayList<CameraSize>()
-        //remove item square
+        // remove item square
         listResolutionsBack.forEach {
             val w = it.width
             val h = it.height
@@ -408,7 +410,7 @@ class UZBroadCastView : FrameLayout,
     fun getResolutionsFront(): List<CameraSize> {
         val listResolutionsFront = rtmpCamera1?.resolutionsFront ?: emptyList()
         val list = ArrayList<CameraSize>()
-        //remove item square
+        // remove item square
         listResolutionsFront.forEach {
             val w = it.width
             val h = it.height
@@ -475,7 +477,7 @@ class UZBroadCastView : FrameLayout,
         rtmpCamera1?.startRecord(path)
     }
 
-    //Stop record MP4 video started with @startRecord. If you don't call it file will be unreadable.
+    // Stop record MP4 video started with @startRecord. If you don't call it file will be unreadable.
     fun stopRecord() {
         rtmpCamera1?.stopRecord()
     }
@@ -490,9 +492,9 @@ class UZBroadCastView : FrameLayout,
         rtmpCamera1?.setAuthorization(user, password)
     }
 
-    //Change preview orientation can be called while stream.
-    //Params:
-    //orientation – of the camera preview. Could be 90, 180, 270 or 0.
+    // Change preview orientation can be called while stream.
+    // Params:
+    // orientation – of the camera preview. Could be 90, 180, 270 or 0.
     fun setPreviewOrientation(orientation: Int) {
         rtmpCamera1?.setPreviewOrientation(orientation)
     }
