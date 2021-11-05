@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToast(msg: String?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private fun handleBroadcastBasic() {

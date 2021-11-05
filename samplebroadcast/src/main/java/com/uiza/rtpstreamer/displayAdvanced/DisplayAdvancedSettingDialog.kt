@@ -12,7 +12,6 @@ import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.dialog_setting_display_advanced.*
 
-
 class DisplayAdvancedSettingDialog(
     private val videoWidth: Int,
     private val videoHeight: Int,
@@ -26,19 +25,21 @@ class DisplayAdvancedSettingDialog(
     private val audioEchoCanceler: Boolean,
     private val audioNoiseSuppressor: Boolean,
 ) : BottomSheetDialogFragment() {
-    var onOk: ((
-        videoWidth: Int,
-        videoHeight: Int,
-        videoFps: Int,
-        videoBitrate: Int,
-        videoRotation: Int,
-        videoDpi: Int,
-        audioBitrate: Int,
-        audioSampleRate: Int,
-        audioIsStereo: Boolean,
-        audioEchoCanceler: Boolean,
-        audioNoiseSuppressor: Boolean,
-    ) -> Unit)? = null
+    var onOk: (
+        (
+            videoWidth: Int,
+            videoHeight: Int,
+            videoFps: Int,
+            videoBitrate: Int,
+            videoRotation: Int,
+            videoDpi: Int,
+            audioBitrate: Int,
+            audioSampleRate: Int,
+            audioIsStereo: Boolean,
+            audioEchoCanceler: Boolean,
+            audioNoiseSuppressor: Boolean,
+        ) -> Unit
+    )? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,33 +122,33 @@ class DisplayAdvancedSettingDialog(
         val audioEchoCanceler = switchAudioEchoCanceler.isChecked
         val audioNoiseSuppressor = switchAudioNoiseSuppressor.isChecked
 
-        if (videoWidth == null || videoHeight == null || videoFps == null || videoBitrate == null || videoRotation == null || videoDpi == null
-            || audioBitrate == null || audioSampleRate == null
+        if (videoWidth == null || videoHeight == null || videoFps == null || videoBitrate == null || videoRotation == null || videoDpi == null ||
+            audioBitrate == null || audioSampleRate == null
         ) {
             showToast("Invalid setting")
             return
         }
-        if (videoRotation != UZConstant.VIDEO_ROTATION_0
-            && videoRotation != UZConstant.VIDEO_ROTATION_90
-            && videoRotation != UZConstant.VIDEO_ROTATION_180
-            && videoRotation != UZConstant.VIDEO_ROTATION_270
+        if (videoRotation != UZConstant.VIDEO_ROTATION_0 &&
+            videoRotation != UZConstant.VIDEO_ROTATION_90 &&
+            videoRotation != UZConstant.VIDEO_ROTATION_180 &&
+            videoRotation != UZConstant.VIDEO_ROTATION_270
         ) {
             showToast("Rotation could be 90, 180, 270 or 0")
             return
         }
-        if (audioBitrate != UZConstant.AUDIO_BITRATE_32
-            && audioBitrate != UZConstant.AUDIO_BITRATE_64
-            && audioBitrate != UZConstant.AUDIO_BITRATE_128
-            && audioBitrate != UZConstant.AUDIO_BITRATE_256
+        if (audioBitrate != UZConstant.AUDIO_BITRATE_32 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_64 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_128 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_256
         ) {
             showToast("audioBitrate could be 32, 64, 128 or 256")
             return
         }
-        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
+        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
         ) {
             showToast("audioSampleRate could be 8000, 16000, 22500, 32000, 44100")
             return
@@ -169,6 +170,6 @@ class DisplayAdvancedSettingDialog(
     }
 
     private fun showToast(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 }

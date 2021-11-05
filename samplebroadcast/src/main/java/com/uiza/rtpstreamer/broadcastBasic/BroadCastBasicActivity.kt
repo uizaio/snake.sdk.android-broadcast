@@ -24,8 +24,8 @@ class BroadCastBasicActivity : AppCompatActivity() {
     private var videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
     private var videoFps = UZConstant.VIDEO_FPS_DEFAULT
     private var videoBitrate = UZConstant.VIDEO_BITRATE_DEFAULT
-    private var audioBitrate = UZConstant.AUDIO_BITRATE_64
-    private var audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_32000
+    private var audioBitrate = UZConstant.AUDIO_BITRATE_DEFAULT
+    private var audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_DEFAULT
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
@@ -98,7 +98,7 @@ class BroadCastBasicActivity : AppCompatActivity() {
     }
 
     private fun showToast(msg: String?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private fun handleBStartTop() {
@@ -149,14 +149,14 @@ class BroadCastBasicActivity : AppCompatActivity() {
     private fun setTextSetting() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
-                    "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+            "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
+            ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
     }
 
     private fun startPreview() {
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
 
-        //Option 1: in case you want to customize width, height
+        // Option 1: in case you want to customize width, height
         uzBroadCastView.startPreview(
             cameraFacing = CameraHelper.Facing.FRONT,
             width = videoWidth,
@@ -164,7 +164,7 @@ class BroadCastBasicActivity : AppCompatActivity() {
             rotation = CameraHelper.getCameraOrientation(this)
         )
 
-        //Option 2: in case you want to SDK choose the width, height automatically
+        // Option 2: in case you want to SDK choose the width, height automatically
 //        val cameraSize = uzBroadCastView.getStableCameraSize()
 //        videoWidth = cameraSize.width
 //        videoHeight = cameraSize.height
