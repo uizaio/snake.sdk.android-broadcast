@@ -41,8 +41,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
     private var videoFps = UZConstant.VIDEO_FPS_DEFAULT
     private var videoBitrate = UZConstant.VIDEO_BITRATE_DEFAULT
-    private var audioBitrate = UZConstant.AUDIO_BITRATE_64
-    private var audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_32000
+    private var audioBitrate = UZConstant.AUDIO_BITRATE_DEFAULT
+    private var audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_DEFAULT
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
@@ -452,7 +452,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     }
 
     private fun showToast(msg: String?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private fun handleBScreenRotation() {
@@ -461,8 +461,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
             videoFps = UZConstant.VIDEO_FPS_DEFAULT
             videoBitrate = UZConstant.VIDEO_BITRATE_DEFAULT
-            audioBitrate = UZConstant.AUDIO_BITRATE_64
-            audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_32000
+            audioBitrate = UZConstant.AUDIO_BITRATE_DEFAULT
+            audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_DEFAULT
             audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
             audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
             audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT

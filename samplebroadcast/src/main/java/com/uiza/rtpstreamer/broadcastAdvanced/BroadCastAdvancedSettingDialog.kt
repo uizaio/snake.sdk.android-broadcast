@@ -29,17 +29,19 @@ class BroadCastAdvancedSettingDialog(
 
     private val logTag = javaClass.simpleName
 
-    var onOk: ((
-        videoWidth: Int,
-        videoHeight: Int,
-        videoFps: Int,
-        videoBitrate: Int,
-        audioBitrate: Int,
-        audioSampleRate: Int,
-        audioIsStereo: Boolean,
-        audioEchoCanceler: Boolean,
-        audioNoiseSuppressor: Boolean,
-    ) -> Unit)? = null
+    var onOk: (
+        (
+            videoWidth: Int,
+            videoHeight: Int,
+            videoFps: Int,
+            videoBitrate: Int,
+            audioBitrate: Int,
+            audioSampleRate: Int,
+            audioIsStereo: Boolean,
+            audioEchoCanceler: Boolean,
+            audioNoiseSuppressor: Boolean,
+        ) -> Unit
+    )? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,21 +133,22 @@ class BroadCastAdvancedSettingDialog(
             showToast("Invalid setting")
             return
         }
-        if (audioBitrate != UZConstant.AUDIO_BITRATE_32
-            && audioBitrate != UZConstant.AUDIO_BITRATE_64
-            && audioBitrate != UZConstant.AUDIO_BITRATE_128
-            && audioBitrate != UZConstant.AUDIO_BITRATE_256
+        if (audioBitrate != UZConstant.AUDIO_BITRATE_32 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_64 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_128 &&
+            audioBitrate != UZConstant.AUDIO_BITRATE_256
         ) {
             showToast("audioBitrate could be 32, 64, 128 or 256")
             return
         }
-        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000
-            && audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100
+        if (audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_8000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_16000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_22500 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_32000 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_44100 &&
+            audioSampleRate != UZConstant.AUDIO_SAMPLE_RATE_48000
         ) {
-            showToast("audioSampleRate could be 8000, 16000, 22500, 32000, 44100")
+            showToast("audioSampleRate could be 8000, 16000, 22500, 32000, 44100, 48000")
             return
         }
         onOk?.invoke(
@@ -163,6 +166,6 @@ class BroadCastAdvancedSettingDialog(
     }
 
     private fun showToast(msg: String?) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 }

@@ -122,9 +122,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null && (requestCode == UZDisplayView.REQUEST_CODE_STREAM
-                    || requestCode == UZDisplayView.REQUEST_CODE_RECORD
-                    && resultCode == RESULT_OK)
+        if (data != null && (
+            requestCode == UZDisplayView.REQUEST_CODE_STREAM ||
+                requestCode == UZDisplayView.REQUEST_CODE_RECORD &&
+                resultCode == RESULT_OK
+            )
         ) {
             val endPoint = etRtpUrl.text.toString()
             uzDisplayBroadCast.onActivityResult(
@@ -174,8 +176,8 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             )
             displaySettingDialog.onOk =
                 {
-                        videoWidth: Int, videoHeight: Int, videoFps: Int, videoBitrate: Int, videoRotation: Int, videoDpi: Int,
-                        audioBitrate: Int, audioSampleRate: Int, audioIsStereo: Boolean, audioEchoCanceler: Boolean, audioNoiseSuppressor: Boolean,
+                    videoWidth: Int, videoHeight: Int, videoFps: Int, videoBitrate: Int, videoRotation: Int, videoDpi: Int,
+                    audioBitrate: Int, audioSampleRate: Int, audioIsStereo: Boolean, audioEchoCanceler: Boolean, audioNoiseSuppressor: Boolean,
                     ->
                     this.videoWidth = videoWidth
                     this.videoHeight = videoHeight
@@ -193,7 +195,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             displaySettingDialog.show(supportFragmentManager, displaySettingDialog.tag)
         }
 
-        //stop streaming
+        // stop streaming
         uzDisplayBroadCast.stop(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
@@ -212,7 +214,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun setupTvSetting() {
         tvSetting.text =
             "videoWidth: $videoWidth, videoHeight: $videoHeight, videoFps: $videoFps, videoBitrate: $videoBitrate, videoRotation: $videoRotation, videoDpi: $videoDpi" +
-                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
+            "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
     }
 
     private fun handleBStartTop() {
@@ -246,7 +248,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     }
 
     private fun showToast(msg: String?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private fun handleUI() {

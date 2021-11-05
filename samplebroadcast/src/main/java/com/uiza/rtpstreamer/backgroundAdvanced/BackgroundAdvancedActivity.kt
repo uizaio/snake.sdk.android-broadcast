@@ -24,8 +24,8 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private var videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
     private var videoFps = UZConstant.VIDEO_FPS_DEFAULT
     private var videoBitrate = UZConstant.VIDEO_BITRATE_DEFAULT
-    private var audioBitrate = UZConstant.AUDIO_BITRATE_64
-    private var audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_32000
+    private var audioBitrate = UZConstant.AUDIO_BITRATE_DEFAULT
+    private var audioSampleRate = UZConstant.AUDIO_SAMPLE_RATE_DEFAULT
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
@@ -71,7 +71,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
 
-            //reconnect if needed
+            // reconnect if needed
             val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
             if (retrySuccess != true) {
                 runOnUiThread {
@@ -167,15 +167,15 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                 audioNoiseSuppressor = audioNoiseSuppressor,
             )
             dialog.onOk = {
-                    videoWidth: Int,
-                    videoHeight: Int,
-                    videoFps: Int,
-                    videoBitrate: Int,
-                    audioBitrate: Int,
-                    audioSampleRate: Int,
-                    audioIsStereo: Boolean,
-                    audioEchoCanceler: Boolean,
-                    audioNoiseSuppressor: Boolean,
+                videoWidth: Int,
+                videoHeight: Int,
+                videoFps: Int,
+                videoBitrate: Int,
+                audioBitrate: Int,
+                audioSampleRate: Int,
+                audioIsStereo: Boolean,
+                audioEchoCanceler: Boolean,
+                audioNoiseSuppressor: Boolean,
                 ->
                 this.videoWidth = videoWidth
                 this.videoHeight = videoHeight
@@ -205,7 +205,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             dialog.show(supportFragmentManager, dialog.tag)
         }
 
-        //stop streaming if exist
+        // stop streaming if exist
         uzBackgroundView.stopStream(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
@@ -258,7 +258,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
 
     private fun handleBEnableFaceDetection() {
         uzBackgroundView.enableFaceDetection { _, _, _ ->
-            //do nothing
+            // do nothing
         }
         showToast("isFaceDetectionEnabled ${uzBackgroundView.isFaceDetectionEnabled()}")
     }
@@ -346,7 +346,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     }
 
     private fun showToast(msg: String?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private fun handleUI() {
@@ -367,18 +367,18 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun setTextSetting() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
-                    "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+            "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
+            ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
     }
 
     private fun startPreview() {
-        //Option 1: in case you want to customize width, height
+        // Option 1: in case you want to customize width, height
         uzBackgroundView.startPreview(
             videoWidth = videoWidth,
             videoHeight = videoHeight,
         )
 
-        //Option 2: in case you want to SDK choose the width, height automatically
+        // Option 2: in case you want to SDK choose the width, height automatically
 //        val cameraSize = uzBackgroundView.getStableCameraSize()
 //        videoWidth = cameraSize.width
 //        videoHeight = cameraSize.height

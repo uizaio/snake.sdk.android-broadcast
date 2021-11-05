@@ -44,7 +44,7 @@ class PlayerBasicActivity : AppCompatActivity() {
 
     private fun onPlay(link: String) {
         if (link.isEmpty()) {
-            Toast.makeText(this, "Link play is empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Link play is empty", Toast.LENGTH_LONG).show()
             return
         }
         if (uzVideoView.isViewCreated()) {
