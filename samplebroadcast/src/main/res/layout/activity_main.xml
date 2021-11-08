@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="BroadCastBasicActivity" />
+            android:text="BroadCastBasicActivity (Foreground)" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bBroadcastBackgroundBasic"
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
-            android:text="BroadCastAdvancedActivity" />
+            android:text="BroadCastAdvancedActivity (Foreground)" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bBroadcastBackgroundAdvanced"
