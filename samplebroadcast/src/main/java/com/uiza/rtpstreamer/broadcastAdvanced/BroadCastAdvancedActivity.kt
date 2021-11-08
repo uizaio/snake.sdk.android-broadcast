@@ -46,8 +46,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
-
-    private var resumeBroadcasting = false
+    private var autoStreamingAfterOnPause = true
+    private var firstStartStream = true
+    private var userWantToStopStream = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +57,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         folder = UZPathUtils.getRecordPath(this)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupViews()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        resumeBroadcasting = true
     }
 
     @SuppressLint("SetTextI18n")
@@ -101,11 +97,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         uzBroadCastView.onSurfaceChanged =
             { _: SurfaceHolder, _: Int, _: Int, _: Int ->
                 startPreview(true)
-
-                // resume broadcasting after onPause
-                if (resumeBroadcasting) {
-                    resumeBroadcasting = false
-                    bStartTop.performClick()
+                if (autoStreamingAfterOnPause && !firstStartStream && !userWantToStopStream) {
+                    start()
                 }
             }
         uzBroadCastView.onSurfaceDestroyed = { _: SurfaceHolder ->
@@ -558,14 +551,22 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         openSheet()
     }
 
-    private fun handleBStartTop() {
+    private fun start() {
         if (!uzBroadCastView.isStreaming()) {
             if (uzBroadCastView.isRecording() || prepareAudio() && prepareVideo()) {
                 uzBroadCastView.startStream(etRtpUrl.text.toString())
+                if (firstStartStream) {
+                    firstStartStream = false
+                }
+                userWantToStopStream = false
             } else {
                 showToast("Error preparing stream, This device cant do it")
             }
-        } else {
+        }
+    }
+
+    private fun stop() {
+        if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
                     bStartTop.isVisible = false
@@ -576,6 +577,15 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                     progressBar.isVisible = false
                 }
             )
+            userWantToStopStream = true
+        }
+    }
+
+    private fun handleBStartTop() {
+        if (uzBroadCastView.isStreaming()) {
+            stop()
+        } else {
+            start()
         }
     }
 
