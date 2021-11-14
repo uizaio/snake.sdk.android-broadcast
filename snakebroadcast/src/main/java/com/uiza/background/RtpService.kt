@@ -23,7 +23,7 @@ import com.pedro.rtplibrary.util.FpsListener
 import com.pedro.rtplibrary.view.OpenGlView
 import com.uiza.R
 import com.uiza.broadcast.CameraSize
-import com.uiza.display.*
+import com.uiza.display.* // ktlint-disable no-wildcard-imports
 import com.uiza.util.UZConstant
 import org.greenrobot.eventbus.EventBus
 
@@ -134,7 +134,6 @@ class RtpService : Service() {
             override fun onNewBitrateRtp(bitrate: Long) {
 //                Log.d(TAG, "onNewBitrateRtp")
                 EventBus.getDefault().post(OnNewBitrateRtp(bitrate))
-
             }
 
             override fun onConnectionFailedRtp(reason: String) {
@@ -276,7 +275,7 @@ class RtpService : Service() {
         fun getResolutionsBack(): List<CameraSize> {
             val listResolutionsBack = camera2Base?.resolutionsBack ?: emptyList()
             val list = ArrayList<CameraSize>()
-            //remove item square
+            // remove item square
             listResolutionsBack.forEach {
                 val w = it.width
                 val h = it.height
@@ -290,7 +289,7 @@ class RtpService : Service() {
         fun getResolutionsFront(): List<CameraSize> {
             val listResolutionsFront = camera2Base?.resolutionsFront ?: emptyList()
             val list = ArrayList<CameraSize>()
-            //remove item square
+            // remove item square
             listResolutionsFront.forEach {
                 val w = it.width
                 val h = it.height
@@ -502,14 +501,14 @@ class RtpService : Service() {
                         videoFps,
                         videoBitrate * 1024,
                         rotation
-                    )
-                    && cam.prepareAudio(
-                        audioBitrate * 1024,
-                        audioSampleRate,
-                        audioIsStereo,
-                        audioEchoCanceler,
-                        audioNoiseSuppressor
-                    )
+                    ) &&
+                    cam.prepareAudio(
+                            audioBitrate * 1024,
+                            audioSampleRate,
+                            audioIsStereo,
+                            audioEchoCanceler,
+                            audioNoiseSuppressor
+                        )
                 ) {
 //                    facing?.let {
 //                        startPreview(

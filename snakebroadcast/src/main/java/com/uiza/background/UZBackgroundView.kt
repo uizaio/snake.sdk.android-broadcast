@@ -20,7 +20,7 @@ import com.pedro.encoder.input.video.CameraOpenException
 import com.pedro.rtplibrary.util.BitrateAdapter
 import com.uiza.R
 import com.uiza.broadcast.CameraSize
-import com.uiza.display.*
+import com.uiza.display.* // ktlint-disable no-wildcard-imports
 import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.layout_uz_background.view.*
@@ -42,7 +42,7 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
     var onAuthErrorRtp: ((Unit) -> Unit)? = null
     var onAuthSuccessRtp: ((Unit) -> Unit)? = null
 
-    //Adaptative video bitrate
+    // Adaptative video bitrate
     private var bitrateAdapter: BitrateAdapter? = null
     var isAdaptativeVideoBitrate = true
 
@@ -132,7 +132,7 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
         return UZUtil.getStableCameraSize(resolutionCamera)
     }
 
-    //Stop camera preview. Ignored if streaming or already stopped. You need call it after
+    // Stop camera preview. Ignored if streaming or already stopped. You need call it after
     fun stopPreview() {
         RtpService.stopPreview()
     }
@@ -249,7 +249,7 @@ class UZBackgroundView : FrameLayout, LifecycleObserver, SurfaceHolder.Callback 
 //    Params:
 //    baseFilterRender – filter to set. You can modify parameters to filter after set it to stream.
 
-    //didn't work when app is running in background
+    // didn't work when app is running in background
 //    fun setFilter(baseFilterRender: BaseFilterRender) {
 //        RtpService.setFilter(baseFilterRender)
 //    }

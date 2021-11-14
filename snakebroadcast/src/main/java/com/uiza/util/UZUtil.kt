@@ -46,7 +46,7 @@ class UZUtil {
 
         fun getStableCameraSize(resolutionCamera: List<CameraSize>): CameraSize {
 
-            //1280x960
+            // 1280x960
             val list1280Width = resolutionCamera.filter {
                 it.width == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_1280
             }.sortedBy { it.height }
@@ -61,7 +61,7 @@ class UZUtil {
                 return list1280Height.last()
             }
 
-            //720x480
+            // 720x480
             val list720Width = resolutionCamera.filter {
                 it.width == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_720
             }.sortedBy { it.height }
@@ -69,7 +69,7 @@ class UZUtil {
                 return list720Width.last()
             }
 
-            //1640x720
+            // 1640x720
             val list720Height = resolutionCamera.filter {
                 it.height == UZConstant.RESOLUTION_STABLE_FOR_SYSTEM_UIZA_720
             }.sortedBy { it.width }
