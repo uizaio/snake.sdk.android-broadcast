@@ -2,13 +2,17 @@ package com.uiza.rtpstreamer.backgroundBasic
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
+import com.uiza.sdk.utils.ConnectivityUtils
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import kotlinx.android.synthetic.main.activity_background_basic.*
@@ -45,6 +49,7 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
+        Glide.with(this).load(R.drawable.dot).into(ivDot)
         etRtpUrl.setText(UZApplication.URL_STREAM)
 
         uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, _: Int, _: Int ->
@@ -59,11 +64,11 @@ class BackgroundBasicActivity : AppCompatActivity() {
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            updateDot()
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
-
             // reconnect if needed
             val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
             if (retrySuccess != true) {
@@ -147,6 +152,17 @@ class BackgroundBasicActivity : AppCompatActivity() {
             bStartTop.setText(R.string.start_button)
             bSwitchCamera.isVisible = false
         }
+    }
+
+    private val handlerDot = Handler(Looper.getMainLooper())
+    private fun updateDot() {
+        if (uzBackgroundView.isStreaming() == true && ConnectivityUtils.isConnected(this)) {
+            ivDot.isVisible = true
+        }
+        handlerDot.removeCallbacksAndMessages(null)
+        handlerDot.postDelayed({
+            ivDot.isVisible = false
+        }, 1000)
     }
 
     @SuppressLint("SetTextI18n")
