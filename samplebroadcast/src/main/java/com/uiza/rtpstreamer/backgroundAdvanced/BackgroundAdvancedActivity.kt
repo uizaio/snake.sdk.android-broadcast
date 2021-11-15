@@ -14,6 +14,7 @@ import com.pedro.encoder.input.video.CameraHelper
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
+import com.uiza.sdk.utils.ConnectivityUtils
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import kotlinx.android.synthetic.main.activity_background_advanced.*
@@ -67,12 +68,14 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             handleUI()
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
+            Log.d(logTag, "onNewBitrateRtp $bitrate")
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            updateDot()
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
-
+            updateDot()
             // reconnect if needed
             val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
             if (retrySuccess != true) {
@@ -84,6 +87,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"
             handleUI()
+            updateDot()
         }
         uzBackgroundView.onAuthErrorRtp = {
             tvStatus.text = "onAuthErrorRtp"
@@ -356,13 +360,16 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             bStartTop.setText(R.string.stop_button)
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
-            ivDot.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
-            ivDot.isVisible = false
         }
+    }
+
+    private fun updateDot() {
+        ivDot.isVisible =
+            uzBackgroundView.isStreaming() == true && ConnectivityUtils.isConnected(this)
     }
 
     @SuppressLint("SetTextI18n")
