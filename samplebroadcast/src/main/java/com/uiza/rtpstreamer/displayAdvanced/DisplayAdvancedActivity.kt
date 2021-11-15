@@ -74,6 +74,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            updateDot()
         }
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
             Log.d(logTag, "onConnectionFailedRtp reason $reason")
@@ -261,5 +262,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }
+    }
+
+    private fun updateDot() {
+        ivDot.isVisible = true
+        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
     }
 }
