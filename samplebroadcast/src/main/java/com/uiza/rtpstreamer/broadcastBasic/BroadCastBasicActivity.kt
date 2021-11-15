@@ -76,6 +76,7 @@ class BroadCastBasicActivity : AppCompatActivity() {
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
+            updateDot()
         }
         uzBroadCastView.onSurfaceChanged = { _: SurfaceHolder, _: Int, w: Int, h: Int ->
             Log.d(logTag, "onSurfaceChanged $w x $h")
@@ -225,6 +226,13 @@ class BroadCastBasicActivity : AppCompatActivity() {
             } else {
                 bStartTop.setText(R.string.start_button)
             }
+        }
+    }
+
+    private fun updateDot() {
+        ivDot.post {
+            ivDot.isVisible = true
+            ivDot.postDelayed({ ivDot.isVisible = false }, 100)
         }
     }
 }
