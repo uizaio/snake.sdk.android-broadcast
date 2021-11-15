@@ -8,6 +8,7 @@ import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.uiza.UZApplication
@@ -46,6 +47,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
+        Glide.with(this).load(R.drawable.dot).into(ivDot)
         etRtpUrl.setText(UZApplication.URL_STREAM)
         uzBackgroundView.onSurfaceCreated = {
             Log.d(logTag, "surfaceCreated")
@@ -352,14 +354,14 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
-
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
+            ivDot.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
-
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
+            ivDot.isVisible = false
         }
     }
 
