@@ -78,7 +78,7 @@ class BroadCastBasicActivity : AppCompatActivity() {
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
         }
         uzBroadCastView.onSurfaceChanged = { _: SurfaceHolder, _: Int, w: Int, h: Int ->
-            Log.d("loitpp", "onSurfaceChanged $w x $h")
+            Log.d(logTag, "onSurfaceChanged $w x $h")
             startPreview()
             if (autoStreamingAfterOnPause && !firstStartStream && !userWantToStopStream) {
                 start()

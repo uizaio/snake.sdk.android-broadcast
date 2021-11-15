@@ -93,6 +93,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             setTextStatus("onNewBitrateRtmp bitrate $bitrate")
+            updateDot()
         }
         uzBroadCastView.onSurfaceChanged =
             { _: SurfaceHolder, _: Int, _: Int, _: Int ->
@@ -809,6 +810,13 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 bDisableAudio.isVisible = false
                 bEnableAudio.isVisible = false
             }
+        }
+    }
+
+    private fun updateDot() {
+        ivDot.post {
+            ivDot.isVisible = true
+            ivDot.postDelayed({ ivDot.isVisible = false }, 100)
         }
     }
 }
