@@ -8,13 +8,11 @@ import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
-import com.uiza.sdk.utils.ConnectivityUtils
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import kotlinx.android.synthetic.main.activity_background_advanced.*
@@ -48,7 +46,6 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
-        Glide.with(this).load(R.drawable.dot).into(ivDot)
         etRtpUrl.setText(UZApplication.URL_STREAM)
         uzBackgroundView.onSurfaceCreated = {
             Log.d(logTag, "surfaceCreated")
@@ -75,7 +72,6 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
-            updateDot()
             // reconnect if needed
             val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
             if (retrySuccess != true) {
@@ -87,7 +83,6 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"
             handleUI()
-            updateDot()
         }
         uzBackgroundView.onAuthErrorRtp = {
             tvStatus.text = "onAuthErrorRtp"
@@ -368,8 +363,8 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     }
 
     private fun updateDot() {
-        ivDot.isVisible =
-            uzBackgroundView.isStreaming() == true && ConnectivityUtils.isConnected(this)
+        ivDot.isVisible = true
+        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
     }
 
     @SuppressLint("SetTextI18n")

@@ -20,9 +20,11 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivDot"
-        android:layout_width="@dimen/w_50"
-        android:layout_height="@dimen/w_50"
+        android:layout_width="@dimen/w_30"
+        android:layout_height="@dimen/w_30"
         android:layout_below="@+id/etRtpUrl"
+        android:layout_margin="@dimen/margin_padding_medium"
+        android:src="@drawable/circle_red"
         android:visibility="gone"
         tools:visibility="visible" />
 

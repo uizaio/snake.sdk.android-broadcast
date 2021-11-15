@@ -2,8 +2,6 @@ package com.uiza.rtpstreamer.backgroundBasic
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.MenuItem
 import android.view.SurfaceHolder
 import android.widget.Toast
@@ -12,7 +10,6 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
-import com.uiza.sdk.utils.ConnectivityUtils
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import kotlinx.android.synthetic.main.activity_background_basic.*
@@ -154,15 +151,9 @@ class BackgroundBasicActivity : AppCompatActivity() {
         }
     }
 
-    private val handlerDot = Handler(Looper.getMainLooper())
     private fun updateDot() {
-        if (uzBackgroundView.isStreaming() == true && ConnectivityUtils.isConnected(this)) {
-            ivDot.isVisible = true
-        }
-        handlerDot.removeCallbacksAndMessages(null)
-        handlerDot.postDelayed({
-            ivDot.isVisible = false
-        }, 1000)
+        ivDot.isVisible = true
+        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
     }
 
     @SuppressLint("SetTextI18n")
