@@ -174,12 +174,12 @@ class DisplayService : Service() {
             displayBase?.stopRecord()
         }
 
-        //Mute microphone, can be called before, while and after stream.
+        // Mute microphone, can be called before, while and after stream.
         fun disableAudio() {
             displayBase?.disableAudio()
         }
 
-        //Enable a muted microphone, can be called before, while and after stream.
+        // Enable a muted microphone, can be called before, while and after stream.
         fun enableAudio() {
             displayBase?.enableAudio()
         }
@@ -362,14 +362,14 @@ class DisplayService : Service() {
                         videoBitrate * 1024,
                         videoRotation,
                         videoDpi
-                    )
-                    && db.prepareAudio(
-                        audioBitrate * 1024,
-                        audioSampleRate,
-                        audioIsStereo,
-                        audioEchoCanceler,
-                        audioNoiseSuppressor
-                    )
+                    ) &&
+                    db.prepareAudio(
+                            audioBitrate * 1024,
+                            audioSampleRate,
+                            audioIsStereo,
+                            audioEchoCanceler,
+                            audioNoiseSuppressor
+                        )
                 ) {
                     db.startStream(endpoint)
                 } else {

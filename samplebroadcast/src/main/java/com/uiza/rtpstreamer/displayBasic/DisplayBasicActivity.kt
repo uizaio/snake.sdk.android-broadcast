@@ -70,6 +70,7 @@ class DisplayBasicActivity : AppCompatActivity() {
         }
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            updateDot()
         }
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
             handleUI()
@@ -167,5 +168,10 @@ class DisplayBasicActivity : AppCompatActivity() {
         } else {
             bStartTop.setText(R.string.start_button)
         }
+    }
+
+    private fun updateDot() {
+        ivDot.isVisible = true
+        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
     }
 }

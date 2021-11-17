@@ -65,12 +65,13 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
             handleUI()
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
+            Log.d(logTag, "onNewBitrateRtp $bitrate")
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            updateDot()
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
-
             // reconnect if needed
             val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
             if (retrySuccess != true) {
@@ -352,15 +353,18 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartTop.setText(R.string.stop_button)
-
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
         } else {
             bStartTop.setText(R.string.start_button)
-
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }
+    }
+
+    private fun updateDot() {
+        ivDot.isVisible = true
+        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
     }
 
     @SuppressLint("SetTextI18n")

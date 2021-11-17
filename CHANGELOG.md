@@ -1,3 +1,7 @@
+### 1.1.5 (2021-11-17)
+- Add sample how to show dot view when broadcasting.
+- Update core RTMP version
+
 ### 1.1.4 (2021-11-5)
 - We removed BitrateAdapter so you do not need class BitrateAdapter on your code. We have already handle this feature on SDK.
 

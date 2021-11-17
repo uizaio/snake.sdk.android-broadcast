@@ -7,6 +7,7 @@ import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
@@ -45,6 +46,7 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
+        Glide.with(this).load(R.drawable.dot).into(ivDot)
         etRtpUrl.setText(UZApplication.URL_STREAM)
 
         uzBackgroundView.onSurfaceChanged = { _: SurfaceHolder, _: Int, _: Int, _: Int ->
@@ -59,11 +61,11 @@ class BackgroundBasicActivity : AppCompatActivity() {
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
             tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            updateDot()
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
-
             // reconnect if needed
             val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
             if (retrySuccess != true) {
@@ -147,6 +149,11 @@ class BackgroundBasicActivity : AppCompatActivity() {
             bStartTop.setText(R.string.start_button)
             bSwitchCamera.isVisible = false
         }
+    }
+
+    private fun updateDot() {
+        ivDot.isVisible = true
+        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
     }
 
     @SuppressLint("SetTextI18n")

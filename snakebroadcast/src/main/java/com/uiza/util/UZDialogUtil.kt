@@ -23,12 +23,12 @@ class UZDialogUtil {
                 )
             )
             if (title.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setTitle(title)
             }
             if (msg.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setMessage(msg)
             }
@@ -58,12 +58,12 @@ class UZDialogUtil {
             )
 
             if (title.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setTitle(title)
             }
             if (msg.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setMessage(msg)
             }
@@ -96,31 +96,31 @@ class UZDialogUtil {
                 )
             )
             if (title.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setTitle(title)
             }
             if (msg.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setMessage(msg)
             }
             if (button1.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setNegativeButton(button1) { _, _ ->
                     onClickButton1?.invoke(Unit)
                 }
             }
             if (button2.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setPositiveButton(button2) { _, _ ->
                     onClickButton2?.invoke(Unit)
                 }
             }
             if (button3.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setNeutralButton(button3) { _, _ ->
                     onClickButton3?.invoke(Unit)
@@ -145,7 +145,7 @@ class UZDialogUtil {
                 )
             )
             if (title.isNullOrEmpty()) {
-                //do nothing
+                // do nothing
             } else {
                 builder.setTitle(title)
             }
