@@ -29,7 +29,7 @@ dependencies {
 }
 ```
 
-Get latest release number [HERE](httpshttps://github.com/uizaio/snake.sdk.android-broadcast/releases).
+Get latest release number [HERE](https://github.com/uizaio/snake.sdk.android-broadcast/releases).
 
 <br />
 <br />
