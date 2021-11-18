@@ -153,7 +153,7 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     private fun updateDot() {
         ivDot.isVisible = true
-        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
+        ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
     }
 
     @SuppressLint("SetTextI18n")

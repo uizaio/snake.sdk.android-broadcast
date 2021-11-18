@@ -232,7 +232,7 @@ class BroadCastBasicActivity : AppCompatActivity() {
     private fun updateDot() {
         ivDot.post {
             ivDot.isVisible = true
-            ivDot.postDelayed({ ivDot.isVisible = false }, 100)
+            ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
         }
     }
 }
