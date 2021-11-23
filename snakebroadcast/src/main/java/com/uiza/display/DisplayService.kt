@@ -1,5 +1,6 @@
 package com.uiza.display
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -47,7 +48,9 @@ class DisplayService : Service() {
         private const val channelId = "rtpDisplayStreamChannel"
         const val notifyId = 123456
         private var notificationManager: NotificationManager? = null
+        @SuppressLint("StaticFieldLeak")
         private var displayBase: DisplayBase? = null
+        @SuppressLint("StaticFieldLeak")
         private var contextApp: Context? = null
         private var resultCode: Int? = null
         private var data: Intent? = null

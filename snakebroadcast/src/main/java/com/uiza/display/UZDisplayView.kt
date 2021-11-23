@@ -30,7 +30,6 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
         const val REQUEST_CODE_RECORD = 180
     }
 
-    private val logTag = javaClass.simpleName
     private var notificationManager: NotificationManager? = null
     var onConnectionStartedRtp: ((rtpUrl: String?) -> Unit)? = null
     var onConnectionSuccessRtp: ((Unit) -> Unit)? = null
