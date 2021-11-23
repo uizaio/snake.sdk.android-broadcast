@@ -19,7 +19,6 @@ class BackgroundBasicActivity : AppCompatActivity() {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
-    private val logTag = javaClass.simpleName
     private var videoWidth = UZConstant.VIDEO_WIDTH_DEFAULT
     private var videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
     private var videoFps = UZConstant.VIDEO_FPS_DEFAULT
