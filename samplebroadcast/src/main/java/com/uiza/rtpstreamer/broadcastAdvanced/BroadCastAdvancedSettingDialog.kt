@@ -27,8 +27,6 @@ class BroadCastAdvancedSettingDialog(
     private val audioNoiseSuppressor: Boolean,
 ) : BottomSheetDialogFragment() {
 
-    private val logTag = javaClass.simpleName
-
     var onOk: (
         (
             videoWidth: Int,

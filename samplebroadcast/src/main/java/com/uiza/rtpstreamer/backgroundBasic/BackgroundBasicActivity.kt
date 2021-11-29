@@ -19,7 +19,6 @@ class BackgroundBasicActivity : AppCompatActivity() {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
-    private val logTag = javaClass.simpleName
     private var videoWidth = UZConstant.VIDEO_WIDTH_DEFAULT
     private var videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
     private var videoFps = UZConstant.VIDEO_FPS_DEFAULT
@@ -153,7 +152,7 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     private fun updateDot() {
         ivDot.isVisible = true
-        ivDot.postDelayed({ ivDot.isVisible = false }, 100)
+        ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
     }
 
     @SuppressLint("SetTextI18n")

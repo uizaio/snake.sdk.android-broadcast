@@ -9,10 +9,10 @@ group = 'com.github.uizaio'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
     }
     dexOptions {
         jumboMode true
@@ -30,8 +30,8 @@ android {
 dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'com.google.android.material:material:1.4.0'
-    api "androidx.core:core-ktx:1.6.0"
-    api 'org.jetbrains:annotations:16.0.1'
+    api "androidx.core:core-ktx:1.7.0"
+    api 'org.jetbrains:annotations:20.1.0'
     api 'org.greenrobot:eventbus:3.2.0'
     //https://github.com/pedroSG94/rtmp-rtsp-stream-client-java
     api 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:2.1.4'

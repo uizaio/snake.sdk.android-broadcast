@@ -453,6 +453,178 @@ Returns: true if muted, false if enabled
 <br />
 <br />
 
+## # Real time filters
+This library support OpenGL real time filters
+
+AnalogTV
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/analog_tv.png?raw=true" alt="drawing" width="300"/>
+
+Android view
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/android_view.png?raw=true" alt="drawing" width="300"/>
+
+Basic deformation
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/basic_deformation.png?raw=true" alt="drawing" width="300"/>
+
+Beauty
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/beauty.png?raw=true" alt="drawing" width="300"/>
+
+Black
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/black.png?raw=true" alt="drawing" width="300"/>
+
+Blur
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/blur.png?raw=true" alt="drawing" width="300"/>
+
+Brightness
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/brightness.png?raw=true" alt="drawing" width="300"/>
+
+Cartoon
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/cartoon.png?raw=true" alt="drawing" width="300"/>
+
+Chroma
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/chroma.png?raw=true" alt="drawing" width="300"/>
+
+Circle
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/cirlcle.png?raw=true" alt="drawing" width="300"/>
+
+Color
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/color.png?raw=true" alt="drawing" width="300"/>
+
+Contrast
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/constrast.png?raw=true" alt="drawing" width="300"/>
+
+Duotone
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/duotone.png?raw=true" alt="drawing" width="300"/>
+
+EarlyBird
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/earlybird.png?raw=true" alt="drawing" width="300"/>
+
+Edge detection
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/edge_detection.png?raw=true" alt="drawing" width="300"/>
+
+Exposure
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/exposure.png?raw=true" alt="drawing" width="300"/>
+
+Fire
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/fire.png?raw=true" alt="drawing" width="300"/>
+
+Gamma
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/gamma.png?raw=true" alt="drawing" width="300"/>
+
+Glitch
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/glitch.png?raw=true" alt="drawing" width="300"/>
+
+Gif
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/gif.png?raw=true" alt="drawing" width="300"/>
+
+Grey scale
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/grey_scale.png?raw=true" alt="drawing" width="300"/>
+
+Halftone lines
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/halftone_lines.png?raw=true" alt="drawing" width="300"/>
+
+Images 70s
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/image70s.png?raw=true" alt="drawing" width="300"/>
+
+Lamoish
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/lamoish.png?raw=true" alt="drawing" width="300"/>
+
+Money
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/money.png?raw=true" alt="drawing" width="300"/>
+
+Negative
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/negative.png?raw=true" alt="drawing" width="300"/>
+
+Pixelated
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/pixelated.png?raw=true" alt="drawing" width="300"/>
+
+Polygonization
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/polygonization.png?raw=true" alt="drawing" width="300"/>
+
+Rainbow
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/rainbow.png?raw=true" alt="drawing" width="300"/>
+
+RGB saturate
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/rgb_saturate.png?raw=true" alt="drawing" width="300"/>
+
+Ripple
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/ripple.png?raw=true" alt="drawing" width="300"/>
+
+Rotation
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/rotation.png?raw=true" alt="drawing" width="300"/>
+
+Saturation
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/saturation.png?raw=true" alt="drawing" width="300"/>
+
+Sepia
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/sepia.png?raw=true" alt="drawing" width="300"/>
+
+Sharpness
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/sharpness.png?raw=true" alt="drawing" width="300"/>
+
+Snow
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/snow.png?raw=true" alt="drawing" width="300"/>
+
+Swirl
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/swirl.png?raw=true" alt="drawing" width="300"/>
+
+Surface filter
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/surface_filter.png?raw=true" alt="drawing" width="300"/>
+
+Temperature
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/temperature.png?raw=true" alt="drawing" width="300"/>
+
+Text
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/text.png?raw=true" alt="drawing" width="300"/>
+
+Zebra
+
+<img src="https://github.com/uizaio/snake.sdk.android-broadcast/blob/loitp/dev/samplebroadcast/src/main/res/drawable/zebra.png?raw=true" alt="drawing" width="300"/>
+
+
+<br />
+<br />
+<br />
+<br />
 
 ## Features:
 

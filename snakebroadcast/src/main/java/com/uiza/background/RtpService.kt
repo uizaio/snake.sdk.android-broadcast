@@ -1,5 +1,6 @@
 package com.uiza.background
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -51,8 +52,10 @@ class RtpService : Service() {
 
         private const val notifyId = 123456
         private var notificationManager: NotificationManager? = null
+        @SuppressLint("StaticFieldLeak")
         private var camera2Base: Camera2Base? = null
         private var openGlView: OpenGlView? = null
+        @SuppressLint("StaticFieldLeak")
         private var contextApp: Context? = null
 
         fun setView(openGlView: OpenGlView) {
@@ -69,7 +72,7 @@ class RtpService : Service() {
         /**
          * Start camera preview. Ignored, if stream or preview is started.
          *
-         * @param cameraFacing front or back camera. Like: {@link com.pedro.encoder.input.video.CameraHelper.Facing#BACK}
+         * @param facing front or back camera. Like: {@link com.pedro.encoder.input.video.CameraHelper.Facing#BACK}
          * {@link com.pedro.encoder.input.video.CameraHelper.Facing#FRONT}
          * @param rotation camera rotation (0, 90, 180, 270). Recommended: {@link
          * com.pedro.encoder.input.video.CameraHelper#getCameraOrientation(Context)}
