@@ -1,3 +1,6 @@
+### 1.1.7 (2022-1-4)
+- Update core RTMP version
+
 ### 1.1.5 (2021-11-17)
 - Add sample how to show dot view when broadcasting.
 - Update core RTMP version

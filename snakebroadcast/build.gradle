@@ -28,13 +28,13 @@ android {
 }
 
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10"
     api 'com.google.android.material:material:1.4.0'
     api "androidx.core:core-ktx:1.7.0"
     api 'org.jetbrains:annotations:20.1.0'
     api 'org.greenrobot:eventbus:3.2.0'
     //https://github.com/pedroSG94/rtmp-rtsp-stream-client-java
-    api 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:2.1.4'
+    api 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:2.1.5'
 
     //https://github.com/bertrandmartel/speed-test-lib
 //    implementation 'fr.bmartel:jspeedtest:1.32.1'
