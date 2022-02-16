@@ -20,7 +20,6 @@ import com.uiza.rtpstreamer.displayAdvanced.DisplayAdvancedActivity
 import com.uiza.rtpstreamer.displayBasic.DisplayBasicActivity
 import com.uiza.rtpstreamer.player.PlayerBasicActivity
 import com.uiza.util.UZUtil
-import kotlinx.android.synthetic.main.activity_display_advanced.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
