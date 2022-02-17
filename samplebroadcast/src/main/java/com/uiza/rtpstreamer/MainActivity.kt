@@ -1,6 +1,7 @@
 package com.uiza.rtpstreamer
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,9 +9,12 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.uiza.rtpstreamer.backgroundAdvanced.BackgroundAdvancedActivity
 import com.uiza.rtpstreamer.backgroundBasic.BackgroundBasicActivity
@@ -71,6 +75,26 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PlayerBasicActivity::class.java)
             startActivity(intent)
         }
+
+        testCrashlytics()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun testCrashlytics() {
+        val crashButton = Button(this)
+        crashButton.text = "Test Crash"
+        crashButton.setOnClickListener {
+            throw RuntimeException("Test Crash") // Force a crash
+        }
+
+        addContentView(
+            crashButton,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        )
+        crashButton.isVisible = false
     }
 
     override fun onResume() {
