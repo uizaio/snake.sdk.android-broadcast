@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "232569745295",
+    "project_id": "broadcast-3de39",
+    "storage_bucket": "broadcast-3de39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232569745295:android:f5ad6f3a13946375f425fa",
+        "android_client_info": {
+          "package_name": "com.snake.broadcast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232569745295-80s0i3duftmsaqkqtij3ase47prrlrbm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snake.broadcast",
+            "certificate_hash": "95c13739bbc1af1ad1ddabf8c4eee37dc90d5e0d"
+          }
+        },
+        {
+          "client_id": "232569745295-01ocqr2816aimkskieuhpa0jdq1t1ebt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP3iB1wGizR_B3JdivGTrPY66LXmqLpp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232569745295-01ocqr2816aimkskieuhpa0jdq1t1ebt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
