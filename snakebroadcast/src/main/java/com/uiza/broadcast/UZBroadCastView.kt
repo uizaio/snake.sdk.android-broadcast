@@ -120,13 +120,13 @@ class UZBroadCastView :
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        Log.d(logTag, "surfaceCreated")
+//        Log.d(logTag, "surfaceCreated")
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        Log.d(logTag, "surfaceChanged width $width, height $height")
-        Log.d(logTag, "getStreamWidth ${getStreamWidth()}")
-        Log.d(logTag, "getStreamHeight ${getStreamHeight()}")
+//        Log.d(logTag, "surfaceChanged width $width, height $height")
+//        Log.d(logTag, "getStreamWidth ${getStreamWidth()}")
+//        Log.d(logTag, "getStreamHeight ${getStreamHeight()}")
         onSurfaceChanged?.invoke(holder, format, width, height)
     }
 

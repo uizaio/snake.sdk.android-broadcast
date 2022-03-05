@@ -92,7 +92,20 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             handleUI()
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
-            setTextStatus("onNewBitrateRtmp bitrate $bitrate")
+            tvNewBitrate.post {
+                tvNewBitrate.text = "onNewBitrateRtmp bitrate $bitrate -> "
+            }
+            tvLog.post {
+                val s =
+                    "getBitrate: ${uzBroadCastView.getBitrate()}" +
+                            "\ngetResolutionValue: ${uzBroadCastView.getResolutionValue()}" +
+                            "\nisStreaming: ${uzBroadCastView.isStreaming()}" +
+                            "\nisOnPreview: ${uzBroadCastView.isOnPreview()}" +
+                            "\ngetStableCameraSize ${uzBroadCastView.getStableCameraSize()}" +
+                            "\nisFaceDetectionEnabled: ${uzBroadCastView.isFaceDetectionEnabled()}" +
+                            "\nisVideoStabilizationEnabled: ${uzBroadCastView.isVideoStabilizationEnabled()}"
+                tvLog.text = s
+            }
             updateDot()
         }
         uzBroadCastView.onSurfaceChanged =
@@ -508,15 +521,15 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 audioNoiseSuppressor = audioNoiseSuppressor,
             )
             openGlSettingDialog.onOk = {
-                videoWidth: Int,
-                videoHeight: Int,
-                videoFps: Int,
-                videoBitrate: Int,
-                audioBitrate: Int,
-                audioSampleRate: Int,
-                audioIsStereo: Boolean,
-                audioEchoCanceler: Boolean,
-                audioNoiseSuppressor: Boolean,
+                    videoWidth: Int,
+                    videoHeight: Int,
+                    videoFps: Int,
+                    videoBitrate: Int,
+                    audioBitrate: Int,
+                    audioSampleRate: Int,
+                    audioIsStereo: Boolean,
+                    audioEchoCanceler: Boolean,
+                    audioNoiseSuppressor: Boolean,
                 ->
                 this.videoWidth = videoWidth
                 this.videoHeight = videoHeight
@@ -717,8 +730,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private fun setTextSetting() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
-            "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-            ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+                    "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
+                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+        Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
     }
 
     private fun startPreview(isInitFirst: Boolean) {

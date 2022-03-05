@@ -35,7 +35,7 @@
         android:layout_above="@+id/tvStatus"
         android:padding="@dimen/margin_padding_medium"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_tiny" />
+        android:textSize="@dimen/txt_tiny" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStatus"
