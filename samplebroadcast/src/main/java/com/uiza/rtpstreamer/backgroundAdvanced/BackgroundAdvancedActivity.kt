@@ -15,6 +15,7 @@ import com.uiza.rtpstreamer.R
 import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
+import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.activity_background_advanced.*
 
 class BackgroundAdvancedActivity : AppCompatActivity() {
@@ -66,7 +67,21 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         }
         uzBackgroundView.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp $bitrate")
-            tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            tvNewBitrate.post {
+                tvNewBitrate.text =
+                    "onNewBitrateRtmp bitrate $bitrate -> ${UZUtil.convertBitToKB(bitrate)}"
+            }
+            tvLog.post {
+                val s =
+                    "getBitrate: ${uzBackgroundView.getBitrate()}" +
+                            "\ngetResolutionValue: ${uzBackgroundView.getResolutionValue()}" +
+                            "\nisStreaming: ${uzBackgroundView.isStreaming()}" +
+                            "\nisOnPreview: ${uzBackgroundView.isOnPreview()}" +
+                            "\ngetStableCameraSize ${uzBackgroundView.getStableCameraSize()}" +
+                            "\nisFaceDetectionEnabled: ${uzBackgroundView.isFaceDetectionEnabled()}" +
+                            "\nisVideoStabilizationEnabled: ${uzBackgroundView.isVideoStabilizationEnabled()}"
+                tvLog.text = s
+            }
             updateDot()
         }
         uzBackgroundView.onConnectionFailedRtp = { reason ->
@@ -168,15 +183,15 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                 audioNoiseSuppressor = audioNoiseSuppressor,
             )
             dialog.onOk = {
-                videoWidth: Int,
-                videoHeight: Int,
-                videoFps: Int,
-                videoBitrate: Int,
-                audioBitrate: Int,
-                audioSampleRate: Int,
-                audioIsStereo: Boolean,
-                audioEchoCanceler: Boolean,
-                audioNoiseSuppressor: Boolean,
+                    videoWidth: Int,
+                    videoHeight: Int,
+                    videoFps: Int,
+                    videoBitrate: Int,
+                    audioBitrate: Int,
+                    audioSampleRate: Int,
+                    audioIsStereo: Boolean,
+                    audioEchoCanceler: Boolean,
+                    audioNoiseSuppressor: Boolean,
                 ->
                 this.videoWidth = videoWidth
                 this.videoHeight = videoHeight
@@ -371,8 +386,8 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun setTextSetting() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
-            "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-            ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+                    "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
+                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
     }
 
     private fun startPreview() {
