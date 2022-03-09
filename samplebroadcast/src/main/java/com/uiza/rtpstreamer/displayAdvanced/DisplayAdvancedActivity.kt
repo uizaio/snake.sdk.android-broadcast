@@ -73,7 +73,20 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         }
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
-            tvStatus.text = "onNewBitrateRtp bitrate $bitrate"
+            tvNewBitrate.post {
+                tvNewBitrate.text =
+                    "onNewBitrateRtmp bitrate $bitrate -> ${UZUtil.convertBitToKB(bitrate)}"
+            }
+            tvLog.post {
+                val s =
+                    "getBitrate: ${uzDisplayBroadCast.getBitrate()}" +
+                            "\ngetResolutionValue: ${uzDisplayBroadCast.getResolutionValue()}" +
+                            "\nisStreaming: ${uzDisplayBroadCast.isStreaming()}" +
+                            "\ngetStreamWidth: ${uzDisplayBroadCast.getStreamWidth()}" +
+                            "\ngetStreamHeight ${uzDisplayBroadCast.getStreamHeight()}" +
+                            "\ngetRecordStatus: ${uzDisplayBroadCast.getRecordStatus()}"
+                tvLog.text = s
+            }
             updateDot()
         }
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
@@ -124,10 +137,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null && (
-            requestCode == UZDisplayView.REQUEST_CODE_STREAM ||
-                requestCode == UZDisplayView.REQUEST_CODE_RECORD &&
-                resultCode == RESULT_OK
-            )
+                    requestCode == UZDisplayView.REQUEST_CODE_STREAM ||
+                            requestCode == UZDisplayView.REQUEST_CODE_RECORD &&
+                            resultCode == RESULT_OK
+                    )
         ) {
             val endPoint = etRtpUrl.text.toString()
             uzDisplayBroadCast.onActivityResult(
@@ -177,8 +190,8 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             )
             displaySettingDialog.onOk =
                 {
-                    videoWidth: Int, videoHeight: Int, videoFps: Int, videoBitrate: Int, videoRotation: Int, videoDpi: Int,
-                    audioBitrate: Int, audioSampleRate: Int, audioIsStereo: Boolean, audioEchoCanceler: Boolean, audioNoiseSuppressor: Boolean,
+                        videoWidth: Int, videoHeight: Int, videoFps: Int, videoBitrate: Int, videoRotation: Int, videoDpi: Int,
+                        audioBitrate: Int, audioSampleRate: Int, audioIsStereo: Boolean, audioEchoCanceler: Boolean, audioNoiseSuppressor: Boolean,
                     ->
                     this.videoWidth = videoWidth
                     this.videoHeight = videoHeight
@@ -215,7 +228,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun setupTvSetting() {
         tvSetting.text =
             "videoWidth: $videoWidth, videoHeight: $videoHeight, videoFps: $videoFps, videoBitrate: $videoBitrate, videoRotation: $videoRotation, videoDpi: $videoDpi" +
-            "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
+                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
     }
 
     private fun handleBStartTop() {
