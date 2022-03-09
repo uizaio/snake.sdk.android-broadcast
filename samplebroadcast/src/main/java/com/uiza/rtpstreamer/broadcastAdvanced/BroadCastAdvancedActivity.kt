@@ -25,6 +25,7 @@ import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import com.uiza.util.UZPathUtils
+import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
 import java.io.File
 import java.io.IOException
@@ -93,7 +94,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onNewBitrateRtmp = { bitrate ->
             tvNewBitrate.post {
-                tvNewBitrate.text = "onNewBitrateRtmp bitrate $bitrate -> "
+                tvNewBitrate.text =
+                    "onNewBitrateRtmp bitrate $bitrate -> ${UZUtil.convertBitToKB(bitrate)}"
             }
             tvLog.post {
                 val s =
