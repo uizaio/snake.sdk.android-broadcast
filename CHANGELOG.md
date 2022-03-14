@@ -1,6 +1,6 @@
 ### 1.1.8 (2022-3-14)
 - Display bandwidth while streaming:
-Ex: 
+Ex: https://github.com/uizaio/snake.sdk.android-broadcast/blob/90f2572d683901b66242b201af04c31368bd3f36/samplebroadcast/src/main/java/com/uiza/rtpstreamer/broadcastAdvanced/BroadCastAdvancedActivity.kt#L95
 
 ### 1.1.7 (2022-1-4)
 - Update core RTMP version
