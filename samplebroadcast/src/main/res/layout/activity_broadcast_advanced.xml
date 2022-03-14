@@ -17,7 +17,7 @@
         android:padding="@dimen/margin_padding_medium"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="@dimen/text_size_small" />
+        android:textSize="@dimen/txt_medium" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivDot"
@@ -36,26 +36,44 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_padding_medium">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_tiny" />
+            android:textSize="@dimen/txt_tiny"
+            android:textStyle="bold" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_small" />
+            android:textColor="@color/red"
+            android:textSize="@dimen/txt_medium"
+            android:textStyle="bold" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="@dimen/txt_medium"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNewBitrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:textSize="@dimen/txt_medium"
+            android:textStyle="bold" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_tiny"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

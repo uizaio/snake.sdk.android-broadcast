@@ -148,5 +148,12 @@ class UZUtil {
         fun isStreamingDisplay(): Boolean? {
             return DisplayService.isStreaming()
         }
+
+        fun convertBitToKB(bit: Long?): String {
+            if (bit == null) {
+                return "- KB/s"
+            }
+            return "${bit / 8 / 1000}KB/s"
+        }
     }
 }

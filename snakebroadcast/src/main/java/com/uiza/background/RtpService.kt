@@ -458,6 +458,7 @@ class RtpService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         stopStream()
+        stopPreview()
     }
 
     private fun prepareStreamRtp() {
