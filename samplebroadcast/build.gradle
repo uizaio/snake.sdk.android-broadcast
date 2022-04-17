@@ -57,8 +57,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.0'
 
     implementation project(':snakebroadcast')
-    //https://github.com/uizaio/snake.sdk.android-broadcast
-//    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.1.8'
+//    https://github.com/uizaio/snake.sdk.android-broadcast
+//    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.2.0'
 
     //for player
     //https://github.com/uizaio/snake.sdk.android-player
