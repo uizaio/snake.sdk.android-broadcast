@@ -3,7 +3,10 @@ package com.uiza
 import androidx.multidex.MultiDexApplication
 import com.uiza.util.UZUtil
 
+//TODO add splash screen
+
 // firebase console https://console.firebase.google.com/u/0/project/broadcast-3de39/overview
+
 class UZApplication : MultiDexApplication() {
 
     companion object {

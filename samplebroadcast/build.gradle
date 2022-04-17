@@ -2,23 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
-// Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.snake.broadcast"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
 
     signingConfigs {
         release {
-            //for demo purpose, do not use this way in your production
+            //only for demo purpose, do not use this way in your production
             storeFile file("keystore.jks")
             storePassword "04021993"
             keyAlias "loi"
@@ -44,11 +43,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
     buildFeatures {
         viewBinding true
     }
@@ -63,21 +57,15 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.0'
 
     implementation project(':snakebroadcast')
-    //https://github.com/uizaio/snake.sdk.android-broadcast
-//    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.1.8'
+//    https://github.com/uizaio/snake.sdk.android-broadcast
+//    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.2.0'
 
     //for player
     //https://github.com/uizaio/snake.sdk.android-player
-    implementation 'com.github.uizaio:snake.sdk.android-player:1.0.11'
+    implementation 'com.github.uizaio:snake.sdk.android-player:1.0.12'
 
     //firebase
-    // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
-    // Declare the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 }
