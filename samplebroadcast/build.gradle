@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
-// Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion 32
@@ -18,7 +17,7 @@ android {
 
     signingConfigs {
         release {
-            //for demo purpose, do not use this way in your production
+            //only for demo purpose, do not use this way in your production
             storeFile file("keystore.jks")
             storePassword "04021993"
             keyAlias "loi"
@@ -44,11 +43,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
     buildFeatures {
         viewBinding true
     }
@@ -71,13 +65,7 @@ dependencies {
     implementation 'com.github.uizaio:snake.sdk.android-player:1.0.12'
 
     //firebase
-    // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
-    // Declare the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 }
