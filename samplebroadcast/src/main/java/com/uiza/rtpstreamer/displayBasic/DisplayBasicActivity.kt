@@ -73,15 +73,6 @@ class DisplayBasicActivity : AppCompatActivity() {
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
-
-            reason?.let {
-                val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
-                if (retrySuccess != true) {
-                    runOnUiThread {
-                        showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                    }
-                }
-            }
         }
         uzDisplayBroadCast.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"

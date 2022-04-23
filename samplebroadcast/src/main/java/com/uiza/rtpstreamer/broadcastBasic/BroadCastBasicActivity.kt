@@ -55,13 +55,6 @@ class BroadCastBasicActivity : AppCompatActivity() {
             Log.e(logTag, "onConnectionFailedRtmp reason ${System.nanoTime()}")
             setTextStatus("onConnectionFailedRtmp reason $reason")
             handleUI()
-
-            val retrySuccess = uzBroadCastView.retry(delay = 1000, reason = reason)
-            if (retrySuccess != true) {
-                runOnUiThread {
-                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                }
-            }
         }
         uzBroadCastView.onConnectionStartedRtmp = { rtmpUrl ->
             setTextStatus("onConnectionStartedRtmp rtmpUrl $rtmpUrl")
