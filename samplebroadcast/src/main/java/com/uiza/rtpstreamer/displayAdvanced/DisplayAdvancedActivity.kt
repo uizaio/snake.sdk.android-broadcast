@@ -16,6 +16,7 @@ import com.uiza.UZApplication
 import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
+import com.uiza.util.UZDialogUtil
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.activity_display_advanced.*
 
@@ -94,14 +95,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
 
-            reason?.let {
-                val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
-                if (retrySuccess != true) {
-                    runOnUiThread {
-                        showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                    }
-                }
-            }
+            showPopupRetry(reason)
         }
         uzDisplayBroadCast.onDisconnectRtp = {
             Log.d(logTag, "onDisconnectRtp")
@@ -280,5 +274,24 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun updateDot() {
         ivDot.isVisible = true
         ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
+    }
+
+    private fun showPopupRetry(reason: String?) {
+        uzDisplayBroadCast.postDelayed({
+            if (uzDisplayBroadCast.isStreaming() == true) {
+                return@postDelayed
+            }
+            UZDialogUtil.showDialog2(
+                context = this,
+                title = getString(R.string.warning),
+                msg = "$reason\nDo you want to retry?",
+                button1 = "Retry",
+                button2 = getString(R.string.cancel),
+                onClickButton1 = {
+                    uzDisplayBroadCast.start(this)
+                },
+                onClickButton2 = null,
+            )
+        }, 100)
     }
 }

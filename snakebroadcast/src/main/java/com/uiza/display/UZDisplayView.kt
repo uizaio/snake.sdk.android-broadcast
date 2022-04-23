@@ -290,9 +290,9 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
      * if you'd like to connect to your backup server instead of the original one.
      * Given backupUrl replaces the original one.
      */
-    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
-        return DisplayService.retry(delay, reason, backupUrl)
-    }
+//    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
+//        return DisplayService.retry(delay, reason, backupUrl)
+//    }
 
     fun toggleScreenOrientation() {
         if (context is Activity) {
