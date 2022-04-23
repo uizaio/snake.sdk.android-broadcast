@@ -342,7 +342,7 @@ class UZBroadCastView :
         Log.d(
             logTag,
             "prepareVideo videoWidth $videoWidth, videoHeight $videoHeight," +
-                " videoFps $videoFps, videoBitrate $videoBitrate, videoRotation $videoRotation"
+                    " videoFps $videoFps, videoBitrate $videoBitrate, videoRotation $videoRotation"
         )
         return rtmpCamera1?.prepareVideo(
             videoWidth,
@@ -388,11 +388,11 @@ class UZBroadCastView :
         }, delayStopStreamInMls)
     }
 
-    //    Retries to connect with the given delay. You can pass an optional backupUrl if
+//    Retries to connect with the given delay. You can pass an optional backupUrl if
 //    you'd like to connect to your backup server instead of the original one. Given backupUrl replaces the original one.
-    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
-        return rtmpCamera1?.reTry(delay, reason, backupUrl)
-    }
+//    fun retry(delay: Long, reason: String, backupUrl: String? = null): Boolean? {
+//        return rtmpCamera1?.reTry(delay, reason, backupUrl)
+//    }
 
     fun getResolutionsBack(): List<CameraSize> {
         val listResolutionsBack = rtmpCamera1?.resolutionsBack ?: emptyList()

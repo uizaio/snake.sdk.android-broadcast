@@ -7,12 +7,12 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.* // ktlint-disable no-wildcard-imports
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.pedro.encoder.input.gl.render.filters.* // ktlint-disable no-wildcard-imports
+import com.pedro.encoder.input.gl.render.filters.*
 import com.pedro.encoder.input.gl.render.filters.`object`.GifObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.ImageObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.SurfaceFilterRender
@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BroadCastAdvancedActivity : AppCompatActivity() {
@@ -73,12 +73,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             setTextStatus("onConnectionFailedRtmp reason $reason")
             handleUI()
 
-            val retrySuccess = uzBroadCastView.retry(delay = 1000, reason = reason)
-            if (retrySuccess != true) {
-                runOnUiThread {
-                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                }
-            }
+            showPopupRetry(reason)
         }
         uzBroadCastView.onConnectionStartedRtmp = { rtmpUrl ->
             setTextStatus("onConnectionStartedRtmp rtmpUrl $rtmpUrl")
@@ -833,6 +828,25 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         ivDot.post {
             ivDot.isVisible = true
             ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
+        }
+    }
+
+    private fun showPopupRetry(reason: String) {
+        if (uzBroadCastView.isStreaming()) {
+            return
+        }
+        runOnUiThread {
+            UZDialogUtil.showDialog2(
+                context = this,
+                title = getString(R.string.warning),
+                msg = "$reason\nDo you want to retry?",
+                button1 = "Retry",
+                button2 = getString(R.string.cancel),
+                onClickButton1 = {
+                    start()
+                },
+                onClickButton2 = null,
+            )
         }
     }
 }
