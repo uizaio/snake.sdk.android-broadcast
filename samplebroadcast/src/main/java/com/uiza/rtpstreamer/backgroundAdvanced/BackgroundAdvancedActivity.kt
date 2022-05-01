@@ -166,7 +166,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun handleBSetting() {
 
         fun openSheet() {
-            val dialog = BroadCastAdvancedSettingDialog(
+            val dialog = BackgroundAdvancedSettingDialog(
                 resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
                     uzBackgroundView.getResolutionsFront()
                 } else {
