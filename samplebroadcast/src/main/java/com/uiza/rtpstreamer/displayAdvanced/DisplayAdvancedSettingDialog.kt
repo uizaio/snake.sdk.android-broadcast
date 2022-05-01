@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
@@ -24,21 +25,27 @@ class DisplayAdvancedSettingDialog(
     private val audioIsStereo: Boolean,
     private val audioEchoCanceler: Boolean,
     private val audioNoiseSuppressor: Boolean,
+    private val isAutoRetry: Boolean,
+    private val retryDelayInS: Int,
+    private val retryCount: Int,
 ) : BottomSheetDialogFragment() {
     var onOk: (
         (
-            videoWidth: Int,
-            videoHeight: Int,
-            videoFps: Int,
-            videoBitrate: Int,
-            videoRotation: Int,
-            videoDpi: Int,
-            audioBitrate: Int,
-            audioSampleRate: Int,
-            audioIsStereo: Boolean,
-            audioEchoCanceler: Boolean,
-            audioNoiseSuppressor: Boolean,
-        ) -> Unit
+        videoWidth: Int,
+        videoHeight: Int,
+        videoFps: Int,
+        videoBitrate: Int,
+        videoRotation: Int,
+        videoDpi: Int,
+        audioBitrate: Int,
+        audioSampleRate: Int,
+        audioIsStereo: Boolean,
+        audioEchoCanceler: Boolean,
+        audioNoiseSuppressor: Boolean,
+        isAutoRetry: Boolean,
+        retryDelayInS: Int,
+        retryCount: Int,
+    ) -> Unit
     )? = null
 
     override fun onCreateView(
@@ -68,6 +75,14 @@ class DisplayAdvancedSettingDialog(
         switchAudioEchoCanceler.isChecked = audioEchoCanceler
         switchAudioNoiseSuppressor.isChecked = audioNoiseSuppressor
 
+        switchAutoRetry.isChecked = isAutoRetry
+        layoutRetrySetting.isVisible = isAutoRetry
+        etDelayRetryInS.setText("$retryDelayInS")
+        etNumberOfRetry.setText("$retryCount")
+        switchAutoRetry.setOnCheckedChangeListener { _, b ->
+            layoutRetrySetting.isVisible = b
+        }
+
         btGetBestSetting.setOnClickListener {
             handleBtGetBestSetting()
         }
@@ -91,6 +106,9 @@ class DisplayAdvancedSettingDialog(
         switchAudioIsStereo.isChecked = true
         switchAudioEchoCanceler.isChecked = true
         switchAudioNoiseSuppressor.isChecked = true
+        switchAutoRetry.isChecked = true
+        etDelayRetryInS.setText("${UZConstant.RETRY_IN_S}")
+        etNumberOfRetry.setText("${UZConstant.RETRY_COUNT}")
     }
 
     /**
@@ -121,9 +139,13 @@ class DisplayAdvancedSettingDialog(
         val audioIsStereo = switchAudioIsStereo.isChecked
         val audioEchoCanceler = switchAudioEchoCanceler.isChecked
         val audioNoiseSuppressor = switchAudioNoiseSuppressor.isChecked
+        val isAutoRetry = switchAutoRetry.isChecked
+        val retryDelayInS = etDelayRetryInS.text.toString().toIntOrNull()
+        val retryCount = etNumberOfRetry.text.toString().toIntOrNull()
 
         if (videoWidth == null || videoHeight == null || videoFps == null || videoBitrate == null || videoRotation == null || videoDpi == null ||
             audioBitrate == null || audioSampleRate == null
+            || retryDelayInS == null || retryCount == null || retryDelayInS <= 0 || retryCount <= 0
         ) {
             showToast("Invalid setting")
             return
@@ -166,6 +188,9 @@ class DisplayAdvancedSettingDialog(
             audioIsStereo,
             audioEchoCanceler,
             audioNoiseSuppressor,
+            isAutoRetry,
+            retryDelayInS,
+            retryCount,
         )
         dismiss()
     }

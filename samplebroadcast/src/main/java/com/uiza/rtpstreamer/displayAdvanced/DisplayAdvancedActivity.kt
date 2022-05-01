@@ -37,6 +37,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
 
+    private var isAutoRetry = false
+    private var retryDelayInS = UZConstant.RETRY_IN_S
+    private var retryCount = UZConstant.RETRY_COUNT
+    private var currentRetryCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -71,6 +76,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onConnectionSuccessRtp")
             tvStatus.text = "onConnectionSuccessRtp"
             handleUI()
+            currentRetryCount = 0
         }
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
@@ -181,11 +187,26 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                 audioIsStereo = audioIsStereo,
                 audioEchoCanceler = audioEchoCanceler,
                 audioNoiseSuppressor = audioNoiseSuppressor,
+                isAutoRetry = isAutoRetry,
+                retryDelayInS = retryDelayInS,
+                retryCount = retryCount
             )
             displaySettingDialog.onOk =
                 {
-                        videoWidth: Int, videoHeight: Int, videoFps: Int, videoBitrate: Int, videoRotation: Int, videoDpi: Int,
-                        audioBitrate: Int, audioSampleRate: Int, audioIsStereo: Boolean, audioEchoCanceler: Boolean, audioNoiseSuppressor: Boolean,
+                        videoWidth: Int,
+                        videoHeight: Int,
+                        videoFps: Int,
+                        videoBitrate: Int,
+                        videoRotation: Int,
+                        videoDpi: Int,
+                        audioBitrate: Int,
+                        audioSampleRate: Int,
+                        audioIsStereo: Boolean,
+                        audioEchoCanceler: Boolean,
+                        audioNoiseSuppressor: Boolean,
+                        isAutoRetry: Boolean,
+                        retryDelayInS: Int,
+                        retryCount: Int,
                     ->
                     this.videoWidth = videoWidth
                     this.videoHeight = videoHeight
@@ -198,6 +219,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                     this.audioIsStereo = audioIsStereo
                     this.audioEchoCanceler = audioEchoCanceler
                     this.audioNoiseSuppressor = audioNoiseSuppressor
+                    this.isAutoRetry = isAutoRetry
+                    this.retryDelayInS = retryDelayInS
+                    this.retryCount = retryCount
                     setupTvSetting()
                 }
             displaySettingDialog.show(supportFragmentManager, displaySettingDialog.tag)
@@ -222,7 +246,8 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun setupTvSetting() {
         tvSetting.text =
             "videoWidth: $videoWidth, videoHeight: $videoHeight, videoFps: $videoFps, videoBitrate: $videoBitrate, videoRotation: $videoRotation, videoDpi: $videoDpi" +
-                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
+                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor" +
+                    "\nisAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount, currentRetryCount: $currentRetryCount"
     }
 
     private fun handleBStartTop() {
@@ -277,14 +302,24 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     }
 
     private fun showPopupRetry(reason: String?) {
+        if (!isAutoRetry) {
+            return
+        }
+        if (currentRetryCount >= retryCount) {
+            runOnUiThread {
+                showToast("Max retry detected")
+            }
+            return
+        }
         uzDisplayBroadCast.postDelayed({
             if (uzDisplayBroadCast.isStreaming() == true) {
                 return@postDelayed
             }
+            currentRetryCount++
             UZDialogUtil.showDialog2(
                 context = this,
                 title = getString(R.string.warning),
-                msg = "$reason\nDo you want to retry?",
+                msg = "$reason\nDo you want to retry?\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount",
                 button1 = "Retry",
                 button2 = getString(R.string.cancel),
                 onClickButton1 = {
@@ -292,6 +327,6 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                 },
                 onClickButton2 = null,
             )
-        }, 100)
+        }, retryDelayInS * 1000L)
     }
 }

@@ -82,6 +82,14 @@ class BroadCastAdvancedSettingDialog(
         switchAudioEchoCanceler.isChecked = audioEchoCanceler
         switchAudioNoiseSuppressor.isChecked = audioNoiseSuppressor
 
+        switchAutoRetry.isChecked = isAutoRetry
+        layoutRetrySetting.isVisible = isAutoRetry
+        etDelayRetryInS.setText("$retryDelayInS")
+        etNumberOfRetry.setText("$retryCount")
+        switchAutoRetry.setOnCheckedChangeListener { _, b ->
+            layoutRetrySetting.isVisible = b
+        }
+
         btGetStableResolutionCamera.setOnClickListener {
             handleBtGetStableResolutionCamera()
         }
@@ -92,14 +100,6 @@ class BroadCastAdvancedSettingDialog(
 
         btOK.setOnClickListener {
             handleBtOK()
-        }
-
-        switchAutoRetry.isChecked = isAutoRetry
-        layoutRetrySetting.isVisible = isAutoRetry
-        etDelayRetryInS.setText("$retryDelayInS")
-        etNumberOfRetry.setText("$retryCount")
-        switchAutoRetry.setOnCheckedChangeListener { _, b ->
-            layoutRetrySetting.isVisible = b
         }
     }
 

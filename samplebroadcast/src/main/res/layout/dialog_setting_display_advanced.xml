@@ -165,6 +165,55 @@
             android:layout_height="wrap_content"
             android:text="@string/audio_noise_suppressor" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_large"
+            android:background="@color/appColor"
+            android:padding="@dimen/margin_padding_medium"
+            android:text="@string/retry_setting"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchAutoRetry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/is_auto_retry" />
+
+        <LinearLayout
+            android:id="@+id/layoutRetrySetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delay_retry_in_s" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDelayRetryInS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/delay_retry_in_s"
+                android:inputType="number"
+                android:maxLength="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/number_of_retry" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNumberOfRetry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/number_of_retry"
+                android:inputType="number"
+                android:maxLength="2" />
+        </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btGetBestSetting"
             android:layout_width="match_parent"

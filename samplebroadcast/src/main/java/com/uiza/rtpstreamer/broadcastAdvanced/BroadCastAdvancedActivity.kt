@@ -847,10 +847,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     }
 
     private fun showPopupRetry(reason: String) {
-        Log.d(
-            "loitpp",
-            "showPopupRetry isAutoRetry $isAutoRetry, retryCount $retryCount, currentRetryCount $currentRetryCount, retryDelayInS $retryDelayInS"
-        )
         if (uzBroadCastView.isStreaming()) {
             return
         }
@@ -864,6 +860,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             return
         }
         uzBroadCastView.postDelayed({
+            currentRetryCount++
             UZDialogUtil.showDialog2(
                 context = this,
                 title = getString(R.string.warning),
@@ -871,7 +868,6 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 button1 = "Retry",
                 button2 = getString(R.string.cancel),
                 onClickButton1 = {
-                    currentRetryCount++
                     start()
                 },
                 onClickButton2 = null,
