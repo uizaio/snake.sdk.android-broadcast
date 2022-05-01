@@ -50,6 +50,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var autoStreamingAfterOnPause = true
     private var firstStartStream = true
     private var userWantToStopStream = false
+    private var isAutoRetry = false
+    private var retryDelayInS = UZConstant.RETRY_IN_S
+    private var retryCount = UZConstant.RETRY_COUNT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -516,6 +519,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 audioIsStereo = audioIsStereo,
                 audioEchoCanceler = audioEchoCanceler,
                 audioNoiseSuppressor = audioNoiseSuppressor,
+                isAutoRetry = isAutoRetry,
+                retryDelayInS = retryDelayInS,
+                retryCount = retryCount
             )
             openGlSettingDialog.onOk = {
                     videoWidth: Int,
@@ -527,6 +533,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                     audioIsStereo: Boolean,
                     audioEchoCanceler: Boolean,
                     audioNoiseSuppressor: Boolean,
+                    isAutoRetry: Boolean,
+                    retryDelayInS: Int,
+                    retryCount: Int,
                 ->
                 this.videoWidth = videoWidth
                 this.videoHeight = videoHeight
@@ -537,6 +546,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 this.audioIsStereo = audioIsStereo
                 this.audioEchoCanceler = audioEchoCanceler
                 this.audioNoiseSuppressor = audioNoiseSuppressor
+                this.isAutoRetry = isAutoRetry
+                this.retryDelayInS = retryDelayInS
+                this.retryCount = retryCount
 
                 stopPreview()
                 startPreview(false)
@@ -728,7 +740,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
                     "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor," +
+                    "isAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount"
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
     }
 
