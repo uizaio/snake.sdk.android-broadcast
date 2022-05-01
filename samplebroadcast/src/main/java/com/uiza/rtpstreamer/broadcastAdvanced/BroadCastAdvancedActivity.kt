@@ -53,6 +53,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var isAutoRetry = false
     private var retryDelayInS = UZConstant.RETRY_IN_S
     private var retryCount = UZConstant.RETRY_COUNT
+    private var currentRetryCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +85,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onConnectionSuccessRtmp = {
             setTextStatus("onConnectionSuccessRtmp")
+            currentRetryCount = 0
         }
 
         uzBroadCastView.onDisconnectRtmp = {
@@ -143,7 +145,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         bSetting.setOnClickListener {
             handleBSetting()
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bDisableAudio.setOnClickListener {
@@ -486,11 +488,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 uzBroadCastView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-                        bStartTop.isVisible = false
+                        bStartStop.isVisible = false
                         progressBar.isVisible = true
                     },
                     onStopSuccess = {
-                        bStartTop.isVisible = true
+                        bStartStop.isVisible = true
                         progressBar.isVisible = false
                         stopPreview()
                         uzBroadCastView.toggleScreenOrientation()
@@ -562,11 +564,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             uzBroadCastView.stopStream(
                 delayStopStreamInMls = 100,
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -592,11 +594,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -741,7 +743,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
                     "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
                     ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor," +
-                    "isAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount"
+                    "isAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount, currentRetryCount: $currentRetryCount"
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
     }
 
@@ -826,11 +828,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         runOnUiThread {
             if (uzBroadCastView.isStreaming()) {
-                bStartTop.setText(R.string.stop_button)
+                bStartStop.setText(R.string.stop_button)
                 bDisableAudio.isVisible = true
                 bEnableAudio.isVisible = true
             } else {
-                bStartTop.setText(R.string.start_button)
+                bStartStop.setText(R.string.start_button)
                 bDisableAudio.isVisible = false
                 bEnableAudio.isVisible = false
             }
@@ -845,21 +847,35 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     }
 
     private fun showPopupRetry(reason: String) {
+        Log.d(
+            "loitpp",
+            "showPopupRetry isAutoRetry $isAutoRetry, retryCount $retryCount, currentRetryCount $currentRetryCount, retryDelayInS $retryDelayInS"
+        )
         if (uzBroadCastView.isStreaming()) {
             return
         }
-        runOnUiThread {
+        if (!isAutoRetry) {
+            return
+        }
+        if (currentRetryCount >= retryCount) {
+            runOnUiThread {
+                showToast("Max retry detected")
+            }
+            return
+        }
+        uzBroadCastView.postDelayed({
             UZDialogUtil.showDialog2(
                 context = this,
                 title = getString(R.string.warning),
-                msg = "$reason\nDo you want to retry?",
+                msg = "$reason\nDo you want to retry?\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount",
                 button1 = "Retry",
                 button2 = getString(R.string.cancel),
                 onClickButton1 = {
+                    currentRetryCount++
                     start()
                 },
                 onClickButton2 = null,
             )
-        }
+        }, retryDelayInS * 1000L)
     }
 }

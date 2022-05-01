@@ -63,7 +63,7 @@
             android:paddingBottom="@dimen/margin_padding_large">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bStartTop"
+                android:id="@+id/bStartStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"

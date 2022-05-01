@@ -117,7 +117,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         bSetting.setOnClickListener {
             handleBSetting()
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bDisableAudio.setOnClickListener {
@@ -207,11 +207,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         uzDisplayBroadCast.stop(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStartTop.isVisible = false
+                bStartStop.isVisible = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-                bStartTop.isVisible = true
+                bStartStop.isVisible = true
                 progressBar.isVisible = false
             }
         )
@@ -231,11 +231,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                     if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
                         uzDisplayBroadCast.stopNotification()
@@ -261,11 +261,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            bStartTop.setText(R.string.stop_button)
+            bStartStop.setText(R.string.stop_button)
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
         } else {
-            bStartTop.setText(R.string.start_button)
+            bStartStop.setText(R.string.start_button)
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }

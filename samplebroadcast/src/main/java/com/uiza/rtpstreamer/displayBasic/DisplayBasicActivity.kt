@@ -84,7 +84,7 @@ class DisplayBasicActivity : AppCompatActivity() {
         uzDisplayBroadCast.onAuthSuccessRtp = {
             tvStatus.text = "onAuthSuccessRtp"
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
     }
@@ -133,11 +133,11 @@ class DisplayBasicActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -153,9 +153,9 @@ class DisplayBasicActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            bStartTop.setText(R.string.stop_button)
+            bStartStop.setText(R.string.stop_button)
         } else {
-            bStartTop.setText(R.string.start_button)
+            bStartStop.setText(R.string.start_button)
         }
     }
 
