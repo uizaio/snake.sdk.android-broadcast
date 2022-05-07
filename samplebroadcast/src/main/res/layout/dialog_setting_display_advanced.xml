@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/delay_retry_in_s"
                 android:inputType="number"
-                android:maxLength="1" />
+                android:maxLength="2" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
