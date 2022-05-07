@@ -13,7 +13,7 @@ class UZApplication : MultiDexApplication() {
         const val URL_STREAM =
             "rtmp://a.rtmp.youtube.com/live2/s0tx-t5ru-p009-38pw-8k1m"
 //        const val URL_STREAM =
-//            "rtmp://rtmp.gcpsg.uizadev.io/live/live_3nVCN2y84v"
+//            "rtmp://rtmp.vngvn.uiza.io/live/live_31i07kQNmI"
     }
 
     override fun onCreate() {
