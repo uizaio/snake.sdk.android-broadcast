@@ -73,15 +73,6 @@ class DisplayBasicActivity : AppCompatActivity() {
         uzDisplayBroadCast.onConnectionFailedRtp = { reason ->
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
-
-            reason?.let {
-                val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
-                if (retrySuccess != true) {
-                    runOnUiThread {
-                        showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                    }
-                }
-            }
         }
         uzDisplayBroadCast.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"
@@ -93,7 +84,7 @@ class DisplayBasicActivity : AppCompatActivity() {
         uzDisplayBroadCast.onAuthSuccessRtp = {
             tvStatus.text = "onAuthSuccessRtp"
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
     }
@@ -142,11 +133,11 @@ class DisplayBasicActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -162,9 +153,9 @@ class DisplayBasicActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            bStartTop.setText(R.string.stop_button)
+            bStartStop.setText(R.string.stop_button)
         } else {
-            bStartTop.setText(R.string.start_button)
+            bStartStop.setText(R.string.start_button)
         }
     }
 

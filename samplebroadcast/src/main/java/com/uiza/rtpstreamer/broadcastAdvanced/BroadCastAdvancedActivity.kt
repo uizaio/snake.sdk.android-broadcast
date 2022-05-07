@@ -7,12 +7,12 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.* // ktlint-disable no-wildcard-imports
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.pedro.encoder.input.gl.render.filters.* // ktlint-disable no-wildcard-imports
+import com.pedro.encoder.input.gl.render.filters.*
 import com.pedro.encoder.input.gl.render.filters.`object`.GifObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.ImageObjectFilterRender
 import com.pedro.encoder.input.gl.render.filters.`object`.SurfaceFilterRender
@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_broadcast_advanced.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BroadCastAdvancedActivity : AppCompatActivity() {
@@ -50,6 +50,10 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private var autoStreamingAfterOnPause = true
     private var firstStartStream = true
     private var userWantToStopStream = false
+    private var isAutoRetry = false
+    private var retryDelayInS = UZConstant.RETRY_IN_S
+    private var retryCount = UZConstant.RETRY_COUNT
+    private var currentRetryCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,12 +77,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             setTextStatus("onConnectionFailedRtmp reason $reason")
             handleUI()
 
-            val retrySuccess = uzBroadCastView.retry(delay = 1000, reason = reason)
-            if (retrySuccess != true) {
-                runOnUiThread {
-                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                }
-            }
+            showPopupRetry(reason)
         }
         uzBroadCastView.onConnectionStartedRtmp = { rtmpUrl ->
             setTextStatus("onConnectionStartedRtmp rtmpUrl $rtmpUrl")
@@ -86,6 +85,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.onConnectionSuccessRtmp = {
             setTextStatus("onConnectionSuccessRtmp")
+            currentRetryCount = 0
         }
 
         uzBroadCastView.onDisconnectRtmp = {
@@ -145,7 +145,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         bSetting.setOnClickListener {
             handleBSetting()
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bDisableAudio.setOnClickListener {
@@ -488,11 +488,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 uzBroadCastView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-                        bStartTop.isVisible = false
+                        bStartStop.isVisible = false
                         progressBar.isVisible = true
                     },
                     onStopSuccess = {
-                        bStartTop.isVisible = true
+                        bStartStop.isVisible = true
                         progressBar.isVisible = false
                         stopPreview()
                         uzBroadCastView.toggleScreenOrientation()
@@ -521,6 +521,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 audioIsStereo = audioIsStereo,
                 audioEchoCanceler = audioEchoCanceler,
                 audioNoiseSuppressor = audioNoiseSuppressor,
+                isAutoRetry = isAutoRetry,
+                retryDelayInS = retryDelayInS,
+                retryCount = retryCount
             )
             openGlSettingDialog.onOk = {
                     videoWidth: Int,
@@ -532,6 +535,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                     audioIsStereo: Boolean,
                     audioEchoCanceler: Boolean,
                     audioNoiseSuppressor: Boolean,
+                    isAutoRetry: Boolean,
+                    retryDelayInS: Int,
+                    retryCount: Int,
                 ->
                 this.videoWidth = videoWidth
                 this.videoHeight = videoHeight
@@ -542,6 +548,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 this.audioIsStereo = audioIsStereo
                 this.audioEchoCanceler = audioEchoCanceler
                 this.audioNoiseSuppressor = audioNoiseSuppressor
+                this.isAutoRetry = isAutoRetry
+                this.retryDelayInS = retryDelayInS
+                this.retryCount = retryCount
 
                 stopPreview()
                 startPreview(false)
@@ -555,11 +564,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             uzBroadCastView.stopStream(
                 delayStopStreamInMls = 100,
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -585,11 +594,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -733,7 +742,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
                     "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor," +
+                    "isAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount, currentRetryCount: $currentRetryCount"
         Log.d(logTag, ">>>startPreview isFrontCamera ${uzBroadCastView.isFrontCamera()}")
     }
 
@@ -818,11 +828,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         runOnUiThread {
             if (uzBroadCastView.isStreaming()) {
-                bStartTop.setText(R.string.stop_button)
+                bStartStop.setText(R.string.stop_button)
                 bDisableAudio.isVisible = true
                 bEnableAudio.isVisible = true
             } else {
-                bStartTop.setText(R.string.start_button)
+                bStartStop.setText(R.string.start_button)
                 bDisableAudio.isVisible = false
                 bEnableAudio.isVisible = false
             }
@@ -834,5 +844,34 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             ivDot.isVisible = true
             ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
         }
+    }
+
+    private fun showPopupRetry(reason: String) {
+        if (uzBroadCastView.isStreaming()) {
+            return
+        }
+        if (!isAutoRetry) {
+            return
+        }
+        if (currentRetryCount >= retryCount) {
+            runOnUiThread {
+                showToast("Max retry detected")
+            }
+            return
+        }
+        uzBroadCastView.postDelayed({
+            currentRetryCount++
+            UZDialogUtil.showDialog2(
+                context = this,
+                title = getString(R.string.warning),
+                msg = "$reason\nDo you want to retry?\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount",
+                button1 = "Retry",
+                button2 = getString(R.string.cancel),
+                onClickButton1 = {
+                    start()
+                },
+                onClickButton2 = null,
+            )
+        }, retryDelayInS * 1000L)
     }
 }

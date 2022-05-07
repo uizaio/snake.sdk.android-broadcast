@@ -16,6 +16,7 @@ import com.uiza.UZApplication
 import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
+import com.uiza.util.UZDialogUtil
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.activity_display_advanced.*
 
@@ -35,6 +36,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private var audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
     private var audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
     private var audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
+
+    private var isAutoRetry = false
+    private var retryDelayInS = UZConstant.RETRY_IN_S
+    private var retryCount = UZConstant.RETRY_COUNT
+    private var currentRetryCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +76,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             Log.d(logTag, "onConnectionSuccessRtp")
             tvStatus.text = "onConnectionSuccessRtp"
             handleUI()
+            currentRetryCount = 0
         }
         uzDisplayBroadCast.onNewBitrateRtp = { bitrate ->
             Log.d(logTag, "onNewBitrateRtp bitrate $bitrate")
@@ -94,14 +101,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             handleUI()
             tvStatus.text = "onConnectionFailedRtp reason $reason"
 
-            reason?.let {
-                val retrySuccess = uzDisplayBroadCast.retry(delay = 1000, reason = reason)
-                if (retrySuccess != true) {
-                    runOnUiThread {
-                        showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                    }
-                }
-            }
+            showPopupRetry(reason)
         }
         uzDisplayBroadCast.onDisconnectRtp = {
             Log.d(logTag, "onDisconnectRtp")
@@ -123,7 +123,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         bSetting.setOnClickListener {
             handleBSetting()
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bDisableAudio.setOnClickListener {
@@ -187,11 +187,26 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                 audioIsStereo = audioIsStereo,
                 audioEchoCanceler = audioEchoCanceler,
                 audioNoiseSuppressor = audioNoiseSuppressor,
+                isAutoRetry = isAutoRetry,
+                retryDelayInS = retryDelayInS,
+                retryCount = retryCount
             )
             displaySettingDialog.onOk =
                 {
-                        videoWidth: Int, videoHeight: Int, videoFps: Int, videoBitrate: Int, videoRotation: Int, videoDpi: Int,
-                        audioBitrate: Int, audioSampleRate: Int, audioIsStereo: Boolean, audioEchoCanceler: Boolean, audioNoiseSuppressor: Boolean,
+                        videoWidth: Int,
+                        videoHeight: Int,
+                        videoFps: Int,
+                        videoBitrate: Int,
+                        videoRotation: Int,
+                        videoDpi: Int,
+                        audioBitrate: Int,
+                        audioSampleRate: Int,
+                        audioIsStereo: Boolean,
+                        audioEchoCanceler: Boolean,
+                        audioNoiseSuppressor: Boolean,
+                        isAutoRetry: Boolean,
+                        retryDelayInS: Int,
+                        retryCount: Int,
                     ->
                     this.videoWidth = videoWidth
                     this.videoHeight = videoHeight
@@ -204,6 +219,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                     this.audioIsStereo = audioIsStereo
                     this.audioEchoCanceler = audioEchoCanceler
                     this.audioNoiseSuppressor = audioNoiseSuppressor
+                    this.isAutoRetry = isAutoRetry
+                    this.retryDelayInS = retryDelayInS
+                    this.retryCount = retryCount
                     setupTvSetting()
                 }
             displaySettingDialog.show(supportFragmentManager, displaySettingDialog.tag)
@@ -213,11 +231,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         uzDisplayBroadCast.stop(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStartTop.isVisible = false
+                bStartStop.isVisible = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-                bStartTop.isVisible = true
+                bStartStop.isVisible = true
                 progressBar.isVisible = false
             }
         )
@@ -228,7 +246,8 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun setupTvSetting() {
         tvSetting.text =
             "videoWidth: $videoWidth, videoHeight: $videoHeight, videoFps: $videoFps, videoBitrate: $videoBitrate, videoRotation: $videoRotation, videoDpi: $videoDpi" +
-                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
+                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor" +
+                    "\nisAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount, currentRetryCount: $currentRetryCount"
     }
 
     private fun handleBStartTop() {
@@ -237,11 +256,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                     if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
                         uzDisplayBroadCast.stopNotification()
@@ -267,11 +286,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            bStartTop.setText(R.string.stop_button)
+            bStartStop.setText(R.string.stop_button)
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
         } else {
-            bStartTop.setText(R.string.start_button)
+            bStartStop.setText(R.string.start_button)
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }
@@ -280,5 +299,34 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun updateDot() {
         ivDot.isVisible = true
         ivDot.postDelayed({ ivDot?.isVisible = false }, 100)
+    }
+
+    private fun showPopupRetry(reason: String?) {
+        if (!isAutoRetry) {
+            return
+        }
+        if (currentRetryCount >= retryCount) {
+            runOnUiThread {
+                showToast("Max retry detected")
+            }
+            return
+        }
+        uzDisplayBroadCast.postDelayed({
+            if (uzDisplayBroadCast.isStreaming() == true) {
+                return@postDelayed
+            }
+            currentRetryCount++
+            UZDialogUtil.showDialog2(
+                context = this,
+                title = getString(R.string.warning),
+                msg = "$reason\nDo you want to retry?\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount",
+                button1 = "Retry",
+                button2 = getString(R.string.cancel),
+                onClickButton1 = {
+                    uzDisplayBroadCast.start(this)
+                },
+                onClickButton2 = null,
+            )
+        }, retryDelayInS * 1000L)
     }
 }

@@ -55,13 +55,6 @@ class BroadCastBasicActivity : AppCompatActivity() {
             Log.e(logTag, "onConnectionFailedRtmp reason ${System.nanoTime()}")
             setTextStatus("onConnectionFailedRtmp reason $reason")
             handleUI()
-
-            val retrySuccess = uzBroadCastView.retry(delay = 1000, reason = reason)
-            if (retrySuccess != true) {
-                runOnUiThread {
-                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                }
-            }
         }
         uzBroadCastView.onConnectionStartedRtmp = { rtmpUrl ->
             setTextStatus("onConnectionStartedRtmp rtmpUrl $rtmpUrl")
@@ -93,7 +86,7 @@ class BroadCastBasicActivity : AppCompatActivity() {
                 tvFps.text = "$fps FPS"
             }
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bSwitchCamera.setOnClickListener {
@@ -126,11 +119,11 @@ class BroadCastBasicActivity : AppCompatActivity() {
         if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -222,9 +215,9 @@ class BroadCastBasicActivity : AppCompatActivity() {
     private fun handleUI() {
         runOnUiThread {
             if (uzBroadCastView.isStreaming()) {
-                bStartTop.setText(R.string.stop_button)
+                bStartStop.setText(R.string.stop_button)
             } else {
-                bStartTop.setText(R.string.start_button)
+                bStartStop.setText(R.string.start_button)
             }
         }
     }

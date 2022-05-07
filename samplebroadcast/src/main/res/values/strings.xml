@@ -110,4 +110,8 @@
     <string name="live_background_msg">When livestreaming in background mode, you only start by back camera by default</string>
     <string name="flash_light_background_msg">The flashlight will be disable automatically when the camera preview is lost focus</string>
     <string name="get_stable_resolution_camera">Get stable resolution camera</string>
+    <string name="retry_setting">Retry setting</string>
+    <string name="is_auto_retry">Is Auto retry?</string>
+    <string name="delay_retry_in_s">Delay retry (in s)</string>
+    <string name="number_of_retry">Number of retry</string>
 </resources>

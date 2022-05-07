@@ -65,13 +65,6 @@ class BackgroundBasicActivity : AppCompatActivity() {
         uzBackgroundView.onConnectionFailedRtp = { reason ->
             tvStatus.text = "onConnectionFailedRtp reason $reason"
             handleUI()
-            // reconnect if needed
-            val retrySuccess = uzBackgroundView.retry(delay = 1000, reason = reason)
-            if (retrySuccess != true) {
-                runOnUiThread {
-                    showToast("onConnectionFailedRtmp reason $reason, cannot retry connect, pls check you connection")
-                }
-            }
         }
         uzBackgroundView.onDisconnectRtp = {
             tvStatus.text = "onDisconnectRtp"
@@ -83,7 +76,7 @@ class BackgroundBasicActivity : AppCompatActivity() {
         uzBackgroundView.onAuthSuccessRtp = {
             tvStatus.text = "onAuthSuccessRtp"
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bSwitchCamera.setOnClickListener {
@@ -100,11 +93,11 @@ class BackgroundBasicActivity : AppCompatActivity() {
         if (uzBackgroundView.isServiceRunning()) {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 },
             )
@@ -142,10 +135,10 @@ class BackgroundBasicActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
-            bStartTop.setText(R.string.stop_button)
+            bStartStop.setText(R.string.stop_button)
             bSwitchCamera.isVisible = true
         } else {
-            bStartTop.setText(R.string.start_button)
+            bStartStop.setText(R.string.start_button)
             bSwitchCamera.isVisible = false
         }
     }

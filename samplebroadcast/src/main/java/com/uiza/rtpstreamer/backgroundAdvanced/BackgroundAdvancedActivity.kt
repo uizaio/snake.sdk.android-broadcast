@@ -12,7 +12,6 @@ import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
-import com.uiza.rtpstreamer.broadcastAdvanced.BroadCastAdvancedSettingDialog
 import com.uiza.util.UZConstant
 import com.uiza.util.UZDialogUtil
 import com.uiza.util.UZUtil
@@ -117,7 +116,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         bSetting.setOnClickListener {
             handleBSetting()
         }
-        bStartTop.setOnClickListener {
+        bStartStop.setOnClickListener {
             handleBStartTop()
         }
         bEnableFaceDetection.setOnClickListener {
@@ -166,7 +165,7 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun handleBSetting() {
 
         fun openSheet() {
-            val dialog = BroadCastAdvancedSettingDialog(
+            val dialog = BackgroundAdvancedSettingDialog(
                 resolutionCamera = if (uzBackgroundView.isFrontCamera()) {
                     uzBackgroundView.getResolutionsFront()
                 } else {
@@ -206,11 +205,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                 uzBackgroundView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-                        bStartTop.isVisible = false
+                        bStartStop.isVisible = false
                         progressBar.isVisible = true
                     },
                     onStopSuccess = {
-                        bStartTop.isVisible = true
+                        bStartStop.isVisible = true
                         progressBar.isVisible = false
                         uzBackgroundView.stopPreview()
                         startPreview()
@@ -225,11 +224,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.stopStream(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStartTop.isVisible = false
+                bStartStop.isVisible = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-                bStartTop.isVisible = true
+                bStartStop.isVisible = true
                 progressBar.isVisible = false
                 openSheet()
             }
@@ -240,11 +239,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         if (uzBackgroundView.isServiceRunning()) {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
-                    bStartTop.isVisible = false
+                    bStartStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartTop.isVisible = true
+                    bStartStop.isVisible = true
                     progressBar.isVisible = false
                 }
             )
@@ -367,11 +366,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
-            bStartTop.setText(R.string.stop_button)
+            bStartStop.setText(R.string.stop_button)
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
         } else {
-            bStartTop.setText(R.string.start_button)
+            bStartStop.setText(R.string.start_button)
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }
