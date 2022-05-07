@@ -43,6 +43,6 @@ object UZConstant {
     const val RES_1920 = 1920
     const val DELAY_STOP_STREAM_IN_MLS = 2000L
 
-    const val RETRY_IN_S = 2
-    const val RETRY_COUNT = 5
+    const val RETRY_IN_S = 10
+    const val RETRY_COUNT = 20
 }
