@@ -58,7 +58,7 @@ dependencies {
 
     implementation project(':snakebroadcast')
 //    https://github.com/uizaio/snake.sdk.android-broadcast
-//    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.2.0'
+//    implementation 'com.github.uizaio:snake.sdk.android-broadcast:1.2.1'
 
     //for player
     //https://github.com/uizaio/snake.sdk.android-player
