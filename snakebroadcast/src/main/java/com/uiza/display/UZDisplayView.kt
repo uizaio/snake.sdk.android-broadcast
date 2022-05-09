@@ -15,8 +15,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import com.pedro.rtplibrary.base.recording.RecordController
 import com.pedro.rtplibrary.util.BitrateAdapter
-import com.pedro.rtplibrary.util.RecordController
 import com.uiza.R
 import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
@@ -162,10 +162,10 @@ class UZDisplayView : FrameLayout, LifecycleObserver {
 
         if (data != null &&
             (
-                requestCode == REQUEST_CODE_STREAM ||
-                    requestCode == REQUEST_CODE_RECORD &&
-                    resultCode == AppCompatActivity.RESULT_OK
-                )
+                    requestCode == REQUEST_CODE_STREAM ||
+                            requestCode == REQUEST_CODE_RECORD &&
+                            resultCode == AppCompatActivity.RESULT_OK
+                    )
         ) {
             initNotification()
             DisplayService.setData(resultCode = resultCode, data = data)

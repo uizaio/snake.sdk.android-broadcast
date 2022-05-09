@@ -17,10 +17,10 @@ import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.encoder.input.video.CameraOpenException
 import com.pedro.rtmp.utils.ConnectCheckerRtmp
+import com.pedro.rtplibrary.base.recording.RecordController
 import com.pedro.rtplibrary.rtmp.RtmpCamera1
 import com.pedro.rtplibrary.util.BitrateAdapter
 import com.pedro.rtplibrary.util.FpsListener
-import com.pedro.rtplibrary.util.RecordController
 import com.pedro.rtplibrary.view.TakePhotoCallback
 import com.uiza.R
 import com.uiza.util.UZConstant
