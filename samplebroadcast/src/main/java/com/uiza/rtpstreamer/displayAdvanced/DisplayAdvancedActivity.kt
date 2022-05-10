@@ -316,17 +316,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                 return@postDelayed
             }
             currentRetryCount++
-            UZDialogUtil.showDialog2(
-                context = this,
-                title = getString(R.string.warning),
-                msg = "$reason\nDo you want to retry?\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount",
-                button1 = "Retry",
-                button2 = getString(R.string.cancel),
-                onClickButton1 = {
-                    uzDisplayBroadCast.start(this)
-                },
-                onClickButton2 = null,
-            )
+            uzDisplayBroadCast.start(this)
+            runOnUiThread {
+                showToast("reason $reason\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount")
+            }
         }, retryDelayInS * 1000L)
     }
 }
