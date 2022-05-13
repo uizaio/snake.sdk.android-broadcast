@@ -9,12 +9,9 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.uiza.rtpstreamer.backgroundAdvanced.BackgroundAdvancedActivity
 import com.uiza.rtpstreamer.backgroundBasic.BackgroundBasicActivity
@@ -51,8 +48,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupViews() {
         Glide.with(this).load(R.drawable.live).into(ivLive)
+        tvVersion.text = "Version: " + BuildConfig.VERSION_NAME + " - " + BuildConfig.VERSION_CODE
         bBroadcastBasic.setOnClickListener {
             handleBroadcastBasic()
         }
@@ -76,26 +75,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        testCrashlytics()
+//        testCrashlytics()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun testCrashlytics() {
-        val crashButton = Button(this)
-        crashButton.text = "Test Crash"
-        crashButton.setOnClickListener {
-            throw RuntimeException("Test Crash") // Force a crash
-        }
-
-        addContentView(
-            crashButton,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
-        crashButton.isVisible = false
-    }
+//    @SuppressLint("SetTextI18n")
+//    private fun testCrashlytics() {
+//        val crashButton = Button(this)
+//        crashButton.text = "Test Crash"
+//        crashButton.setOnClickListener {
+//            throw RuntimeException("Test Crash") // Force a crash
+//        }
+//
+//        addContentView(
+//            crashButton,
+//            ViewGroup.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT
+//            )
+//        )
+//        crashButton.isVisible = false
+//    }
 
     override fun onResume() {
         super.onResume()

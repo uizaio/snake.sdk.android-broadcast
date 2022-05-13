@@ -11,10 +11,19 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_padding_medium">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/appColor"
+            android:textSize="@dimen/text_size_small"
+            tools:text="Version x.y.z" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivLive"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/w_256"
+            android:layout_height="@dimen/w_113"
             android:layout_gravity="center"
             tools:src="@drawable/live" />
 
