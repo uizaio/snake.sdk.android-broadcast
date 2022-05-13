@@ -2,12 +2,10 @@ package com.uiza.rtpstreamer.displayBasic
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
@@ -18,7 +16,6 @@ import com.uiza.util.UZConstant
 import com.uiza.util.UZUtil
 import kotlinx.android.synthetic.main.activity_display_basic.*
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class DisplayBasicActivity : AppCompatActivity() {
     private var videoWidth = UZConstant.VIDEO_WIDTH_DEFAULT
     private var videoHeight = UZConstant.VIDEO_HEIGHT_DEFAULT
@@ -92,10 +89,10 @@ class DisplayBasicActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null && (
-            requestCode == UZDisplayView.REQUEST_CODE_STREAM ||
-                requestCode == UZDisplayView.REQUEST_CODE_RECORD &&
-                resultCode == RESULT_OK
-            )
+                    requestCode == UZDisplayView.REQUEST_CODE_STREAM ||
+                            requestCode == UZDisplayView.REQUEST_CODE_RECORD &&
+                            resultCode == RESULT_OK
+                    )
         ) {
             val endPoint = etRtpUrl.text.toString()
             uzDisplayBroadCast.onActivityResult(
@@ -124,7 +121,7 @@ class DisplayBasicActivity : AppCompatActivity() {
     private fun setupTvSetting() {
         tvSetting.text =
             "videoWidth: $videoWidth, videoHeight: $videoHeight, videoFps: $videoFps, videoBitrate: $videoBitrate, videoRotation: $videoRotation, videoDpi: $videoDpi" +
-            "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
+                    "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor"
     }
 
     private fun handleBStartTop() {

@@ -10,7 +10,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pedro.rtplibrary.base.DisplayBase
 import com.pedro.rtplibrary.base.recording.RecordController
@@ -24,7 +23,6 @@ import org.greenrobot.eventbus.EventBus
 /**
  * Basic RTMP/RTSP service streaming implementation with camera2
  */
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class DisplayService : Service() {
 
     companion object {
@@ -48,8 +46,10 @@ class DisplayService : Service() {
         private const val channelId = "rtpDisplayStreamChannel"
         const val notifyId = 123456
         private var notificationManager: NotificationManager? = null
+
         @SuppressLint("StaticFieldLeak")
         private var displayBase: DisplayBase? = null
+
         @SuppressLint("StaticFieldLeak")
         private var contextApp: Context? = null
         private var resultCode: Int? = null
@@ -367,12 +367,12 @@ class DisplayService : Service() {
                         videoDpi
                     ) &&
                     db.prepareAudio(
-                            audioBitrate * 1024,
-                            audioSampleRate,
-                            audioIsStereo,
-                            audioEchoCanceler,
-                            audioNoiseSuppressor
-                        )
+                        audioBitrate * 1024,
+                        audioSampleRate,
+                        audioIsStereo,
+                        audioEchoCanceler,
+                        audioNoiseSuppressor
+                    )
                 ) {
                     db.startStream(endpoint)
                 } else {

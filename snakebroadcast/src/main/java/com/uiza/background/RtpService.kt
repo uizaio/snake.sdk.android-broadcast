@@ -31,7 +31,6 @@ import org.greenrobot.eventbus.EventBus
 /**
  * Basic RTMP/RTSP service streaming implementation with camera2
  */
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class RtpService : Service() {
 
     companion object {

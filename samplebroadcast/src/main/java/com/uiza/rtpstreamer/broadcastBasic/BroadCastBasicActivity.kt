@@ -1,14 +1,12 @@
 package com.uiza.rtpstreamer.broadcastBasic
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.SurfaceHolder
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.pedro.encoder.input.video.CameraHelper
@@ -17,7 +15,6 @@ import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
 import kotlinx.android.synthetic.main.activity_broadcast_basic.*
 
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BroadCastBasicActivity : AppCompatActivity() {
     private val logTag = javaClass.simpleName
     private var videoWidth = UZConstant.VIDEO_WIDTH_DEFAULT
@@ -166,8 +163,8 @@ class BroadCastBasicActivity : AppCompatActivity() {
     private fun setTextSetting() {
         tvSetting.text =
             "videoWidth $videoWidth, videoHeight $videoHeight\nvideoFps $videoFps, videoBitrate $videoBitrate" +
-            "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
-            ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
+                    "\naudioBitrate $audioBitrate, audioSampleRate $audioSampleRate\naudioIsStereo $audioIsStereo" +
+                    ", audioEchoCanceler $audioEchoCanceler, audioNoiseSuppressor $audioNoiseSuppressor"
     }
 
     private fun startPreview() {

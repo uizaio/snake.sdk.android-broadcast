@@ -32,7 +32,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BroadCastAdvancedActivity : AppCompatActivity() {
     private val logTag = javaClass.simpleName
     private var currentDateAndTime = ""
