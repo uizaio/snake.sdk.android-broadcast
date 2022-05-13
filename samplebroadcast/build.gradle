@@ -9,8 +9,8 @@ android {
         applicationId "com.snake.broadcast"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 1
-        versionName "1.0.2"
+        versionCode 20220513
+        versionName "1.0.3"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -43,9 +43,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = defaultConfig.applicationId + "_" + buildType.name + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk"
+        }
+    }
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.uiza.rtpstreamer'
 }
 
 dependencies {
@@ -62,7 +68,7 @@ dependencies {
 
     //for player
     //https://github.com/uizaio/snake.sdk.android-player
-    implementation 'com.github.uizaio:snake.sdk.android-player:1.0.12'
+    implementation 'com.github.uizaio:snake.sdk.android-player:1.0.13'
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
