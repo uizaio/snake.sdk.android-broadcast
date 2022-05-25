@@ -234,9 +234,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             onStopSuccess = {
                 bStartStop.isVisible = true
                 progressBar.isVisible = false
+                openSheet()
             }
         )
-        openSheet()
     }
 
     @SuppressLint("SetTextI18n")
