@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.pedro.encoder.input.gl.render.filters.*
@@ -20,6 +18,7 @@ import com.pedro.encoder.input.gl.render.filters.`object`.TextObjectFilterRender
 import com.pedro.encoder.input.video.CameraCallbacks
 import com.pedro.encoder.input.video.CameraHelper
 import com.pedro.encoder.utils.gl.TranslateTo
+import com.uiza.BuildConfig
 import com.uiza.UZApplication
 import com.uiza.rtpstreamer.R
 import com.uiza.util.UZConstant
@@ -126,11 +125,11 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         }
         uzBroadCastView.setCameraCallbacks(object : CameraCallbacks {
             override fun onCameraChanged(facing: CameraHelper.Facing?) {
-                showToast("onCameraChanged")
+//                showToast("onCameraChanged")
             }
 
             override fun onCameraError(error: String?) {
-                showToast("onCameraError error $error")
+//                showToast("onCameraError error $error")
             }
         })
         uzBroadCastView.setFpsListener { fps ->
@@ -853,16 +852,20 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             return
         }
         if (currentRetryCount >= retryCount) {
-            runOnUiThread {
-                showToast("Max retry detected")
+            if (BuildConfig.DEBUG) {
+                runOnUiThread {
+                    showToast("Max retry detected")
+                }
             }
             return
         }
         uzBroadCastView.postDelayed({
             currentRetryCount++
             start()
-            runOnUiThread {
-                showToast("reason $reason\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount")
+            if (BuildConfig.DEBUG) {
+                runOnUiThread {
+                    showToast("reason $reason\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount")
+                }
             }
         }, retryDelayInS * 1000L)
     }

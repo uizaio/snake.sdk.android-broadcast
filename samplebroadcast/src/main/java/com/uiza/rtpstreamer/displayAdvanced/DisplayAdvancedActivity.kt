@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.uiza.BuildConfig
 import com.uiza.UZApplication
 import com.uiza.display.UZDisplayView
 import com.uiza.rtpstreamer.R
@@ -302,8 +303,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             return
         }
         if (currentRetryCount >= retryCount) {
-            runOnUiThread {
-                showToast("Max retry detected")
+            if(BuildConfig.DEBUG){
+                runOnUiThread {
+                    showToast("Max retry detected")
+                }
             }
             return
         }
@@ -313,8 +316,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             }
             currentRetryCount++
             uzDisplayBroadCast.start(this)
-            runOnUiThread {
-                showToast("reason $reason\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount")
+            if(BuildConfig.DEBUG){
+                runOnUiThread {
+                    showToast("reason $reason\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount")
+                }
             }
         }, retryDelayInS * 1000L)
     }
