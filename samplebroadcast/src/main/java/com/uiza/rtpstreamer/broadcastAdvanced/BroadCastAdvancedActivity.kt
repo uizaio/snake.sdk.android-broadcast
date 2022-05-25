@@ -568,10 +568,12 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 onStopSuccess = {
                     bStartStop.isVisible = true
                     progressBar.isVisible = false
+                    openSheet()
                 }
             )
+        } else {
+            openSheet()
         }
-        openSheet()
     }
 
     private fun start() {
