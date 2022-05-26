@@ -31,6 +31,9 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+//TODO: khi dang retry thi ko dc show bstartstop
+//TODO: khi dang stream ma co auto retry, khi nhan button setting da stop stream nhung can huy luon thao tac check retry
+//TODO tuong tu cho display
 class BroadCastAdvancedActivity : AppCompatActivity() {
     private val logTag = javaClass.simpleName
     private var currentDateAndTime = ""
@@ -473,6 +476,10 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             audioIsStereo = UZConstant.AUDIO_IS_STEREO_DEFAULT
             audioEchoCanceler = UZConstant.AUDIO_ECHO_CANCELER_DEFAULT
             audioNoiseSuppressor = UZConstant.AUDIO_NOISE_SUPPRESSOR_DEFAULT
+            isAutoRetry = false
+            retryDelayInS = UZConstant.RETRY_IN_S
+            retryCount = UZConstant.RETRY_COUNT
+            currentRetryCount = 0
             startPreview(false)
             setTextSetting()
         }
