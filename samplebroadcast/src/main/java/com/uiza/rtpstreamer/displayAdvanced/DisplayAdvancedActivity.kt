@@ -224,6 +224,10 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                     this.retryCount = retryCount
                     this.currentRetryCount = 0
                     setupTvSetting()
+                    if (!isAutoRetry) {
+                        bStart.isVisible = true
+                        bStop.isVisible = false
+                    }
                 }
             displaySettingDialog.show(supportFragmentManager, displaySettingDialog.tag)
         }
@@ -232,13 +236,13 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         uzDisplayBroadCast.stop(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStart.isVisible = false
-                bStop.isVisible = false
+//                bStart.isVisible = false
+//                bStop.isVisible = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-                bStart.isVisible = true
-                bStop.isVisible = false
+//                bStart.isVisible = true
+//                bStop.isVisible = false
                 progressBar.isVisible = false
                 openSheet()
             }
@@ -250,7 +254,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         tvSetting.text =
             "videoWidth: $videoWidth, videoHeight: $videoHeight, videoFps: $videoFps, videoBitrate: $videoBitrate, videoRotation: $videoRotation, videoDpi: $videoDpi" +
                     "\naudioBitrate: $audioBitrate, audioSampleRate: $audioSampleRate, audioIsStereo: $audioIsStereo, audioEchoCanceler: $audioEchoCanceler, audioNoiseSuppressor: $audioNoiseSuppressor" +
-                    "\nisAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount, currentRetryCount: $currentRetryCount"
+                    "\nisAutoRetry: $isAutoRetry"
     }
 
     private fun handleBStart() {
@@ -265,13 +269,13 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStart.isVisible = false
-                    bStop.isVisible = false
+//                    bStart.isVisible = false
+//                    bStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStart.isVisible = true
-                    bStop.isVisible = false
+//                    bStart.isVisible = true
+//                    bStop.isVisible = false
                     progressBar.isVisible = false
                     if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
                         uzDisplayBroadCast.stopNotification()
@@ -297,13 +301,23 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            bStart.isVisible = false
-            bStop.isVisible = true
+            if (isAutoRetry) {
+                bStart.isVisible = false
+                bStop.isVisible = false
+            } else {
+                bStart.isVisible = false
+                bStop.isVisible = true
+            }
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
         } else {
-            bStart.isVisible = true
-            bStop.isVisible = false
+            if (isAutoRetry) {
+                bStart.isVisible = false
+                bStop.isVisible = false
+            } else {
+                bStart.isVisible = true
+                bStop.isVisible = false
+            }
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }
