@@ -120,8 +120,11 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         bSetting.setOnClickListener {
             handleBSetting()
         }
-        bStartStop.setOnClickListener {
-            handleBStartTop()
+        bStart.setOnClickListener {
+            handleBStart()
+        }
+        bStop.setOnClickListener {
+            handleBStop()
         }
         bDisableAudio.setOnClickListener {
             handleBDisableAudio()
@@ -219,6 +222,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                     this.isAutoRetry = isAutoRetry
                     this.retryDelayInS = retryDelayInS
                     this.retryCount = retryCount
+                    this.currentRetryCount = 0
                     setupTvSetting()
                 }
             displaySettingDialog.show(supportFragmentManager, displaySettingDialog.tag)
@@ -228,11 +232,13 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         uzDisplayBroadCast.stop(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStartStop.isVisible = false
+                bStart.isVisible = false
+                bStop.isVisible = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-                bStartStop.isVisible = true
+                bStart.isVisible = true
+                bStop.isVisible = false
                 progressBar.isVisible = false
                 openSheet()
             }
@@ -247,17 +253,25 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                     "\nisAutoRetry: $isAutoRetry, retryDelayInS: $retryDelayInS, retryCount: $retryCount, currentRetryCount: $currentRetryCount"
     }
 
-    private fun handleBStartTop() {
+    private fun handleBStart() {
         if (uzDisplayBroadCast.isStreaming() == false) {
             uzDisplayBroadCast.start(this)
+        }
+    }
+
+    private fun handleBStop() {
+        if (uzDisplayBroadCast.isStreaming() == false) {
+            //do nothing
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStartStop.isVisible = false
+                    bStart.isVisible = false
+                    bStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartStop.isVisible = true
+                    bStart.isVisible = true
+                    bStop.isVisible = false
                     progressBar.isVisible = false
                     if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
                         uzDisplayBroadCast.stopNotification()
@@ -283,11 +297,13 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            bStartStop.setText(R.string.stop_button)
+            bStart.isVisible = false
+            bStop.isVisible = true
             bDisableAudio.isVisible = true
             bEnableAudio.isVisible = true
         } else {
-            bStartStop.setText(R.string.start_button)
+            bStart.isVisible = true
+            bStop.isVisible = false
             bDisableAudio.isVisible = false
             bEnableAudio.isVisible = false
         }
@@ -303,7 +319,7 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             return
         }
         if (currentRetryCount >= retryCount) {
-            if(BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 runOnUiThread {
                     showToast("Max retry detected")
                 }
@@ -311,12 +327,15 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             return
         }
         uzDisplayBroadCast.postDelayed({
+            if (!isAutoRetry) {
+                return@postDelayed
+            }
             if (uzDisplayBroadCast.isStreaming() == true) {
                 return@postDelayed
             }
             currentRetryCount++
             uzDisplayBroadCast.start(this)
-            if(BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 runOnUiThread {
                     showToast("reason $reason\ncurrentRetryCount: $currentRetryCount\nretryCount: $retryCount")
                 }
