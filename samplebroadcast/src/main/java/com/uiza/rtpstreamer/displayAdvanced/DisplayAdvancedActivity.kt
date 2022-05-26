@@ -161,7 +161,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                 audioNoiseSuppressor = audioNoiseSuppressor,
             )
         } else {
-            showToast("No permissions available")
+            val msg = "No permissions available"
+            showToast(msg)
+            showPopupRetry(msg)
         }
     }
 
