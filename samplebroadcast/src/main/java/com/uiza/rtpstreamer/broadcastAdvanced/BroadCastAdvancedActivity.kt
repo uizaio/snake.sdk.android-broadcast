@@ -31,9 +31,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-//TODO: khi dang retry thi ko dc show
-//TODO: khi dang stream ma co auto retry, khi nhan button setting da stop stream nhung can huy luon thao tac check retry
-//TODO tuong tu cho display
 class BroadCastAdvancedActivity : AppCompatActivity() {
     private val logTag = javaClass.simpleName
     private var currentDateAndTime = ""
@@ -562,10 +559,15 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 this.isAutoRetry = isAutoRetry
                 this.retryDelayInS = retryDelayInS
                 this.retryCount = retryCount
+                this.currentRetryCount = 0
 
                 stopPreview()
                 startPreview(false)
                 setTextSetting()
+                if (!isAutoRetry) {
+                    bStart.isVisible = true
+                    bStop.isVisible = false
+                }
             }
 
             // stop streaming if exist
@@ -897,6 +899,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             return
         }
         uzBroadCastView.postDelayed({
+            if (!isAutoRetry) {
+                return@postDelayed
+            }
             currentRetryCount++
             start()
             if (BuildConfig.DEBUG) {
