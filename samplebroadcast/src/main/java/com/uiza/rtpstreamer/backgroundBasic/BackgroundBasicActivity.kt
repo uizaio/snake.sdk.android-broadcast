@@ -93,11 +93,11 @@ class BackgroundBasicActivity : AppCompatActivity() {
         if (uzBackgroundView.isServiceRunning()) {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
-                    bStartStop.isVisible = false
+                    bStartStop.isEnabled = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartStop.isVisible = true
+                    bStartStop.isEnabled = true
                     progressBar.isVisible = false
                 },
             )
@@ -136,10 +136,10 @@ class BackgroundBasicActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartStop.setText(R.string.stop_button)
-            bSwitchCamera.isVisible = true
+            bSwitchCamera.isEnabled = true
         } else {
             bStartStop.setText(R.string.start_button)
-            bSwitchCamera.isVisible = false
+            bSwitchCamera.isEnabled = false
         }
     }
 

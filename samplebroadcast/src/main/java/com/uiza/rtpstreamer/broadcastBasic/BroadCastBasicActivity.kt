@@ -116,11 +116,11 @@ class BroadCastBasicActivity : AppCompatActivity() {
         if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
-                    bStartStop.isVisible = false
+                    bStartStop.isEnabled = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartStop.isVisible = true
+                    bStartStop.isEnabled = true
                     progressBar.isVisible = false
                 }
             )

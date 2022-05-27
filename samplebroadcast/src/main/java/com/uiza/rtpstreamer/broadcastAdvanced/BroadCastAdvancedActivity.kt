@@ -493,13 +493,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 uzBroadCastView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-//                        bStart.isVisible = false
-//                        bStop.isVisible = false
                         progressBar.isVisible = true
                     },
                     onStopSuccess = {
-//                        bStart.isVisible = true
-//                        bStop.isVisible = false
                         progressBar.isVisible = false
                         stopPreview()
                         uzBroadCastView.toggleScreenOrientation()
@@ -565,8 +561,8 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 startPreview(false)
                 setTextSetting()
                 if (!isAutoRetry) {
-                    bStart.isVisible = true
-                    bStop.isVisible = false
+                    bStart.isEnabled = true
+                    bStop.isEnabled = false
                 }
             }
 
@@ -575,13 +571,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 uzBroadCastView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-//                        bStart.isVisible = false
-//                        bStop.isVisible = false
                         progressBar.isVisible = true
                     },
                     onStopSuccess = {
-//                        bStart.isVisible = true
-//                        bStop.isVisible = false
                         progressBar.isVisible = false
                         init()
                     }
@@ -611,13 +603,9 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         if (uzBroadCastView.isStreaming()) {
             uzBroadCastView.stopStream(
                 onStopPreExecute = {
-//                    bStart.isVisible = false
-//                    bStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-//                    bStart.isVisible = true
-//                    bStop.isVisible = false
                     progressBar.isVisible = false
                 }
             )
@@ -853,24 +841,24 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         runOnUiThread {
             if (uzBroadCastView.isStreaming()) {
-                bDisableAudio.isVisible = true
-                bEnableAudio.isVisible = true
+                bDisableAudio.isEnabled = true
+                bEnableAudio.isEnabled = true
                 if (isAutoRetry) {
-                    bStart.isVisible = false
-                    bStop.isVisible = false
+                    bStart.isEnabled = false
+                    bStop.isEnabled = false
                 } else {
-                    bStart.isVisible = false
-                    bStop.isVisible = true
+                    bStart.isEnabled = false
+                    bStop.isEnabled = true
                 }
             } else {
-                bDisableAudio.isVisible = false
-                bEnableAudio.isVisible = false
+                bDisableAudio.isEnabled = false
+                bEnableAudio.isEnabled = false
                 if (isAutoRetry) {
-                    bStart.isVisible = false
-                    bStop.isVisible = false
+                    bStart.isEnabled = false
+                    bStop.isEnabled = false
                 } else {
-                    bStart.isVisible = true
-                    bStop.isVisible = false
+                    bStart.isEnabled = true
+                    bStop.isEnabled = false
                 }
             }
         }

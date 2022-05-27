@@ -93,138 +93,135 @@
             android:paddingEnd="@dimen/margin_padding_medium"
             android:paddingBottom="@dimen/margin_padding_large">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bScreenRotation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/screen_rotation" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/setting" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/start_button" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/stop_button"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:enabled="false" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bDisableAudio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/disable_audio"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:enabled="false" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bEnableAudio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/enable_audio"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:enabled="false" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/start_record" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bRecordPause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/pause_record" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bRecordResume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/resume_record" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bSwitchCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/switch_camera_button" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bSwitchCameraFront"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/camera_front" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bSwitchCameraBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/camera_back" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOnOffFlashFlight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/on_off_flashlight" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOnOffAutoFocus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/on_off_auto_focus" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOrientation90"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/orientation_90" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOrientation180"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/orientation_180" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOrientation270"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/orientation_270" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOrientation0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/orientation_0" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bTakePhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

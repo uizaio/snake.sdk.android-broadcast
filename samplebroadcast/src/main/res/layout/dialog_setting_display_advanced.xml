@@ -214,14 +214,14 @@
                 android:maxLength="2" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/btGetBestSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_large"
             android:text="@string/get_best_setting" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/btOK"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

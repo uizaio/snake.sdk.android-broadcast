@@ -205,11 +205,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
                 uzBackgroundView.stopStream(
                     delayStopStreamInMls = 100,
                     onStopPreExecute = {
-                        bStartStop.isVisible = false
+                        bStartStop.isEnabled = false
                         progressBar.isVisible = true
                     },
                     onStopSuccess = {
-                        bStartStop.isVisible = true
+                        bStartStop.isEnabled = true
                         progressBar.isVisible = false
                         uzBackgroundView.stopPreview()
                         startPreview()
@@ -224,11 +224,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         uzBackgroundView.stopStream(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-                bStartStop.isVisible = false
+                bStartStop.isEnabled = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-                bStartStop.isVisible = true
+                bStartStop.isEnabled = true
                 progressBar.isVisible = false
                 openSheet()
             }
@@ -239,11 +239,11 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
         if (uzBackgroundView.isServiceRunning()) {
             uzBackgroundView.stopStream(
                 onStopPreExecute = {
-                    bStartStop.isVisible = false
+                    bStartStop.isEnabled = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartStop.isVisible = true
+                    bStartStop.isEnabled = true
                     progressBar.isVisible = false
                 }
             )
@@ -367,12 +367,12 @@ class BackgroundAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzBackgroundView.isStreaming() == true) {
             bStartStop.setText(R.string.stop_button)
-            bDisableAudio.isVisible = true
-            bEnableAudio.isVisible = true
+            bDisableAudio.isEnabled = true
+            bEnableAudio.isEnabled = true
         } else {
             bStartStop.setText(R.string.start_button)
-            bDisableAudio.isVisible = false
-            bEnableAudio.isVisible = false
+            bDisableAudio.isEnabled = false
+            bEnableAudio.isEnabled = false
         }
     }
 

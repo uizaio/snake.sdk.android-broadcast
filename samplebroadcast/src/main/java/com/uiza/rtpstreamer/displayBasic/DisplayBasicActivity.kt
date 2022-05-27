@@ -130,11 +130,11 @@ class DisplayBasicActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-                    bStartStop.isVisible = false
+                    bStartStop.isEnabled = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-                    bStartStop.isVisible = true
+                    bStartStop.isEnabled = true
                     progressBar.isVisible = false
                 }
             )

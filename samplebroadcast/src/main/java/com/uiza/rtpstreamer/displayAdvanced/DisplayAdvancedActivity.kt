@@ -227,8 +227,8 @@ class DisplayAdvancedActivity : AppCompatActivity() {
                     this.currentRetryCount = 0
                     setupTvSetting()
                     if (!isAutoRetry) {
-                        bStart.isVisible = true
-                        bStop.isVisible = false
+                        bStart.isEnabled = true
+                        bStop.isEnabled = false
                     }
                 }
             displaySettingDialog.show(supportFragmentManager, displaySettingDialog.tag)
@@ -238,13 +238,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         uzDisplayBroadCast.stop(
             delayStopStreamInMls = 100,
             onStopPreExecute = {
-//                bStart.isVisible = false
-//                bStop.isVisible = false
                 progressBar.isVisible = true
             },
             onStopSuccess = {
-//                bStart.isVisible = true
-//                bStop.isVisible = false
                 progressBar.isVisible = false
                 openSheet()
             }
@@ -271,13 +267,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
         } else {
             uzDisplayBroadCast.stop(
                 onStopPreExecute = {
-//                    bStart.isVisible = false
-//                    bStop.isVisible = false
                     progressBar.isVisible = true
                 },
                 onStopSuccess = {
-//                    bStart.isVisible = true
-//                    bStop.isVisible = false
                     progressBar.isVisible = false
                     if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
                         uzDisplayBroadCast.stopNotification()
@@ -304,24 +296,24 @@ class DisplayAdvancedActivity : AppCompatActivity() {
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
             if (isAutoRetry) {
-                bStart.isVisible = false
-                bStop.isVisible = false
+                bStart.isEnabled = false
+                bStop.isEnabled = false
             } else {
-                bStart.isVisible = false
-                bStop.isVisible = true
+                bStart.isEnabled = false
+                bStop.isEnabled = true
             }
-            bDisableAudio.isVisible = true
-            bEnableAudio.isVisible = true
+            bDisableAudio.isEnabled = true
+            bEnableAudio.isEnabled = true
         } else {
             if (isAutoRetry) {
-                bStart.isVisible = false
-                bStop.isVisible = false
+                bStart.isEnabled = false
+                bStop.isEnabled = false
             } else {
-                bStart.isVisible = true
-                bStop.isVisible = false
+                bStart.isEnabled = true
+                bStop.isEnabled = false
             }
-            bDisableAudio.isVisible = false
-            bEnableAudio.isVisible = false
+            bDisableAudio.isEnabled = false
+            bEnableAudio.isEnabled = false
         }
     }
 

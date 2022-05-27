@@ -62,7 +62,7 @@
             android:paddingEnd="@dimen/margin_padding_medium"
             android:paddingBottom="@dimen/margin_padding_large">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bStartStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -16,13 +16,13 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.uiza.rtpstreamer.FadedDisableButton
         android:id="@+id/btPlayVOD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="VOD" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.uiza.rtpstreamer.FadedDisableButton
         android:id="@+id/btPlayLive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:hint="Enter link play here" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.uiza.rtpstreamer.FadedDisableButton
         android:id="@+id/btPlayLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

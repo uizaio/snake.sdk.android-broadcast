@@ -74,21 +74,21 @@
             android:paddingEnd="@dimen/margin_padding_medium"
             android:paddingBottom="@dimen/margin_padding_large">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bStartStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/start_button" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bSwitchCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_medium"
                 android:text="@string/switch_camera_button" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.uiza.rtpstreamer.FadedDisableButton
                 android:id="@+id/bOnOffFlashFlight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -34,21 +34,21 @@
             android:textColor="@color/appColor"
             android:textSize="@dimen/text_size_large" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/bBroadcastBasic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
             android:text="BroadCastBasicActivity (Foreground)" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/bBroadcastBackgroundBasic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
             android:text="BackgroundBasicActivity" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/bDisplayBasic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,21 +63,21 @@
             android:textColor="@color/appColor"
             android:textSize="@dimen/text_size_large" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/bBroadcastAdvanced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
             android:text="BroadCastAdvancedActivity (Foreground)" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/bBroadcastBackgroundAdvanced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_medium"
             android:text="BackgroundAdvancedActivity" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/bDisplayAdvanced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:textColor="@color/appColor"
             android:textSize="@dimen/text_size_large" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.uiza.rtpstreamer.FadedDisableButton
             android:id="@+id/btPlayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
