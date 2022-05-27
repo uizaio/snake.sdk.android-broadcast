@@ -600,16 +600,21 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
     }
 
     private fun stop() {
-        if (uzBroadCastView.isStreaming()) {
-            uzBroadCastView.stopStream(
-                onStopPreExecute = {
-                    progressBar.isVisible = true
-                },
-                onStopSuccess = {
-                    progressBar.isVisible = false
-                }
-            )
-            userWantToStopStream = true
+        if (isAutoRetry) {
+            currentRetryCount = retryCount
+            showPopupRetry("Force stop when isAutoRetry true")
+        } else {
+            if (uzBroadCastView.isStreaming()) {
+                uzBroadCastView.stopStream(
+                    onStopPreExecute = {
+                        progressBar.isVisible = true
+                    },
+                    onStopSuccess = {
+                        progressBar.isVisible = false
+                    }
+                )
+                userWantToStopStream = true
+            }
         }
     }
 
@@ -617,12 +622,13 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
         if (uzBroadCastView.isStreaming()) {
             //do nothing
         } else {
+            currentRetryCount = 0
             start()
         }
     }
 
     private fun handleBStop() {
-        if (uzBroadCastView.isStreaming()) {
+        if (uzBroadCastView.isStreaming() || isAutoRetry) {
             stop()
         }
     }
@@ -845,7 +851,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 bEnableAudio.isEnabled = true
                 if (isAutoRetry) {
                     bStart.isEnabled = false
-                    bStop.isEnabled = false
+                    bStop.isEnabled = true
                 } else {
                     bStart.isEnabled = false
                     bStop.isEnabled = true
@@ -855,7 +861,7 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
                 bEnableAudio.isEnabled = false
                 if (isAutoRetry) {
                     bStart.isEnabled = false
-                    bStop.isEnabled = false
+                    bStop.isEnabled = true
                 } else {
                     bStart.isEnabled = true
                     bStop.isEnabled = false
@@ -879,15 +885,17 @@ class BroadCastAdvancedActivity : AppCompatActivity() {
             return
         }
         if (currentRetryCount >= retryCount) {
-            if (BuildConfig.DEBUG) {
-                runOnUiThread {
+            runOnUiThread {
+                if (BuildConfig.DEBUG) {
                     showToast("Max retry detected")
                 }
+                bStart.isEnabled = true
+                bStop.isEnabled = false
             }
             return
         }
         uzBroadCastView.postDelayed({
-            if (!isAutoRetry) {
+            if (!isAutoRetry || currentRetryCount >= retryCount) {
                 return@postDelayed
             }
             currentRetryCount++
