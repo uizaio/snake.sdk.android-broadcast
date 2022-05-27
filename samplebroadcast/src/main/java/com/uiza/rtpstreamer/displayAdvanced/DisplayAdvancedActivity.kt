@@ -257,25 +257,29 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleBStart() {
         if (uzDisplayBroadCast.isStreaming() == false) {
+            currentRetryCount = 0
             uzDisplayBroadCast.start(this)
         }
     }
 
     private fun handleBStop() {
-        if (uzDisplayBroadCast.isStreaming() == false) {
-            //do nothing
-        } else {
-            uzDisplayBroadCast.stop(
-                onStopPreExecute = {
-                    progressBar.isVisible = true
-                },
-                onStopSuccess = {
-                    progressBar.isVisible = false
-                    if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
-                        uzDisplayBroadCast.stopNotification()
+        if (uzDisplayBroadCast.isStreaming() == true || isAutoRetry) {
+            if (isAutoRetry) {
+                currentRetryCount = retryCount
+                showPopupRetry("Force stop when isAutoRetry true")
+            } else {
+                uzDisplayBroadCast.stop(
+                    onStopPreExecute = {
+                        progressBar.isVisible = true
+                    },
+                    onStopSuccess = {
+                        progressBar.isVisible = false
+                        if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
+                            uzDisplayBroadCast.stopNotification()
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 
@@ -295,9 +299,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleUI() {
         if (uzDisplayBroadCast.isStreaming() == true) {
-            if (isAutoRetry) {
+            if (isAutoRetry && currentRetryCount < retryCount) {
                 bStart.isEnabled = false
-                bStop.isEnabled = false
+                bStop.isEnabled = true
             } else {
                 bStart.isEnabled = false
                 bStop.isEnabled = true
@@ -305,9 +309,9 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             bDisableAudio.isEnabled = true
             bEnableAudio.isEnabled = true
         } else {
-            if (isAutoRetry) {
+            if (isAutoRetry && currentRetryCount < retryCount) {
                 bStart.isEnabled = false
-                bStop.isEnabled = false
+                bStop.isEnabled = true
             } else {
                 bStart.isEnabled = true
                 bStop.isEnabled = false
@@ -327,15 +331,17 @@ class DisplayAdvancedActivity : AppCompatActivity() {
             return
         }
         if (currentRetryCount >= retryCount) {
-            if (BuildConfig.DEBUG) {
-                runOnUiThread {
+            runOnUiThread {
+                if (BuildConfig.DEBUG) {
                     showToast("Max retry detected")
                 }
+                bStart.isEnabled = true
+                bStop.isEnabled = false
             }
             return
         }
         uzDisplayBroadCast.postDelayed({
-            if (!isAutoRetry) {
+            if (!isAutoRetry || currentRetryCount >= retryCount) {
                 return@postDelayed
             }
             if (uzDisplayBroadCast.isStreaming() == true) {
