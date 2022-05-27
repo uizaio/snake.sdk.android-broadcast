@@ -9,7 +9,7 @@ android {
         applicationId "com.snake.broadcast"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 20220526
+        versionCode 20220527
         versionName "1.0.3"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true

@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.uiza.rtpstreamer.backgroundAdvanced.BackgroundAdvancedActivity
 import com.uiza.rtpstreamer.backgroundBasic.BackgroundBasicActivity
@@ -75,26 +76,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        testCrashlytics()
+        //hide background broadcast mode
+        bBroadcastBackgroundBasic.isVisible = false
+        bBroadcastBackgroundAdvanced.isVisible = false
     }
-
-//    @SuppressLint("SetTextI18n")
-//    private fun testCrashlytics() {
-//        val crashButton = Button(this)
-//        crashButton.text = "Test Crash"
-//        crashButton.setOnClickListener {
-//            throw RuntimeException("Test Crash") // Force a crash
-//        }
-//
-//        addContentView(
-//            crashButton,
-//            ViewGroup.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                ViewGroup.LayoutParams.WRAP_CONTENT
-//            )
-//        )
-//        crashButton.isVisible = false
-//    }
 
     override fun onResume() {
         super.onResume()
