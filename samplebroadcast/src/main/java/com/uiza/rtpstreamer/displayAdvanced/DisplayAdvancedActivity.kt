@@ -264,21 +264,20 @@ class DisplayAdvancedActivity : AppCompatActivity() {
 
     private fun handleBStop() {
         if (uzDisplayBroadCast.isStreaming() == true || isAutoRetry) {
-            if (isAutoRetry) {
+            uzDisplayBroadCast.stop(
+                onStopPreExecute = {
+                    progressBar.isVisible = true
+                },
+                onStopSuccess = {
+                    progressBar.isVisible = false
+                    if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
+                        uzDisplayBroadCast.stopNotification()
+                    }
+                }
+            )
+            if (isAutoRetry && currentRetryCount < retryCount) {
                 currentRetryCount = retryCount
                 showPopupRetry("Force stop when isAutoRetry true")
-            } else {
-                uzDisplayBroadCast.stop(
-                    onStopPreExecute = {
-                        progressBar.isVisible = true
-                    },
-                    onStopSuccess = {
-                        progressBar.isVisible = false
-                        if (uzDisplayBroadCast.isStreaming() == false && uzDisplayBroadCast.isRecording() == false) {
-                            uzDisplayBroadCast.stopNotification()
-                        }
-                    }
-                )
             }
         }
     }
